@@ -1,7 +1,8 @@
 package model.command;
 
 /**
- * The {@code CommandStatus} enum represents the various statuses of a command during its lifecycle.
+ * The {@code CommandStatus} enum represents the various statuses of a command during its
+ * lifecycle.
  * <p>
  * Lifecycle:
  * <ul>
@@ -11,6 +12,7 @@ package model.command;
  *   <li><strong>FAILURE</strong>: The command has failed to execute.</li>
  * </ul>
  * </p>
+ *
  * @see Command
  */
 public enum CommandStatus {
