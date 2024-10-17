@@ -11,6 +11,7 @@ package model.command;
  *   <li><strong>FAILURE</strong>: The command has failed to execute.</li>
  * </ul>
  * </p>
+ * @see Command
  */
 public enum CommandStatus {
 
