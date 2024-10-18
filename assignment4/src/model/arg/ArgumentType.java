@@ -15,7 +15,7 @@ package model.command;
  * </ul>
  */
 
-public enum ArgumentTypes {
+public enum ArgumentType {
   EXISTING_IMAGE,
   NEW_IMAGE,
   FILE_OUT,

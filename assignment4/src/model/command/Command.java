@@ -1,6 +1,7 @@
 package model.command;
 
-import model.ArgumentWrapper;
+import model.arg.ArgumentWrapper;
+import model.arg.ArgumentType;
 
 /**
  * The {@code Command} interface represents a generic command that can be executed in an image
@@ -19,21 +20,21 @@ public interface Command {
   /**
    * Returns the argument types required for the command.
    *
-   * @return an array of {@link ArgumentTypes} indicating the types of arguments needed for this
+   * @return an array of {@link ArgumentType} indicating the types of arguments needed for this
    *     command.
    */
-  ArgumentTypes[] getArgumentTypes();
+  ArgumentType[] getArgumentTypes();
 
   /**
    * Sets the arguments for the command.
    *
-   * @param arguments an array of {@link ArgumentWrapper} that contains the arguments needed to
-   *                  execute the command. The size and types of the arguments should match the
-   *                  requirements defined by {@link #getArgumentTypes()}.
+   * @param arguments an {@link ArgumentWrapper} that contains the arguments needed to execute the
+   *                  command. The size and types of the arguments should match the requirements
+   *                  defined by {@link #getArgumentTypes()}.
    * @throws IllegalArgumentException if the provided arguments do not match the expected types.
    * @see ArgumentWrapper
    */
-  void setArguments(ArgumentWrapper[] arguments);
+  void setArguments(ArgumentWrapper arguments);
 
   /**
    * Executes the command. This method performs the primary operation of the command.

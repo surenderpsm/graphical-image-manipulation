@@ -1,14 +1,16 @@
 package model.command;
 
-import static model.command.ArgumentTypes.EXISTING_IMAGE;
-import static model.command.ArgumentTypes.NEW_IMAGE;
+import static model.arg.ArgumentType.EXISTING_IMAGE;
+import static model.arg.ArgumentType.NEW_IMAGE;
+
+import model.arg.ArgumentType;
 
 class Sepia extends AbstractCommand {
 
 
   @Override
-  public ArgumentTypes[] getArgumentTypes() {
-    return new ArgumentTypes[]{EXISTING_IMAGE, NEW_IMAGE};
+  public ArgumentType[] getArgumentTypes() {
+    return new ArgumentType[]{EXISTING_IMAGE, NEW_IMAGE};
   }
 
 }

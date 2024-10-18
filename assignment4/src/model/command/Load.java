@@ -1,14 +1,16 @@
 package model.command;
 
-import static model.command.ArgumentTypes.FILE_IN;
-import static model.command.ArgumentTypes.NEW_IMAGE;
+import static model.arg.ArgumentType.FILE_IN;
+import static model.arg.ArgumentType.NEW_IMAGE;
+
+import model.arg.ArgumentType;
 
 class Load extends AbstractCommand {
 
 
   @Override
-  public ArgumentTypes[] getArgumentTypes() {
-    return new ArgumentTypes[]{FILE_IN, NEW_IMAGE};
+  public ArgumentType[] getArgumentTypes() {
+    return new ArgumentType[]{FILE_IN, NEW_IMAGE};
   }
 
 }

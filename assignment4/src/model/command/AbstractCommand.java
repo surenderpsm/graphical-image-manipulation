@@ -1,6 +1,6 @@
 package model.command;
 
-import model.ArgumentWrapper;
+import model.arg.ArgumentWrapper;
 
 abstract class AbstractCommand implements Command {
 
@@ -10,7 +10,7 @@ abstract class AbstractCommand implements Command {
 
 
   @Override
-  public void setArguments(ArgumentWrapper[] arguments) {
+  public void setArguments(ArgumentWrapper arguments) {
 
   }
 
