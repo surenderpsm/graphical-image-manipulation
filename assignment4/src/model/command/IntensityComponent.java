@@ -1,5 +1,5 @@
 package model.command;
 
-public class IntensityComponent extends AbstractXComponent {
+class IntensityComponent extends AbstractXComponent {
 
 }

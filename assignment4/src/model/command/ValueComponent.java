@@ -1,5 +1,5 @@
 package model.command;
 
-public class ValueComponent extends AbstractXComponent {
+class ValueComponent extends AbstractXComponent {
 
 }

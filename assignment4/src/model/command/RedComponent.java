@@ -1,5 +1,5 @@
 package model.command;
 
-public class RedComponent extends AbstractXComponent {
+class RedComponent extends AbstractXComponent {
 
 }
