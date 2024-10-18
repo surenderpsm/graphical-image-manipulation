@@ -9,8 +9,32 @@ import java.util.NoSuchElementException;
  *
  * @see Image.Cache
  */
-public class Image {
-  // @todo Image Implementation goes here.
+public class Image{
+
+  // isEmpty tracks whether an Image is instantiated as an empty object or with parameters.
+  private boolean isEmpty = false;
+
+  /**
+   * This constructor is used to instantiate an "empty" Image object.
+   */
+  public Image(){
+    isEmpty = true;
+  }
+
+  public Image(int [][][] image){
+    int height = image.length;
+    int width = image[0].length;
+    int num_channels = image[0][0].length;
+    // @todo Complete implementation here.
+  }
+
+  /**
+   * Checks if the Image is empty or
+   * @return
+   */
+  public boolean isEmpty() {
+    return isEmpty;
+  }
 
   /**
    * This class represents a temporary storage medium for a collection of {@code model.Image}. A
