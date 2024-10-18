@@ -1,4 +1,4 @@
-package model.command;
+package model.arg;
 
 /**
  * The {@code ArgumentTypes} enum represents the possible types of arguments that can be passed to a
