@@ -1,6 +1,9 @@
 package controller;
 
 import java.lang.reflect.InvocationTargetException;
+import model.arg.ArgumentWrapper;
+import model.command.Command;
+import model.command.CommandStatus;
 import model.command.Commands;
 
 /**
@@ -23,7 +26,7 @@ import model.command.Commands;
  *
  * @see model.command.Commands
  * @see controller.ArgumentHandler
- * @see model.ArgumentWrapper
+ * @see ArgumentWrapper
  */
 public class CommandExecutor {
 
@@ -61,7 +64,11 @@ public class CommandExecutor {
     for (Commands c : Commands.values()) {
       if (c.getCommandName().equals(command)) {
         try {
-          isSuccess = c.executeWith(args.getAllArguments());
+          Command cmd = c.getCommand();
+          args.prepareArguments(cmd.getArgumentTypes());
+          cmd.setArguments(args.getAllArguments());
+          cmd.execute();
+          CommandStatus status = cmd.status();
         } catch (NoSuchMethodException e) {
           throw new UnsupportedOperationException(
               "Internal Error: The specified command " + c.getCommandName() + " has no "
