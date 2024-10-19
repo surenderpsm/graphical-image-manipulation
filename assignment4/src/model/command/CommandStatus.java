@@ -16,12 +16,6 @@ package model.command;
  * @see Command
  */
 enum CommandStatus {
-
-  /**
-   * The command is pending and has not yet been initialized.
-   */
-  PENDING,
-
   /**
    * The command is ready for execution after initialization.
    */
