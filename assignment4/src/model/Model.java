@@ -6,9 +6,9 @@ import model.command.CommandEnum;
 /**
  * The {@code Model} class serves as the entry point to the entire model in the MVC architecture. It
  * manages command execution, image retrieval, and storage while interfacing with the
- * {@link CommandEnum} enum to determine which command to execute with. The {@code Model}
- * interacts with an internal image cache via {@link Image.Cache}, and maintains an internal status
- * flag to track the success of operations.
+ * {@link CommandEnum} enum to determine which command to execute with. The {@code Model} interacts
+ * with an internal image cache via {@link Image.Cache}, and maintains an internal status flag to
+ * track the success of operations.
  * <p>
  * All interactions between the controller and the underlying model must go through this class,
  * ensuring that the controller only accesses the model through this entry point.
@@ -33,25 +33,24 @@ public class Model {
 
   private final CommandEnum commandClass;
   private boolean status = false;
-  private String args;
+  private final String args;
 
   /**
    * Constructs a {@code Model} instance by matching the input string to a corresponding command in
-   * the {@link CommandEnum} enum. If the command is found, it is assigned to the model, otherwise, an
-   * {@link UnsupportedOperationException} is thrown.
+   * the {@link CommandEnum} enum. If the command is found, it is assigned to the model, otherwise,
+   * an {@link UnsupportedOperationException} is thrown.
    *
    * <p>
    * Status updates can be tracked with {@link Model#getStatus()}.
    * </p>
    *
-   * @param commandLine the name of the command to be executed appended to the arguments passed.
-   * @throws UnsupportedOperationException if the input command is not found in the {@link CommandEnum}
-   *                                       enum
+   * @param command the name of the command.
+   * @param args    a string of arguments for the command.
+   * @throws UnsupportedOperationException if the input command is not found in the
+   *                                       {@link CommandEnum} enum
    */
-  public Model(String commandLine) throws UnsupportedOperationException {
-    String[] tokens = commandLine.split(" ", 1);
-    String command = tokens[0];
-    args = tokens[1];
+  public Model(String command, String args) throws UnsupportedOperationException {
+    this.args = args;
     for (CommandEnum c : CommandEnum.values()) {
       if (c.getCommandName().equals(command)) {
         commandClass = c;
@@ -74,6 +73,7 @@ public class Model {
    */
   public Model() {
     commandClass = CommandEnum.IO;
+    args = "";
     status = true;
   }
 
@@ -134,8 +134,9 @@ public class Model {
     status = false;
     try {
       commandClass.executeCommandWith(args);
+    } catch (Exception e) {
+      // @todo what exceptions?
     }
-    catch (Exception e) {}
   }
 
   /**
