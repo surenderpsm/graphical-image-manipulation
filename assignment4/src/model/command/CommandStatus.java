@@ -9,13 +9,13 @@ package model.command;
  *   <li><strong>PENDING</strong>: The command is pending and has not yet been initialized.</li>
  *   <li><strong>READY</strong>: The command is ready for execution after initialization.</li>
  *   <li><strong>SUCCESS</strong>: The command has been executed successfully.</li>
- *   <li><strong>FAILURE</strong>: The command has failed to execute.</li>
+ *   <li><strong>FAILURE</strong>: The command has failed to executeWith.</li>
  * </ul>
  * </p>
  *
  * @see Command
  */
-public enum CommandStatus {
+enum CommandStatus {
 
   /**
    * The command is pending and has not yet been initialized.
@@ -33,7 +33,7 @@ public enum CommandStatus {
   SUCCESS,
 
   /**
-   * The command has failed to execute.
+   * The command has failed to executeWith.
    */
   FAILURE
 }
