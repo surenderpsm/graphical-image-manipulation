@@ -4,24 +4,32 @@ package model.command;
 import java.lang.reflect.InvocationTargetException;
 
 /**
- * The {@code CommandEnum} enum represents a collection of command types for various operations in
- * the image processing application. Each enum constant is associated with a specific command class
- * that implements the {@code Command} interface and a string representation of the command name.
+ * The {@code CommandEnum} enum serves as the sole public entry point for the command package,
+ * representing a collection of commands for various operations in the image processing
+ * application. This class implements the factory pattern to facilitate the dynamic instantiation of
+ * command classes that implement the {@code Command} interface.
  *
  * <p>
- * This enum provides {@link CommandEnum#getCommand()} to return an instance of the required
- * command.
+ * Each enum constant is associated with a specific command class and a string representation of the
+ * command name. This structure allows for easy retrieval and execution of commands based on user
+ * input.
+ * </p>
+ *
+ * <p>
+ * The enum provides the {@link CommandEnum#executeCommandWith(String)} method to run commands with
+ * the provided arguments, abstracting the details of command instantiation.
  * </p>
  *
  * <h3>Example Usage:</h3>
  * <pre>
- *     Command command = CommandEnum.BRIGHTEN.getCommand();
+ *     // Executes the brighten command with the specified arguments
+ *     CommandEnum.BRIGHTEN.executeCommandWith("koala new-koala-brighten");
  * </pre>
  *
  * @see Command
  */
 public enum CommandEnum {
-  IO(null, "none"),
+  IO(null, "io"),
   BRIGHTEN(Brighten.class, "brighten"),
   VERTICAL_FLIP(VerticalFlip.class, "vertical-flip"),
   HORIZONTAL_FLIP(HorizontalFlip.class, "horizontal-flip"),
@@ -54,20 +62,23 @@ public enum CommandEnum {
   }
 
   /**
-   * Gets the command associated with this enum constant.
+   * Executes a command with the specified arguments.
    *
-   * <p>This method dynamically instantiates the command class by invoking the default
-   * constructor of the command.</p>
+   * <p>This method instantiates a {@code Command} object based on the provided
+   * arguments and executes it. This method is designed to be used within the model, ensuring that
+   * no other classes outside the command package can directly access a {@code Command} object.</p>
    *
-   * @return an instance of the {@link Command} associated with this enum constant
-   * @throws NoSuchMethodException     if the command class does not have a default constructor
-   * @throws InvocationTargetException if the constructor or command execution throws an exception
-   * @throws InstantiationException    if the command class cannot be instantiated
-   * @throws IllegalAccessException    if the command class or its constructor is not accessible
+   * @param args the arguments to be passed to the command constructor.
    */
-  public Command getCommand()
-      throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-    return commandClass.getDeclaredConstructor().newInstance();
+  public void executeCommandWith(String args) {
+    if (this == CommandEnum.IO) {
+      throw new UnsupportedOperationException("IO operation cannot be executed in the model.");
+    }
+    try {
+      Command c = instantiateCommand(args);
+    } catch (Exception e) {
+      // @todo add relevant exceptions.
+    }
   }
 
   /**
@@ -81,5 +92,31 @@ public enum CommandEnum {
    */
   public String getCommandName() {
     return commandName;
+  }
+
+  /**
+   * Gets the command associated with this enum constant.
+   *
+   * <p>This method dynamically instantiates the command class by invoking the default
+   * constructor of the command.</p>
+   *
+   * @return an instance of the {@link Command} associated with this enum constant
+   */
+  private Command instantiateCommand(String args) {
+    try {
+      return commandClass.getDeclaredConstructor(String.class).newInstance(args);
+    } catch (NoSuchMethodException e) {
+      throw new InternalError(
+          "Internal Error: The specified command" + commandName + " has no String constructor.");
+    } catch (InvocationTargetException e) {
+      // @todo Catch all exceptions thrown by constructors from Command.
+      throw new UnsupportedOperationException(
+          "Internal Error: There was an error in constructor invocation of command  : "
+              + e.getCause().getMessage());
+    } catch (InstantiationException e) {
+      throw new InternalError("Internal Error: The specified command cannot be instantiated.");
+    } catch (IllegalAccessException e) {
+      throw new InternalError("Internal Error: The specified command cannot be accessed.");
+    }
   }
 }
