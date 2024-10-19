@@ -5,12 +5,21 @@ package model.command;
  * processing system. Implementations of this interface define specific commands, such as loading,
  * saving, or applying transformations to an image.
  *
- * <h2>Example Usage:</h2>
+ * <h3>Example Usage:</h3>
  * <pre>
  *     Command command = new LoadCommand();
  *     command.executeWith();
  *     CommandState status = command.status();
  * </pre>
+ * <h3>Developer Notes:</h3>
+ * <p>
+ *   <ul>
+ *     <li>
+ *       Each {@code Command} implementation is expected to manage its own argument handling.
+ *       Recommended approach is to isolate this logic in the constructor.
+ *     </li>
+ *   </ul>
+ * </p>
  */
 interface Command {
 
@@ -28,10 +37,11 @@ interface Command {
 
   /**
    * Returns the status of the command execution.
-   * <br>
+   * <p>
    * The status is represented by the {@link CommandStatus} enum.
+   * </p>
    *
-   * @return a {@link CommandStatus} value representing the current status of the command execution.
+   * @return a {@link CommandStatus} value representing the current status of the command lifecycle.
    * @see CommandStatus
    */
   CommandStatus status();
