@@ -1,15 +1,12 @@
 package model;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.NoSuchElementException;
-import model.command.Command;
 import model.command.CommandEnum;
-import model.command.CommandStatus;
 
 /**
  * The {@code Model} class serves as the entry point to the entire model in the MVC architecture. It
  * manages command execution, image retrieval, and storage while interfacing with the
- * {@link CommandEnum} enum to determine which {@link Command} to execute with. The {@code Model}
+ * {@link CommandEnum} enum to determine which command to execute with. The {@code Model}
  * interacts with an internal image cache via {@link Image.Cache}, and maintains an internal status
  * flag to track the success of operations.
  * <p>
@@ -30,9 +27,7 @@ import model.command.CommandStatus;
  *   boolean status = new Model().setImage(image, 'rabbit').getStatus();
  * </pre>
  *
- * @see Command
  * @see CommandEnum
- * @see CommandStatus
  */
 public class Model {
 
@@ -138,22 +133,9 @@ public class Model {
   private void execute() {
     status = false;
     try {
-      Command command = commandClass.getCommand();
-      command.executeWith(args);
-      if (command.status() == CommandStatus.SUCCESS) {
-        status = true;
-      }
-    } catch (NoSuchMethodException e) {
-      throw new InternalError("Internal Error: The specified command has no constructors.");
-    } catch (InvocationTargetException e) {
-      throw new UnsupportedOperationException(
-          "Internal Error: There was an error in constructor invocation of command  : "
-              + e.getCause().getMessage());
-    } catch (InstantiationException e) {
-      throw new InternalError("Internal Error: The specified command cannot be instantiated.");
-    } catch (IllegalAccessException e) {
-      throw new InternalError("Internal Error: The specified command cannot be accessed.");
+      commandClass.executeCommandWith(args);
     }
+    catch (Exception e) {}
   }
 
   /**
