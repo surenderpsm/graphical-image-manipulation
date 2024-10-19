@@ -9,31 +9,41 @@ import java.util.NoSuchElementException;
  *
  * @see Image.Cache
  */
-public class Image{
+public class Image {
 
   // isEmpty tracks whether an Image is instantiated as an empty object or with parameters.
   private boolean isEmpty = false;
 
+  // @todo add private final members as required.
+
   /**
    * This constructor is used to instantiate an "empty" Image object.
+   * @todo IDK if this is needed anymore.
    */
-  public Image(){
+  public Image() {
     isEmpty = true;
   }
 
-  public Image(int [][][] image){
+  public Image(int[][][] image) {
     int height = image.length;
     int width = image[0].length;
     int num_channels = image[0][0].length;
-    // @todo Complete implementation here.
+    // @todo Complete implementation here. int[][][] has [width][height][num_channels]
   }
 
   /**
-   * Checks if the Image is empty or
+   * Checks if the Image is empty.
+   *
    * @return
    */
   public boolean isEmpty() {
     return isEmpty;
+  }
+
+
+  public int[][][] getImageArray() {
+    throw new UnsupportedOperationException("Not supported yet.");
+    // @todo Need to convert to 3d array [width][height][num_channels]
   }
 
   /**
@@ -71,7 +81,7 @@ public class Image{
      * @return a {@code model.Image} object which is the mapped image.
      * @throws NoSuchElementException If the name is not found in the hashMap.
      */
-    public static Image get(String name) {
+    public static Image get(String name) throws NoSuchElementException {
       Image image = cache.get(name);
       if (image == null) {
         throw new NoSuchElementException("Image not found");
