@@ -1,20 +1,24 @@
 package model.command;
 
-import static model.arg.ArgumentType.EXISTING_IMAGE;
-import static model.arg.ArgumentType.NEW_IMAGE;
 
-import model.arg.ArgumentType;
+import model.Image;
 
 class Blur extends AbstractCommand {
 
-  @Override
-  public ArgumentType[] getArgumentTypes() {
-    return new ArgumentType[]{EXISTING_IMAGE, NEW_IMAGE};
+  private final Image currentImage;
+  private final String blurredImageName;
+
+  public Blur(String rawArguments) {
+    super(rawArguments);
+    if (numberOfArgs() != 2) {
+      throw new IllegalArgumentException("Expected 2 arguments.");
+    }
+    currentImage = Image.Cache.get(getArg(1));
+    blurredImageName = getArg(2);
   }
 
   @Override
-  public void execute() {
-
+  protected boolean run() {
+    return false;
   }
-
 }

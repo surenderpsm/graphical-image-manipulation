@@ -1,6 +1,6 @@
 package model.command;
 
-class GreenComponent extends AbstractXComponent {
+class GreenComponent extends AbstractColorComponent {
 
 
 }

@@ -3,11 +3,12 @@ package model.command;
 
 import java.lang.reflect.InvocationTargetException;
 
+
 /**
  * The {@code CommandEnum} enum serves as the sole public entry point for the command package,
- * representing a collection of commands for various operations in the image processing
- * application. This class implements the factory pattern to facilitate the dynamic instantiation of
- * command classes that implement the {@code Command} interface.
+ * representing a collection of commands for various operations in the image processing application.
+ * This class implements the factory pattern to facilitate the dynamic instantiation of command
+ * classes that implement the {@code Command} interface.
  *
  * <p>
  * Each enum constant is associated with a specific command class and a string representation of the
