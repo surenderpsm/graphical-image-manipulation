@@ -6,7 +6,6 @@ package model.command;
  * <p>
  * Lifecycle:
  * <ul>
- *   <li><strong>PENDING</strong>: The command is pending and has not yet been initialized.</li>
  *   <li><strong>READY</strong>: The command is ready for execution after initialization.</li>
  *   <li><strong>SUCCESS</strong>: The command has been executed successfully.</li>
  *   <li><strong>FAILURE</strong>: The command has failed to executeWith.</li>
@@ -27,7 +26,7 @@ enum CommandStatus {
   SUCCESS,
 
   /**
-   * The command has failed to executeWith.
+   * The command has failed to execute.
    */
   FAILURE
 }
