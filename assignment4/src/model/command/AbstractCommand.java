@@ -7,13 +7,15 @@ abstract class AbstractCommand implements Command {
 
   private CommandStatus status = CommandStatus.READY;
   private final String[] args;
+  private final Image currentImage;
+  private final String imageName;
 
   AbstractCommand(String rawArguments) {
     args = rawArguments.split(" ");
   }
 
   protected String getArg(int argumentNumber) throws IndexOutOfBoundsException {
-    return args[argumentNumber+1];
+    return args[argumentNumber];
   }
   protected int numberOfArgs() {
     return args.length;
