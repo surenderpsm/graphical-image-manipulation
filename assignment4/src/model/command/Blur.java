@@ -5,7 +5,7 @@ import model.Image;
 
 class Blur extends AbstractCommand {
 
-  private final Image currentImage;
+  //private final Image currentImage;
   private final String blurredImageName;
 
   public Blur(String rawArguments) {
@@ -13,8 +13,8 @@ class Blur extends AbstractCommand {
     if (numberOfArgs() != 2) {
       throw new IllegalArgumentException("Expected 2 arguments.");
     }
-    currentImage = Image.Cache.get(getArg(1));
-    blurredImageName = getArg(2);
+    currentImage = Image.Cache.get(getArg(0));
+    blurredImageName = getArg(1);
   }
 
   @Override
