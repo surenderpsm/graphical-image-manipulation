@@ -77,6 +77,7 @@ public enum CommandEnum {
     }
     try {
       Command c = instantiateCommand(args);
+      c.execute();
     } catch (Exception e) {
       // @todo add relevant exceptions.
     }
