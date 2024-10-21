@@ -3,12 +3,14 @@ package model.command;
 
 import java.lang.reflect.InvocationTargetException;
 
+import model.Image;
+
 abstract class AbstractCommand implements Command {
 
   private CommandStatus status = CommandStatus.READY;
-  private final String[] args;
-  private final Image currentImage;
-  private final String imageName;
+  protected final String[] args;
+  protected Image currentImage;
+  protected String imageName;
 
   AbstractCommand(String rawArguments) {
     args = rawArguments.split(" ");

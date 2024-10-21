@@ -1,6 +1,8 @@
 package model.command;
 
-class BlueComponent extends AbstractColorComponent {
+import model.Image;
+
+class BlueComponent extends AbstractCommand {
   public BlueComponent(String rawArguments) {
     super(rawArguments);
     if (numberOfArgs() != 2) {

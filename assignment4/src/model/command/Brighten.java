@@ -1,9 +1,11 @@
 package model.command;
 
 
+import model.Image;
+
 class Brighten extends AbstractCommand {
 
-  private final String brightenImageName;
+  private final int value;
 
   Brighten(String rawArguments) {
     super(rawArguments);
@@ -11,7 +13,7 @@ class Brighten extends AbstractCommand {
       throw new IllegalArgumentException("Expected 3 arguments.");
     }
 
-    int value = Integer.parseInt(getArg(0));
+    value = Integer.parseInt(getArg(0));
     currentImage = Image.Cache.get(getArg(1));
     imageName = getArg(2);
   }
@@ -27,7 +29,7 @@ class Brighten extends AbstractCommand {
 
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        if (redChannelData[i][j] ! = 0 && redChannelData != null){
+        if (redChannelData[i][j] != 0){
           imageArray[i][j][0] = (redChannelData[i][j] + value);
         }
       }
@@ -36,7 +38,7 @@ class Brighten extends AbstractCommand {
     if (currentImage.getNoOfChannels() > 1) {
       for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
-          if (greenChannelData[i][j] ! = 0 && greenChannelData != null){
+          if (greenChannelData[i][j] != 0){
             imageArray[i][j][1] = (greenChannelData[i][j] + value);
           }
         }
@@ -46,7 +48,7 @@ class Brighten extends AbstractCommand {
     if (currentImage.getNoOfChannels() > 2) {
       for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
-          if (blueChannelData[i][j] ! = 0 && blueChannelData != null){
+          if (blueChannelData[i][j] != 0){
             imageArray[i][j][2] = (blueChannelData[i][j] + value);
           }
         }
