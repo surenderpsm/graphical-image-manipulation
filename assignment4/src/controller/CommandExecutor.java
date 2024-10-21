@@ -1,5 +1,8 @@
 package controller;
 
+import controller.imagehandler.ImageHandler;
+import controller.imagehandler.ImageHandlerSelector;
+import java.io.IOException;
 import model.Model;
 
 
@@ -21,7 +24,6 @@ import model.Model;
  *     boolean success = executor.isSuccess();
  * </pre>
  *
- * @see controller.ArgumentHandler
  */
 public class CommandExecutor {
 
@@ -34,27 +36,16 @@ public class CommandExecutor {
    *
    * @param commandString the input string containing the command and its arguments.
    */
-  public CommandExecutor(String commandString) {
+  public CommandExecutor(String commandString) throws IOException {
     String[] tokens = commandString.split(" ", 1);
     String command = tokens[0];
     String args = tokens[1];
-    if (command.equals("load") || command.equals("save")){
-      //@todo work on this part.
-      return;
+    try{
+      new IOHandler(command, args);
+      new Model(command, args);
     }
-    new Model(command, args);//@todo how to proceed?
+    catch(Exception e){
+      System.out.println(e.getMessage());
+    }
   }
-
-  /**
-   * Executes the command specified during the creation of the {@code CommandExecutor}.
-   *
-   * <p>This method searches for a matching command in the {@code CommandEnum} enum,
-   * and invokes its {@code executeWith} method. If an error occurs during command instantiation or
-   * execution, an {@code UnsupportedOperationException} is thrown with a detailed message.</p>
-   *
-   * @throws UnsupportedOperationException if the command is not found or if there is an error
-   *                                       during command instantiation or execution
-   */
-
-
 }
