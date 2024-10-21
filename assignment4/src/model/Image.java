@@ -33,7 +33,7 @@ public class Image {
     isEmpty = true;
   }
 
-  public Image(int[][][] image) {
+  public Image(int[][][] arr) {
     height = arr.length;
     width = arr[0].length;
     noOfChannels = arr[0][0].length;
@@ -42,9 +42,7 @@ public class Image {
     redChannelData = new int[height][width];
     greenChannelData = new int[height][width];
     blueChannelData = new int[height][width];
-    value = new int[height][width];
-    intensity = new int[height][width];
-    luma = new int[height][width];
+
 
     if (noOfChannels == 4) {
       transparency = new int[height][height];
@@ -85,7 +83,7 @@ public class Image {
   /**
    * Checks if the Image is empty.
    *
-   * @return
+   * @return is empty or not
    */
   public boolean isEmpty() {
     return isEmpty;
@@ -117,31 +115,32 @@ public class Image {
   }
 
   public int[] getPixelData(int i, int j) {
+    int[] arr = new int[noOfChannels];
     if (noOfChannels == 3) {
-      int[] arr = new int[3];
       arr[0] = redChannelData[i][j];
       arr[1] = greenChannelData[i][j];
       arr[2] = blueChannelData[i][j];
     } else if (noOfChannels == 4) {
-      int[] arr = new int[4];
+
       arr[0] = redChannelData[i][j];
       arr[1] = greenChannelData[i][j];
       arr[2] = blueChannelData[i][j];
       arr[3] = transparency[i][j];
     }
+    return arr;
   }
 
   public int[][][] getImageArray() {
-    int imageArr[][][] = new int[this.height][this.width][this.noOfChannels];
+    int[][][] imageArr = new int[this.height][this.width][this.noOfChannels];
     for (int i = 0; i < this.height; i++) {
-      for (int h = 0; j < this.width; j++) {
+      for (int j = 0; j < this.width; j++) {
         imageArr[i][j][0] = redChannelData[i][j];
       }
     }
 
     if (noOfChannels > 1) {
       for (int i = 0; i < this.height; i++) {
-        for (int h = 0; j < this.width; j++) {
+        for (int j = 0; j < this.width; j++) {
           imageArr[i][j][1] = greenChannelData[i][j];
         }
       }
@@ -149,14 +148,14 @@ public class Image {
 
     if (noOfChannels > 2) {
       for (int i = 0; i < this.height; i++) {
-        for (int h = 0; j < this.width; j++) {
+        for (int j = 0; j < this.width; j++) {
           imageArr[i][j][2] = blueChannelData[i][j];
         }
       }
     }
     if (noOfChannels == 4) {
       for (int i = 0; i < this.height; i++) {
-        for (int h = 0; j < this.width; j++) {
+        for (int j = 0; j < this.width; j++) {
           imageArr[i][j][3] = transparency[i][j];
         }
       }
