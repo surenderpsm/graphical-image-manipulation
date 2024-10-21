@@ -27,21 +27,32 @@ class Brighten extends AbstractCommand {
 
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        imageArray[i][j][0] = (redChannelData[i][j]+value);
+        if (redChannelData[i][j] ! = 0 && redChannelData != null){
+          imageArray[i][j][0] = (redChannelData[i][j] + value);
+        }
       }
     }
 
-    for (int i = 0; i < height; i++) {
-      for (int j = 0; j < width; j++) {
-        imageArray[i][j][1] = (greenChannelData[i][j]+value);
+    if (currentImage.getNoOfChannels() > 1) {
+      for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+          if (greenChannelData[i][j] ! = 0 && greenChannelData != null){
+            imageArray[i][j][1] = (greenChannelData[i][j] + value);
+          }
+        }
       }
     }
 
-    for (int i = 0; i < height; i++) {
-      for (int j = 0; j < width; j++) {
-        imageArray[i][j][2] = (blueChannelData[i][j]+value);
+    if (currentImage.getNoOfChannels() > 2) {
+      for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+          if (blueChannelData[i][j] ! = 0 && blueChannelData != null){
+            imageArray[i][j][2] = (blueChannelData[i][j] + value);
+          }
+        }
       }
     }
+
 
     Image brightImage = new Image(imageArray);
     Image.Cache.set(imageName, brightImage);

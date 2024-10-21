@@ -20,8 +20,8 @@ class ValueComponent extends AbstractXComponent {
     int[][] redChannelData = currentImage.getRedChannelData();
     int[][] greenChannelData = currentImage.getGreenChannelData();
     int[][] blueChannelData = currentImage.getBlueChannelData();
-    for(int i=0; i< height; i++){
-      for(int j=0;j<width;j++){
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
         max1 = Math.max(redChannelData[i][j], greenChannelData[i][j]);
         imageArray[i][j][0] = Math.max(max1, blueChannelData[i][j]);
       }

@@ -1,6 +1,7 @@
 package model;
 
 import java.util.NoSuchElementException;
+
 import model.command.CommandEnum;
 
 /**

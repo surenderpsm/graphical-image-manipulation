@@ -10,7 +10,7 @@ class BlueComponent extends AbstractColorComponent {
     imageName = getArg(1);
   }
 
-  public void execute(){
+  public void execute() {
 
     int height = currentImage.getHeight();
     int width = currentImage.getWidth();
@@ -19,23 +19,14 @@ class BlueComponent extends AbstractColorComponent {
     int[][][] imageArray = new int[height][width][3];
     int[][] blueChannelData = currentImage.getBlueChannelData();
 
-    for(int i=0; i< height; i++){
-      for(int j=0;j<width;j++){
-        imageArray[i][j][0] =  blueChannelData[i][j];
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        imageArray[i][j][0] = blueChannelData[i][j];
+        imageArray[i][j][1] = blueChannelData[i][j];
+        imageArray[i][j][2] = blueChannelData[i][j];
       }
     }
 
-    for(int i=0; i< height; i++){
-      for(int j=0;j<width;j++){
-        imageArray[i][j][1] =  blueChannelData[i][j];
-      }
-    }
-
-    for(int i=0; i< height; i++){
-      for(int j=0;j<width;j++){
-        imageArray[i][j][2] =  blueChannelData[i][j];
-      }
-    }
 
     Image blueComp = new Image(imageArray);
     Image.Cache.set(imageName, blueComp);

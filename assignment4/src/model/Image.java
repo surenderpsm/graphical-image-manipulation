@@ -26,6 +26,7 @@ public class Image {
 
   /**
    * This constructor is used to instantiate an "empty" Image object.
+   *
    * @todo IDK if this is needed anymore.
    */
   public Image() {
@@ -45,33 +46,39 @@ public class Image {
     intensity = new int[height][width];
     luma = new int[height][width];
 
-    if (noOfChannels==4){
+    if (noOfChannels == 4) {
       transparency = new int[height][height];
     }
 
 
-    for(int i=0; i< height ; i++){
-      for(int j=0; j<width; j++){
-        redChannelData[i][j] = arr [i][j][0];
-        greenChannelData[i][j] = arr[i][j][1];
-        blueChannelData[i][j] = arr[i][j][2];
-        if(noOfChannels == 4){
-          transparency[i][j] = arr[i][j][2];
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        redChannelData[i][j] = arr[i][j][0];
+        if (noOfChannels > 1) {
+          greenChannelData[i][j] = arr[i][j][1];
+        }
+
+        if (noOfChannels > 2) {
+          blueChannelData[i][j] = arr[i][j][2];
+        }
+
+        if (noOfChannels == 4) {
+          transparency[i][j] = arr[i][j][3];
 
         }
       }
     }
   }
 
-  public int getHeight(){
+  public int getHeight() {
     return height;
   }
 
-  public int getWidth(){
+  public int getWidth() {
     return width;
   }
 
-  public int getNoOfChannels(){
+  public int getNoOfChannels() {
     return noOfChannels;
   }
 
@@ -84,30 +91,38 @@ public class Image {
     return isEmpty;
   }
 
-  public int[][] getRedChannelData(){
+  public int[][] getRedChannelData() {
     return redChannelData;
   }
 
-  public int[][] getGreenChannelData(){
+  public int[][] getGreenChannelData() {
+    if (noOfChannels < 2) {
+      return null;
+    }
     return greenChannelData;
   }
 
-  public int[][] getBlueChannelData(){
+  public int[][] getBlueChannelData() {
+    if (noOfChannels < 3) {
+      return null;
+    }
     return blueChannelData;
   }
 
-  public int[][] getTransparencyData(){
+  public int[][] getTransparencyData() {
+    if (noOfChannels < 4) {
+      return null;
+    }
     return transparency;
   }
 
-  public int[] getPixelData(int i, int j){
-    if(noOfChannels == 3){
+  public int[] getPixelData(int i, int j) {
+    if (noOfChannels == 3) {
       int[] arr = new int[3];
       arr[0] = redChannelData[i][j];
       arr[1] = greenChannelData[i][j];
       arr[2] = blueChannelData[i][j];
-    }
-    else if(noOfChannels == 4){
+    } else if (noOfChannels == 4) {
       int[] arr = new int[4];
       arr[0] = redChannelData[i][j];
       arr[1] = greenChannelData[i][j];
@@ -116,29 +131,32 @@ public class Image {
     }
   }
 
-  public int[][][] getImageArray(){
+  public int[][][] getImageArray() {
     int imageArr[][][] = new int[this.height][this.width][this.noOfChannels];
-    for(int i=0; i<this.height ; i++){
-      for(int h=0; j<this.width; j++){
+    for (int i = 0; i < this.height; i++) {
+      for (int h = 0; j < this.width; j++) {
         imageArr[i][j][0] = redChannelData[i][j];
       }
     }
 
-    for(int i=0; i<this.height ; i++){
-      for(int h=0; j<this.width; j++){
-        imageArr[i][j][1] = greenChannelData[i][j];
+    if (noOfChannels > 1) {
+      for (int i = 0; i < this.height; i++) {
+        for (int h = 0; j < this.width; j++) {
+          imageArr[i][j][1] = greenChannelData[i][j];
+        }
       }
     }
 
-    for(int i=0; i<this.height ; i++){
-      for(int h=0; j<this.width; j++){
-        imageArr[i][j][2] = blueChannelData[i][j];
+    if (noOfChannels > 2) {
+      for (int i = 0; i < this.height; i++) {
+        for (int h = 0; j < this.width; j++) {
+          imageArr[i][j][2] = blueChannelData[i][j];
+        }
       }
     }
-
-    if(noOfChannels == 4){
-      for(int i=0; i<this.height ; i++){
-        for(int h=0; j<this.width; j++){
+    if (noOfChannels == 4) {
+      for (int i = 0; i < this.height; i++) {
+        for (int h = 0; j < this.width; j++) {
           imageArr[i][j][3] = transparency[i][j];
         }
       }

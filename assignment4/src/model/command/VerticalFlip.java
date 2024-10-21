@@ -11,7 +11,7 @@ class VerticalFlip extends AbstractCommand {
     imageName = getArg(1);
   }
 
-  public void execute(){
+  public void execute() {
 
     int height = currentImage.getHeight();
     int width = currentImage.getWidth();
@@ -23,28 +23,28 @@ class VerticalFlip extends AbstractCommand {
     int[][] blueChannelData = currentImage.getBlueChannelData();
     int[][] transparency = currentImage.getTransparencyData();
 
-    for(int i=0, k=height-1; i< height; i++,k--){
-      for(int j=0;j<width;j++){
-        imageArray[i][j][0] =  redChannelData[k][j];
+    for (int i = 0, k = height - 1; i < height; i++, k--) {
+      for (int j = 0; j < width; j++) {
+        imageArray[i][j][0] = redChannelData[k][j];
       }
     }
 
-    for(int i=0, k=height-1; i< height; i++,k--){
-      for(int j=0;j<width;j++){
-        imageArray[i][j][1] =  greenChannelData[k][j];
+    for (int i = 0, k = height - 1; i < height; i++, k--) {
+      for (int j = 0; j < width; j++) {
+        imageArray[i][j][1] = greenChannelData[k][j];
       }
     }
 
-    for(int i=0, k=height-1; i< height; i++,k--){
-      for(int j=0;j<width;j++){
-        imageArray[i][j][2] =  blueChannelData[k][j];
+    for (int i = 0, k = height - 1; i < height; i++, k--) {
+      for (int j = 0; j < width; j++) {
+        imageArray[i][j][2] = blueChannelData[k][j];
       }
     }
 
-    if(noOfChannels == 4){
-      for(int i=0, k=height-1; i< height; i++,k--){
-        for(int j=0;j<width;j++){
-          imageArray[i][j][3] =  transparency[k][j];
+    if (noOfChannels == 4) {
+      for (int i = 0, k = height - 1; i < height; i++, k--) {
+        for (int j = 0; j < width; j++) {
+          imageArray[i][j][3] = transparency[k][j];
         }
       }
 

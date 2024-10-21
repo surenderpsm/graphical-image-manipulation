@@ -17,28 +17,31 @@ abstract class AbstractCommand implements Command {
   protected String getArg(int argumentNumber) throws IndexOutOfBoundsException {
     return args[argumentNumber];
   }
+
   protected int numberOfArgs() {
     return args.length;
   }
+
   protected void setStatus(CommandStatus status) {
     this.status = status;
   }
 
   @Override
-  public void execute(){
+  public void execute() {
     status = CommandStatus.FAILURE;
-    try{
+    try {
       status = run() ? CommandStatus.SUCCESS : CommandStatus.FAILURE;
-    }
-    catch (Exception e){
+    } catch (Exception e) {
       // @todo rework this.
       System.out.println(e.getMessage());
       throw new RuntimeException(e.getMessage());
     }
   }
+
   /**
    * This method is required by all concrete classes. This method defines core logic of what the
    * command does.
+   *
    * @return true if the command execution is successful, otherwise false if some failure occurs.
    */
   protected abstract boolean run();

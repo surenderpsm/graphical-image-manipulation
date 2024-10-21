@@ -11,7 +11,7 @@ class LumaComponent extends AbstractXComponent {
     imageName = getArg(1);
   }
 
-  public void execute(){
+  public void execute() {
     int height = currentImage.getHeight();
     int width = currentImage.getWidth();
 
@@ -19,9 +19,9 @@ class LumaComponent extends AbstractXComponent {
     int[][] redChannelData = currentImage.getRedChannelData();
     int[][] greenChannelData = currentImage.getGreenChannelData();
     int[][] blueChannelData = currentImage.getBlueChannelData();
-    for(int i=0; i< height; i++){
-      for(int j=0;j<width;j++){
-        imageArray[i][j][0] = (0.2126 * redChannelData[i][j]+ 0.7152 * greenChannelData[i][j]
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        imageArray[i][j][0] = (0.2126 * redChannelData[i][j] + 0.7152 * greenChannelData[i][j]
                 + 0.0722 * blueChannelData[i][j]);
       }
     }
