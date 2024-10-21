@@ -1,16 +1,18 @@
 package model.command;
 
 
+import model.Image;
+
 class ColorTransform extends AbstractCommand {
-  protected int a11;
-  protected int a12;
-  protected int a13;
-  protected int a21;
-  protected int a22;
-  protected int a23;
-  protected int a31;
-  protected int a32;
-  protected int a33;
+  protected double a11;
+  protected double a12;
+  protected double a13;
+  protected double a21;
+  protected double a22;
+  protected double a23;
+  protected double a31;
+  protected double a32;
+  protected double a33;
 
   public ColorTransform(String rawArguments) {
     super(rawArguments);
@@ -18,7 +20,7 @@ class ColorTransform extends AbstractCommand {
       throw new IllegalArgumentException("Expected 2 arguments.");
     }
     currentImage = Image.Cache.get(getArg(0));
-    ImageName = getArg(1);
+    imageName = getArg(1);
   }
 
   public void execute() {
@@ -32,12 +34,12 @@ class ColorTransform extends AbstractCommand {
 
     for (int i = 1; i < height - 1; i++) {
       for (int j = 1; j < width - 1; j++) {
-        imageArray[i][j][0] = (int) a11 * redChannelData[i][j] + a12 * greenChannelData[i][j]
-                + a13 * greenChannelData[i][j];
-        imageArray[i][j][1] = (int) a21 * redChannelData[i][j] + a22 * greenChannelData[i][j]
-                + a23 * greenChannelData[i][j];
-        imageArray[i][j][2] = (int) a31 * redChannelData[i][j] + a32 * greenChannelData[i][j]
-                + a33 * greenChannelData[i][j];
+        imageArray[i][j][0] = (int) (a11 * redChannelData[i][j] + a12 * greenChannelData[i][j]
+                + a13 * blueChannelData[i][j]);
+        imageArray[i][j][1] = (int) (a21 * redChannelData[i][j] + a22 * greenChannelData[i][j]
+                + a23 * blueChannelData[i][j]);
+        imageArray[i][j][2] = (int) (a31 * redChannelData[i][j] + a32 * greenChannelData[i][j]
+                + a33 * blueChannelData[i][j]);
       }
     }
 

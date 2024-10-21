@@ -1,6 +1,8 @@
 package model.command;
 
-class LumaComponent extends AbstractXComponent {
+import model.Image;
+
+class LumaComponent extends AbstractCommand {
 
   public LumaComponent(String rawArguments) {
     super(rawArguments);
@@ -21,7 +23,7 @@ class LumaComponent extends AbstractXComponent {
     int[][] blueChannelData = currentImage.getBlueChannelData();
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        imageArray[i][j][0] = (0.2126 * redChannelData[i][j] + 0.7152 * greenChannelData[i][j]
+        imageArray[i][j][0] = (int) (0.2126 * redChannelData[i][j] + 0.7152 * greenChannelData[i][j]
                 + 0.0722 * blueChannelData[i][j]);
       }
     }

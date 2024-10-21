@@ -1,5 +1,7 @@
 package model.command;
 
+import model.Image;
+
 class VerticalFlip extends AbstractCommand {
 
   public VerticalFlip(String rawArguments) {

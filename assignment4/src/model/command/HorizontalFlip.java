@@ -1,5 +1,7 @@
 package model.command;
 
+import model.Image;
+
 // horizontal flip deals with columns
 class HorizontalFlip extends AbstractCommand {
 

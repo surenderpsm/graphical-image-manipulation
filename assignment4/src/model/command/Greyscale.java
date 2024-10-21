@@ -3,7 +3,8 @@ package model.command;
 
 class Greyscale extends ColorTransform {
 
-  public Sepia(String rawArguments) {
+  public Greyscale(String rawArguments) {
+    super(rawArguments);
     a11 = 0.2126;
     a12 = 0.7152;
     a13 = 0.0722;
@@ -13,7 +14,6 @@ class Greyscale extends ColorTransform {
     a31 = 0.2126;
     a32 = 0.7152;
     a33 = 0.0722;
-    super(rawArguments);
   }
 
 

@@ -61,9 +61,4 @@ class Brighten extends AbstractCommand {
 
   }
 
-  @Override
-  protected boolean run() {
-    return false;
-  }
-
 }

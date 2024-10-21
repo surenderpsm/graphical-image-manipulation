@@ -1,6 +1,8 @@
 package model.command;
 
-class IntensityComponent extends AbstractXComponent {
+import model.Image;
+
+class IntensityComponent extends AbstractCommand {
 
   public IntensityComponent(String rawArguments) {
     super(rawArguments);

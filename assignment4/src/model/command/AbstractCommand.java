@@ -1,13 +1,13 @@
 package model.command;
 
 
-import java.lang.reflect.InvocationTargetException;
+//import java.lang.reflect.InvocationTargetException;
 
 import model.Image;
 
 abstract class AbstractCommand implements Command {
 
-  private CommandStatus status = CommandStatus.READY;
+
   protected final String[] args;
   protected Image currentImage;
   protected String imageName;
@@ -24,32 +24,4 @@ abstract class AbstractCommand implements Command {
     return args.length;
   }
 
-  protected void setStatus(CommandStatus status) {
-    this.status = status;
-  }
-
-  @Override
-  public void execute() {
-    status = CommandStatus.FAILURE;
-    try {
-      status = run() ? CommandStatus.SUCCESS : CommandStatus.FAILURE;
-    } catch (Exception e) {
-      // @todo rework this.
-      System.out.println(e.getMessage());
-      throw new RuntimeException(e.getMessage());
-    }
-  }
-
-  /**
-   * This method is required by all concrete classes. This method defines core logic of what the
-   * command does.
-   *
-   * @return true if the command execution is successful, otherwise false if some failure occurs.
-   */
-  protected abstract boolean run();
-
-  @Override
-  public CommandStatus status() {
-    return status;
-  }
 }

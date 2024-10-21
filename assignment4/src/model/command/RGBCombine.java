@@ -1,7 +1,11 @@
 package model.command;
 
 
+import model.Image;
+
 class RGBCombine extends AbstractCommand {
+  private final Image currentImage2;
+  private final Image currentImage3;
 
   public RGBCombine(String rawArguments) {
     super(rawArguments);
@@ -18,7 +22,7 @@ class RGBCombine extends AbstractCommand {
 
     int height = currentImage.getHeight();
     int width = currentImage.getWidth();
-    int noOfChannels = currentImage.getNoOfChannels();
+    //int noOfChannels = currentImage.getNoOfChannels();
 
     int[][][] imageArray = new int[height][width][3];
     int[][] redChannelData = currentImage.getRedChannelData();

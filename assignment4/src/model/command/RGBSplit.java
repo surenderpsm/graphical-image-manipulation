@@ -1,7 +1,11 @@
 package model.command;
 
 
+import model.Image;
+
 class RGBSplit extends AbstractCommand {
+  private final String imageName2;
+  private final String imageName3;
 
   public RGBSplit(String rawArguments) {
     super(rawArguments);
@@ -18,7 +22,7 @@ class RGBSplit extends AbstractCommand {
 
     int height = currentImage.getHeight();
     int width = currentImage.getWidth();
-    int noOfChannels = currentImage.getNoOfChannels();
+    //int noOfChannels = currentImage.getNoOfChannels();
 
     int[][][] imageArray = new int[height][width][3];
     int[][][] imageArray2 = new int[height][width][3];

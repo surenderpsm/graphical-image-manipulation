@@ -1,6 +1,8 @@
 package model.command;
 
-class ValueComponent extends AbstractXComponent {
+import model.Image;
+
+class ValueComponent extends AbstractCommand {
 
 
   public ValueComponent(String rawArguments) {

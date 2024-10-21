@@ -1,6 +1,8 @@
 package model.command;
 
 
+import model.Image;
+
 class Sharpen extends AbstractCommand {
 
   public Sharpen(String rawArguments) {
@@ -9,7 +11,7 @@ class Sharpen extends AbstractCommand {
       throw new IllegalArgumentException("Expected 2 arguments.");
     }
     currentImage = Image.Cache.get(getArg(0));
-    ImageName = getArg(1);
+    imageName = getArg(1);
   }
 
   public void execute() {

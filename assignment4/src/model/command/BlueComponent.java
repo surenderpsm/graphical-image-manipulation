@@ -16,7 +16,7 @@ class BlueComponent extends AbstractCommand {
 
     int height = currentImage.getHeight();
     int width = currentImage.getWidth();
-    int noOfChannels = currentImage.getNoOfChannels();
+    //int noOfChannels = currentImage.getNoOfChannels();
 
     int[][][] imageArray = new int[height][width][3];
     int[][] blueChannelData = currentImage.getBlueChannelData();

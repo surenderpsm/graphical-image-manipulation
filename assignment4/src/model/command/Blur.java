@@ -12,7 +12,7 @@ class Blur extends AbstractCommand {
       throw new IllegalArgumentException("Expected 2 arguments.");
     }
     currentImage = Image.Cache.get(getArg(0));
-    ImageName = getArg(1);
+    imageName = getArg(1);
   }
 
   public void execute() {
@@ -56,8 +56,4 @@ class Blur extends AbstractCommand {
 
   }
 
-  @Override
-  protected boolean run() {
-    return false;
-  }
 }

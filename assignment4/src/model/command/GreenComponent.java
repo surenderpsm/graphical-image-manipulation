@@ -1,6 +1,8 @@
 package model.command;
 
-class GreenComponent extends AbstractColorComponent {
+import model.Image;
+
+class GreenComponent extends AbstractCommand {
   public GreenComponent(String rawArguments) {
     super(rawArguments);
     if (numberOfArgs() != 2) {
@@ -14,7 +16,7 @@ class GreenComponent extends AbstractColorComponent {
 
     int height = currentImage.getHeight();
     int width = currentImage.getWidth();
-    int noOfChannels = currentImage.getNoOfChannels();
+    //int noOfChannels = currentImage.getNoOfChannels();
 
     int[][][] imageArray = new int[height][width][3];
     int[][] greenChannelData = currentImage.getGreenChannelData();
