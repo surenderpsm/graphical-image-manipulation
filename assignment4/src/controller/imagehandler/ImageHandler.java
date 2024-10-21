@@ -21,8 +21,8 @@ import model.Image;
  * <h3>Usage Example:</h3>
  * <pre>
  *   // in the controller (during argument handling). Assume args is passed to model.
- *   args.set(1, getImageHandler(".././koala.png"));  // This could call PNGImageHandler.
- *   args.set(2, getImageHandler("../koala.ppm"));    // This could call a PPMImageHandler.
+ *   args.set(1, getMatchingImageHandler(".././koala.png"));  // This could call PNGImageHandler.
+ *   args.set(2, getMatchingImageHandler("../koala.ppm"));    // This could call a PPMImageHandler.
  *
  *   // in the model
  *   Image image = args.get(1).loadImage();
@@ -49,7 +49,7 @@ public interface ImageHandler {
    * @throws IOException if there is an error reading the image file
    * @see Image
    */
-  Image loadImage() throws IOException;
+  int[][][] loadImage() throws IOException;
 
   /**
    * Saves the given {@code Image} object to a specified file path.
@@ -64,6 +64,6 @@ public interface ImageHandler {
    *              saved
    * @throws IOException if there is an error writing the image file
    */
-  void saveImage(Image image) throws IOException;
+  void saveImage(int[][][] image) throws IOException;
 
 }
