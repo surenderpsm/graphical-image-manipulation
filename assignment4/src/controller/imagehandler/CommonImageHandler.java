@@ -1,25 +1,17 @@
 package controller.imagehandler;
 
 import java.awt.image.BufferedImage;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import model.Image;
 
 class CommonImageHandler extends AbstractImageHandler {
 
-  CommonImageHandler(String path) throws FileNotFoundException {
-    super(path);
+  CommonImageHandler(String path, String extension) {
+    super(path, extension);
   }
 
-  public void loadImage() {
-    BufferedImage image;
-    try {
-      image = ImageIO.read(getPath());
-    } catch (IOException e) {
-      System.out.println("Error loading image " + getPath());
-      return;
-    }
+  public int[][][] loadImage() throws IOException {
+    BufferedImage image = ImageIO.read(getPath());
 
     int width = image.getWidth();
     int height = image.getHeight();
@@ -43,6 +35,38 @@ class CommonImageHandler extends AbstractImageHandler {
 
       }
     }
-    setImage(new Image(pixelData));
+    return pixelData;
   }
+
+  @Override
+  public void saveImage(int[][][] pixelData) throws IOException {
+    BufferedImage image = createBufferedImage(pixelData);
+
+    ImageIO.write(image, getExtension(), getPath());
+  }
+
+  private BufferedImage createBufferedImage(int[][][] pixelData) {
+    int height = pixelData.length;
+    int width = pixelData[0].length;
+    int num_channels = pixelData[0][0].length;
+
+    var type =  (num_channels == 3) ? BufferedImage.TYPE_3BYTE_BGR : BufferedImage.TYPE_4BYTE_ABGR;
+
+    BufferedImage image = new BufferedImage(width, height, type);
+
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        int r = pixelData[y][x][0];  // Red value
+        int g = pixelData[y][x][1];  // Green value
+        int b = pixelData[y][x][2];  // Blue value
+
+        // Combine RGB values into a single integer and set it to the BufferedImage
+        int rgb = (r << 16) | (g << 8) | b;  // Convert to RGB integer
+        image.setRGB(x, y, rgb);
+      }
+    }
+
+    return image;
+  }
+
 }

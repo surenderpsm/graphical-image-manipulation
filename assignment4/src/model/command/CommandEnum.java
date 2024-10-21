@@ -77,6 +77,7 @@ public enum CommandEnum {
     }
     try {
       Command c = instantiateCommand(args);
+      c.execute();
     } catch (Exception e) {
       // @todo add relevant exceptions.
     }
@@ -108,12 +109,12 @@ public enum CommandEnum {
       return commandClass.getDeclaredConstructor(String.class).newInstance(args);
     } catch (NoSuchMethodException e) {
       throw new InternalError(
-          "Internal Error: The specified command" + commandName + " has no String constructor.");
+              "Internal Error: The specified command" + commandName + " has no String constructor.");
     } catch (InvocationTargetException e) {
       // @todo Catch all exceptions thrown by constructors from Command.
       throw new UnsupportedOperationException(
-          "Internal Error: There was an error in constructor invocation of command  : "
-              + e.getCause().getMessage());
+              "Internal Error: There was an error in constructor invocation of command  : "
+                      + e.getCause().getMessage());
     } catch (InstantiationException e) {
       throw new InternalError("Internal Error: The specified command cannot be instantiated.");
     } catch (IllegalAccessException e) {
