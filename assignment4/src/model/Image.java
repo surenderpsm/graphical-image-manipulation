@@ -38,16 +38,13 @@ public class Image {
     width = arr[0].length;
     noOfChannels = arr[0][0].length;
 
-
     redChannelData = new int[height][width];
     greenChannelData = new int[height][width];
     blueChannelData = new int[height][width];
 
-
     if (noOfChannels == 4) {
       transparency = new int[height][height];
     }
-
 
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
@@ -120,7 +117,8 @@ public class Image {
       arr[0] = redChannelData[i][j];
       arr[1] = greenChannelData[i][j];
       arr[2] = blueChannelData[i][j];
-    } else if (noOfChannels == 4) {
+    }
+    else if (noOfChannels == 4) {
 
       arr[0] = redChannelData[i][j];
       arr[1] = greenChannelData[i][j];
@@ -203,7 +201,7 @@ public class Image {
     public static Image get(String name) throws NoSuchElementException {
       Image image = cache.get(name);
       if (image == null) {
-        throw new NoSuchElementException("Image not found");
+        throw new NoSuchElementException("Image " + name + " not found in cache.");
       }
       return cache.get(name);
     }
@@ -242,7 +240,7 @@ public class Image {
      */
     public static void remove(String name) {
       if (!cache.containsKey(name)) {
-        throw new NoSuchElementException("Image not found");
+        throw new NoSuchElementException("Image " + name + " not found in cache.");
       }
       cache.remove(name);
     }
