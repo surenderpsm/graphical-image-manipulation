@@ -1,27 +1,19 @@
 package controller.imagehandler;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import model.Image;
 
 abstract class AbstractImageHandler implements ImageHandler {
-  private Image image;
+
   private final File path;
+  private final String extension;
 
-  AbstractImageHandler(String path) throws FileNotFoundException {
+  AbstractImageHandler(String path, String extension) {
     this.path = new File(path);
+    this.extension = extension;
   }
 
-  protected File getPath(){
+  protected String getExtension() {return extension;}
+  protected File getPath() {
     return path;
-  }
-
-  protected void setImage(Image image){
-    this.image = image;
-  }
-
-  @Override
-  public Image getImage(){
-    return image;
   }
 }
