@@ -1,7 +1,5 @@
 package controller;
 
-import controller.imagehandler.ImageHandler;
-import controller.imagehandler.ImageHandlerSelector;
 import java.io.IOException;
 import model.Model;
 
@@ -23,7 +21,6 @@ import model.Model;
  *     executor.executeWith();
  *     boolean success = executor.isSuccess();
  * </pre>
- *
  */
 public class CommandExecutor {
 
@@ -37,15 +34,13 @@ public class CommandExecutor {
    * @param commandString the input string containing the command and its arguments.
    */
   public CommandExecutor(String commandString) throws IOException {
-    String[] tokens = commandString.split(" ", 1);
+    String[] tokens = commandString.split(" ", 2);
     String command = tokens[0];
     String args = tokens[1];
-    try{
+    if (command.equals("load") || command.equals("save")) {
       new IOHandler(command, args);
-      new Model(command, args);
+      return;
     }
-    catch(Exception e){
-      System.out.println(e.getMessage());
-    }
+    new Model(command, args);
   }
 }

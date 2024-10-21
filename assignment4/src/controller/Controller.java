@@ -16,10 +16,12 @@ public class Controller {
         try {
           List<String> scriptCommands = new ScriptHandler(tokens[1]).getCommands();
           for (String cmd : scriptCommands) {
+            System.out.println("EXECUTING: " + cmd);
             new CommandExecutor(cmd);
+            System.out.println("\tSTATUS: DONE");
           }
         } catch (Exception e) {
-          System.out.println(e.getMessage());
+          System.out.println("ERROR: " + e.getMessage());
         }
       }
       else if (command.equals("quit")) {
