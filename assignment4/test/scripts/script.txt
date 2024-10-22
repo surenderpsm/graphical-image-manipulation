@@ -4,5 +4,7 @@ blur brighter-manhattan blurred-manhattan
 sepia manhattan retro-manhattan
 brighten -10 manhattan darker-manhattan
 save C:\Users\psmsu\Documents\CS5010\projects\group\assignment4\test\img\manhattan-small-retro.ppm retro-manhattan
-save C:\Users\psmsu\Documents\CS5010\projects\group\assignment4\test\img\manhattan-small-brighter.png brighter-manhattan
+save C:\Users\psmsu\Documents\CS5010\projects\group\assignment4\test\img\manhattan-small-brighter.png retro-manhattan
 save C:\Users\psmsu\Documents\CS5010\projects\group\assignment4\test\img\manhattan-small-brighter.jpg brighter-manhattan
+vertical-flip manhattan manhattan-flip
+save C:\Users\psmsu\Documents\CS5010\projects\group\assignment4\test\img\manhattan-small-flipped-vertical.jpg manhattan-flip
