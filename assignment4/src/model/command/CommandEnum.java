@@ -30,7 +30,7 @@ import java.lang.reflect.InvocationTargetException;
  * @see Command
  */
 public enum CommandEnum {
-  IO(null, "io"),
+  NONE(null, ""),
   BRIGHTEN(Brighten.class, "brighten"),
   VERTICAL_FLIP(VerticalFlip.class, "vertical-flip"),
   HORIZONTAL_FLIP(HorizontalFlip.class, "horizontal-flip"),
@@ -72,8 +72,9 @@ public enum CommandEnum {
    * @param args the arguments to be passed to the command constructor.
    */
   public void executeCommandWith(String args) {
-    if (this == CommandEnum.IO) {
-      throw new UnsupportedOperationException("IO operation cannot be executed in the model.");
+    if (this == CommandEnum.NONE) {
+      throw new IllegalStateException(
+          "Illegal state: No command has been assigned to Model.");
     }
     try {
       Command c = instantiateCommand(args);
@@ -109,12 +110,12 @@ public enum CommandEnum {
       return commandClass.getDeclaredConstructor(String.class).newInstance(args);
     } catch (NoSuchMethodException e) {
       throw new InternalError(
-              "Internal Error: The specified command" + commandName + " has no String constructor.");
+          "Internal Error: The specified command" + commandName + " has no String constructor.");
     } catch (InvocationTargetException e) {
       // @todo Catch all exceptions thrown by constructors from Command.
       throw new UnsupportedOperationException(
-              "Internal Error: There was an error in constructor invocation of command  : "
-                      + e.getCause().getMessage());
+          "Internal Error: There was an error in constructor invocation of command  : "
+              + e.getCause().getMessage());
     } catch (InstantiationException e) {
       throw new InternalError("Internal Error: The specified command cannot be instantiated.");
     } catch (IllegalAccessException e) {
