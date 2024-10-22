@@ -5,14 +5,17 @@ import controller.imagehandler.ImageHandlerSelector;
 import java.io.IOException;
 import model.Model;
 
+/**
+ * The {@code IOHandler} class is responsible for executing  out IO related commands.
+ */
 public class IOHandler {
 
-  public IOHandler(String command, String args) throws IOException {
+  public IOHandler(Model model, String command, String args) throws IOException {
     if (!command.equals("load") && !command.equals("save")) {
       throw new IllegalArgumentException("Invalid command. Supported IO commands are: load, save");
     }
 
-    String [] argsArray = parseArgs(args);
+    String[] argsArray = parseArgs(args);
     String path = argsArray[0];
     String name = argsArray[1];
 
@@ -22,7 +25,6 @@ public class IOHandler {
           "No matching ImageHandler found for the provided arguments.");
     }
 
-    Model model = new Model();
     switch (command) {
       case "load":
         model.setImage(ih.loadImage(), name);

@@ -31,16 +31,17 @@ public class CommandExecutor {
    * arguments required for the command. The string is split into the command and arguments, which
    * are handled by the {@code ArgumentHandler}.</p>
    *
+   * @param model         An instance of the model.
    * @param commandString the input string containing the command and its arguments.
    */
-  public CommandExecutor(String commandString) throws IOException {
+  public CommandExecutor(Model model, String commandString) throws IOException {
     String[] tokens = commandString.split(" ", 2);
     String command = tokens[0];
     String args = tokens[1];
     if (command.equals("load") || command.equals("save")) {
-      new IOHandler(command, args);
+      new IOHandler(model, command, args);
       return;
     }
-    new Model(command, args);
+    model.execute(command, args);
   }
 }

@@ -1,14 +1,26 @@
 package controller;
 
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.List;
 import java.util.Scanner;
+import model.Model;
 
 public class Controller {
 
-  public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
+  private final InputStream in;
+  private final PrintStream out;
+
+  public Controller(InputStream in, PrintStream out) {
+    this.in = in;
+    this.out = out;
+  }
+
+  public void go(Model model) {
+    Scanner sc = new Scanner(in);
+
     while (true) {
-      System.out.println("Enter command: ");
+      out.println("Enter command: ");
       String command = sc.nextLine();
       String[] tokens = command.split(" ");
       command = tokens[0].toLowerCase();
@@ -16,12 +28,12 @@ public class Controller {
         try {
           List<String> scriptCommands = new ScriptHandler(tokens[1]).getCommands();
           for (String cmd : scriptCommands) {
-            System.out.println("EXECUTING: " + cmd);
-            new CommandExecutor(cmd);
-            System.out.println("\tSTATUS: DONE");
+            out.println("EXECUTING: " + cmd);
+            new CommandExecutor(model, cmd);
+            out.println("\tSTATUS: DONE");
           }
         } catch (Exception e) {
-          System.out.println("ERROR: " + e.getMessage());
+          out.println("ERROR: " + e.getMessage());
         }
       }
       else if (command.equals("quit")) {
