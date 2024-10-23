@@ -13,11 +13,18 @@ import org.junit.Test;
 
 public abstract class AbstractModelTest {
 
-
+  /**
+   * method to get root directory.
+   * @return root in string format.
+   */
   protected abstract String getRoot();
 
   protected int[][][] originalImage;
   protected Model model;
+
+  /**
+   * test set up method.
+   */
 
   @Before
   public void setup() {
@@ -25,6 +32,10 @@ public abstract class AbstractModelTest {
     originalImage = get3DArrayFromFile(getRoot() + "original.txt");
     model.setImage(originalImage, "image");
   }
+
+  /**
+   * rgb combine test.
+   */
 
   @Test
   public void rgbCombineTest() {
@@ -38,6 +49,10 @@ public abstract class AbstractModelTest {
     assertTrue(isEqual(originalImage, model.getImage("combined")));
   }
 
+  /**
+   * rgb split test.
+   */
+
   @Test
   public void rgbSplitTest() {
     int[][][] red = get3DArrayFromFile(getRoot() + "redComponent.txt");
@@ -49,6 +64,10 @@ public abstract class AbstractModelTest {
     assertTrue(isEqual(blue, model.getImage("blue")));
   }
 
+  /**
+   * brighten test +10.
+   */
+
   @Test
   public void brightenBy10Test() {
     int[][][] brighten = get3DArrayFromFile(getRoot() + "brighten.txt");
@@ -56,12 +75,31 @@ public abstract class AbstractModelTest {
     assertTrue(isEqual(brighten, model.getImage("brighten")));
   }
 
+  /**
+   * brighten test -10.
+   */
+
   @Test
   public void darkenBy10Test() {
     int[][][] darken = get3DArrayFromFile(getRoot() + "darken.txt");
     model.execute("brighten", "-10 image darkened");
     assertTrue(isEqual(darken, model.getImage("darkened")));
   }
+
+  /**
+   * brighten test 0.
+   */
+
+  @Test
+  public void brightenZeroTest() {
+    int[][][] darken = get3DArrayFromFile(getRoot() + "original.txt");
+    model.execute("brighten", "0 image same");
+    assertTrue(isEqual(darken, model.getImage("same")));
+  }
+
+  /**
+   * red component test.
+   */
 
   @Test
   public void RedComponentTest() {
@@ -71,6 +109,10 @@ public abstract class AbstractModelTest {
     int[][][] expectedImage = model.getImage("redComponent");
     assertTrue(isEqual(redComponent, expectedImage));
   }
+
+  /**
+   * green component test.
+   */
 
   @Test
   public void greenComponentTest() {
@@ -82,6 +124,10 @@ public abstract class AbstractModelTest {
     assertTrue(isEqual(greenComponent, expectedImage));
   }
 
+  /**
+   * blue component test.
+   */
+
   @Test
   public void blueComponentTest() {
     int[][][] blueComponent = get3DArrayFromFile(getRoot() + "blueComponent.txt");
@@ -92,6 +138,10 @@ public abstract class AbstractModelTest {
 
   }
 
+  /**
+   * horizontal flip test.
+   */
+
   @Test
   public void horizontalFlipTest() {
     int[][][] horizontalFlip = get3DArrayFromFile(getRoot() + "horizontalFlip.txt");
@@ -100,6 +150,10 @@ public abstract class AbstractModelTest {
     int[][][] expectedImage = model.getImage("horizontalFlip");
     assertTrue(isEqual(horizontalFlip, expectedImage));
   }
+
+  /**
+   * vertical flip test.
+   */
 
   @Test
   public void verticalFlipTest() {
@@ -110,12 +164,20 @@ public abstract class AbstractModelTest {
     assertTrue(isEqual(verticalFlip, expectedImage));
   }
 
+  /**
+   * blurred test.
+   */
+
   @Test
   public void blurredTest() {
     int[][][] blurred = get3DArrayFromFile(getRoot() + "blurred.txt");
     model.execute("blur", "image blurred");
     assertTrue(isEqual(blurred, model.getImage("blurred")));
   }
+
+  /**
+   * sharpen test.
+   */
 
   @Test
   public void sharpenTest() {
@@ -124,12 +186,20 @@ public abstract class AbstractModelTest {
     assertTrue(isEqual(sharpen, model.getImage("sharpen")));
   }
 
+  /**
+   * luma test.
+   */
+
   @Test
   public void lumaTest() {
     int[][][] luma = get3DArrayFromFile(getRoot() + "luma.txt");
     model.execute("luma-component", "image luma");
     assertTrue(isEqual(luma, model.getImage("luma")));
   }
+
+  /**
+   * value test.
+   */
 
   @Test
   public void valueTest() {
@@ -138,6 +208,10 @@ public abstract class AbstractModelTest {
     assertTrue(isEqual(value, model.getImage("value")));
   }
 
+  /**
+   * intensity test.
+   */
+
   @Test
   public void intensityTest() {
     int[][][] intensity = get3DArrayFromFile(getRoot() + "intensity.txt");
@@ -145,12 +219,135 @@ public abstract class AbstractModelTest {
     assertTrue(isEqual(intensity, model.getImage("intensity")));
   }
 
+  /**
+   * sepia test.
+   */
+
   @Test
   public void sepiaTest() {
     int[][][] sepia = get3DArrayFromFile(getRoot() + "sepia.txt");
     model.execute("sepia", "image sepia");
     assertTrue(isEqual(sepia, model.getImage("sepia")));
   }
+
+  /**
+   * brightening by 10 and then blur it.
+   */
+
+  @Test
+  public void brightenBlurTest() {
+    int[][][] brightenBlur = get3DArrayFromFile(getRoot() + "brightenBlur.txt");
+    model.execute("brighten", "10 image brightened");
+    model.execute("blur", "brightened brightened-blurred");
+    assertTrue(isEqual(brightenBlur, model.getImage("brightened-blurred")));
+  }
+
+  /**
+   * Add a green tint by splitting an image, and brightening the green channel by 100.
+   */
+  @Test
+  public void addGreenTintTest() {
+    int[][][] greenTint = get3DArrayFromFile(getRoot() + "greenTint.txt");
+    model.execute("rgb-split", "image red green blue");
+    model.execute("brighten", "100 green brightened-green");
+    model.execute("rgb-combine", "original-green-tint red brightened-green blue");
+    assertTrue(isEqual(greenTint, model.getImage("original-green-tint")));
+  }
+
+  /**
+   * Add a red tint by splitting an image, and brightening the green channel by 100.
+   */
+  @Test
+  public void addRedTintTest() {
+    int[][][] redTint = get3DArrayFromFile(getRoot() + "redTint.txt");
+    model.execute("rgb-split", "image red green blue");
+    model.execute("brighten", "100 red brightened-red");
+    model.execute("rgb-combine", "original-red-tint brightened-red green blue");
+    assertTrue(isEqual(redTint, model.getImage("original-red-tint")));
+  }
+
+  /**
+   * Add a blue tint by splitting an image, and brightening the green channel by 100.
+   */
+  @Test
+  public void addBlueTintTest() {
+    int[][][] blueTint = get3DArrayFromFile(getRoot() + "blueTint.txt");
+    model.execute("rgb-split", "image red green blue");
+    model.execute("brighten", "100 blue brightened-blue");
+    model.execute("rgb-combine", "original-blue-tint red green brightened-blue");
+    assertTrue(isEqual(blueTint, model.getImage("original-blue-tint")));
+  }
+
+  /**
+   * Vertical flip an image, and blur.
+   */
+  @Test
+  public void verticalBlurTest() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "verticalBlur.txt");
+    model.execute("vertical-flip", "image vertical");
+    model.execute("blur", "vertical vertical-blur");
+    assertTrue(isEqual(expected, model.getImage("vertical-blur")));
+  }
+
+  /**
+   * Horizontal flip an image, and blur.
+   */
+  @Test
+  public void horizontalBlurTest() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "horizontalBlur.txt");
+    model.execute("horizontal-flip", "image horizontal");
+    model.execute("blur", "horizontal horizontal-blur");
+    assertTrue(isEqual(expected, model.getImage("horizontal-blur")));
+  }
+
+  /**
+   * Vertical flip an image, and sharpen.
+   */
+  @Test
+  public void verticalSharpenTest() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "verticalSharpen.txt");
+    model.execute("vertical-flip", "image vertical");
+    model.execute("sharpen", "vertical vertical-Sharpen");
+    assertTrue(isEqual(expected, model.getImage("vertical-Sharpen")));
+  }
+
+  /**
+   * Horizontal flip an image, and sharpen.
+   */
+  @Test
+  public void horizontalSharpenTest() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "horizontalSharpen.txt");
+    model.execute("horizontal-flip", "image horizontal");
+    model.execute("sharpen", "horizontal horizontal-Sharpen");
+    assertTrue(isEqual(expected, model.getImage("horizontal-Sharpen")));
+  }
+
+  //3 cascades
+
+  /**
+   * Vertical flip an image, blur then Brighten by 100.
+   */
+  @Test
+  public void verticalBlurBrightenTest() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "verticalBlurBrighten.txt");
+    model.execute("vertical-flip", "image vertical");
+    model.execute("blur", "vertical vertical-blur");
+    model.execute("brighten", "100 vertical-blur vertical-blur-brighten");
+    assertTrue(isEqual(expected, model.getImage("vertical-blur-brighten")));
+  }
+
+  /**
+   * Horizontal flip an image, and blur then Brighten by 100.
+   */
+  @Test
+  public void horizontalBlurBrightenTest() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "horizontalBlurBrighten.txt");
+    model.execute("horizontal-flip", "image horizontal");
+    model.execute("blur", "horizontal horizontal-blur");
+    model.execute("brighten", "100 horizontal-blur horizontal-blur-brighten");
+    assertTrue(isEqual(expected, model.getImage("horizontal-blur-brighten")));
+  }
+
 
   protected int[][][] get3DArrayFromFile(String path) {
     try {

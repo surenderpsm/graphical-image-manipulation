@@ -6,6 +6,6 @@ public class ModelTest5x5 extends AbstractModelTest {
 
   @Override
   protected String getRoot() {
-    return "test/model/img5x5";
+    return "assignment4/test/model/img5x5/";
   }
 }
