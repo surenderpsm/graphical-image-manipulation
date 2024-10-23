@@ -34,23 +34,23 @@ class RGBSplit extends AbstractCommand {
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
         imageArray[i][j][0] = redChannelData[i][j];
-        imageArray[i][j][1] = 0;
-        imageArray[i][j][2] = 0;
+        imageArray[i][j][1] = redChannelData[i][j];
+        imageArray[i][j][2] = redChannelData[i][j];
       }
     }
 
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        imageArray2[i][j][0] = 0;
+        imageArray2[i][j][0] = greenChannelData[i][j];
         imageArray2[i][j][1] = greenChannelData[i][j];
-        imageArray2[i][j][2] = 0;
+        imageArray2[i][j][2] = greenChannelData[i][j];
       }
     }
 
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        imageArray3[i][j][0] = 0;
-        imageArray3[i][j][1] = 0;
+        imageArray3[i][j][0] = blueChannelData[i][j];
+        imageArray3[i][j][1] = blueChannelData[i][j];
         imageArray3[i][j][2] = blueChannelData[i][j];
       }
     }

@@ -28,9 +28,9 @@ public abstract class AbstractModelTest {
 
   @Test
   public void rgbCombineTest() {
-    int[][][] red = get3DArrayFromFile(getRoot() + "red.txt");
-    int[][][] green = get3DArrayFromFile(getRoot() + "green.txt");
-    int[][][] blue = get3DArrayFromFile(getRoot() + "blue.txt");
+    int[][][] red = get3DArrayFromFile(getRoot() + "redComponent.txt");
+    int[][][] green = get3DArrayFromFile(getRoot() + "greenComponent.txt");
+    int[][][] blue = get3DArrayFromFile(getRoot() + "blueComponent.txt");
     model.setImage(red, "red");
     model.setImage(green, "green");
     model.setImage(blue, "blue");
@@ -40,10 +40,10 @@ public abstract class AbstractModelTest {
 
   @Test
   public void rgbSplitTest() {
-    int[][][] red = get3DArrayFromFile(getRoot() + "red.txt");
-    int[][][] green = get3DArrayFromFile(getRoot() + "green.txt");
-    int[][][] blue = get3DArrayFromFile(getRoot() + "blue.txt");
-    model.execute("rgb-split", "original red green blue");
+    int[][][] red = get3DArrayFromFile(getRoot() + "redComponent.txt");
+    int[][][] green = get3DArrayFromFile(getRoot() + "greenComponent.txt");
+    int[][][] blue = get3DArrayFromFile(getRoot() + "blueComponent.txt");
+    model.execute("rgb-split", "image red green blue");
     assertTrue(isEqual(red, model.getImage("red")));
     assertTrue(isEqual(green, model.getImage("green")));
     assertTrue(isEqual(blue, model.getImage("blue")));
@@ -127,21 +127,21 @@ public abstract class AbstractModelTest {
   @Test
   public void lumaTest() {
     int[][][] luma = get3DArrayFromFile(getRoot() + "luma.txt");
-    model.execute("luma", "image luma");
+    model.execute("luma-component", "image luma");
     assertTrue(isEqual(luma, model.getImage("luma")));
   }
 
   @Test
   public void valueTest() {
     int[][][] value = get3DArrayFromFile(getRoot() + "value.txt");
-    model.execute("value", "image value");
+    model.execute("value-component", "image value");
     assertTrue(isEqual(value, model.getImage("value")));
   }
 
   @Test
   public void intensityTest() {
     int[][][] intensity = get3DArrayFromFile(getRoot() + "intensity.txt");
-    model.execute("intensity", "image intensity");
+    model.execute("intensity-component", "image intensity");
     assertTrue(isEqual(intensity, model.getImage("intensity")));
   }
 

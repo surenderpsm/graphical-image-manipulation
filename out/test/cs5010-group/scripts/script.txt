@@ -8,3 +8,7 @@ save C:\Users\psmsu\Documents\CS5010\projects\group\assignment4\test\img\manhatt
 save C:\Users\psmsu\Documents\CS5010\projects\group\assignment4\test\img\manhattan-small-brighter.jpg brighter-manhattan
 vertical-flip manhattan manhattan-flip
 save C:\Users\psmsu\Documents\CS5010\projects\group\assignment4\test\img\manhattan-small-flipped-vertical.jpg manhattan-flip
+rgb-split manhattan manhattan-red manhattan-green manhattan-blue
+brighten 100 manhattan-red manhattan-redder
+rgb-combine manhattan-new manhattan-redder manhattan-green manhattan-blue
+save C:\Users\psmsu\Documents\CS5010\projects\group\assignment4\test\img\manhattan-redder.jpg manhattan-new

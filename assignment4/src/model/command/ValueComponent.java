@@ -17,7 +17,7 @@ class ValueComponent extends AbstractCommand {
   public void execute() {
     int height = currentImage.getHeight();
     int width = currentImage.getWidth();
-    int[][][] imageArray = new int[height][width][1];
+    int[][][] imageArray = new int[height][width][3];
     int max1 = 0;
     int[][] redChannelData = currentImage.getRedChannelData();
     int[][] greenChannelData = currentImage.getGreenChannelData();
@@ -26,6 +26,8 @@ class ValueComponent extends AbstractCommand {
       for (int j = 0; j < width; j++) {
         max1 = Math.max(redChannelData[i][j], greenChannelData[i][j]);
         imageArray[i][j][0] = Math.max(max1, blueChannelData[i][j]);
+        imageArray[i][j][1] = Math.max(max1, blueChannelData[i][j]);
+        imageArray[i][j][2] = Math.max(max1, blueChannelData[i][j]);
       }
     }
     Image valueComp = new Image(imageArray);

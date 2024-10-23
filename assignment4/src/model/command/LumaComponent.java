@@ -17,15 +17,20 @@ class LumaComponent extends AbstractCommand {
     int height = currentImage.getHeight();
     int width = currentImage.getWidth();
 
-    int[][][] imageArray = new int[height][width][1];
+    int[][][] imageArray = new int[height][width][3];
     int[][] redChannelData = currentImage.getRedChannelData();
     int[][] greenChannelData = currentImage.getGreenChannelData();
     int[][] blueChannelData = currentImage.getBlueChannelData();
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        imageArray[i][j][0] = (int) (0.2126 * redChannelData[i][j] + 0.7152 * greenChannelData[i][j]
-                + 0.0722 * blueChannelData[i][j]);
+        imageArray[i][j][0] = Math.min(255, Math.max(0,(int) Math.round((0.2126 * redChannelData[i][j] + 0.7152 * greenChannelData[i][j]
+                + 0.0722 * blueChannelData[i][j]))));
+        imageArray[i][j][1] = Math.min(255, Math.max(0,(int) Math.round( (0.2126 * redChannelData[i][j] + 0.7152 * greenChannelData[i][j]
+                + 0.0722 * blueChannelData[i][j]))));
+        imageArray[i][j][2] = Math.min(255, Math.max(0,(int) Math.round((0.2126 * redChannelData[i][j] + 0.7152 * greenChannelData[i][j]
+                + 0.0722 * blueChannelData[i][j]))));
       }
+      System.out.println();
     }
 
     Image lumaComp = new Image(imageArray);
