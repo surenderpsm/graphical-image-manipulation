@@ -9,8 +9,8 @@ class RGBSplit extends AbstractCommand {
 
   public RGBSplit(String rawArguments) {
     super(rawArguments);
-    if (numberOfArgs() != 2) {
-      throw new IllegalArgumentException("Expected 2 arguments.");
+    if (numberOfArgs() != 4) {
+      throw new IllegalArgumentException("Expected 4 arguments.");
     }
     currentImage = Image.Cache.get(getArg(0));
     imageName = getArg(1);

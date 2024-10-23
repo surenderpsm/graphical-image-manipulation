@@ -12,8 +12,12 @@ class Brighten extends AbstractCommand {
     if (numberOfArgs() != 3) {
       throw new IllegalArgumentException("Expected 3 arguments.");
     }
-
-    value = Integer.parseInt(getArg(0));
+    try {
+      value = Integer.parseInt(getArg(0));
+    }
+    catch (NumberFormatException e) {
+      throw new IllegalArgumentException("Expected integer argument at position 0.");
+    }
     currentImage = Image.Cache.get(getArg(1));
     imageName = getArg(2);
   }

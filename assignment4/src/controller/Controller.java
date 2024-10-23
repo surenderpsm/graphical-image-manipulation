@@ -28,16 +28,19 @@ public class Controller {
         try {
           List<String> scriptCommands = new ScriptHandler(tokens[1]).getCommands();
           for (String cmd : scriptCommands) {
-            out.println("EXECUTING: " + cmd);
+            out.print("EXC: " + cmd);
             new CommandExecutor(model, cmd);
             out.println("\tSTATUS: DONE");
           }
         } catch (Exception e) {
-          out.println("ERROR: " + e.getMessage());
+          out.println("\n\n: " + e.getMessage());
         }
       }
       else if (command.equals("quit")) {
         break;
+      }
+      else {
+        out.println("ERROR: Unknown command: " + command);
       }
     }
   }

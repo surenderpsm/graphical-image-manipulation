@@ -76,12 +76,8 @@ public enum CommandEnum {
       throw new IllegalStateException(
           "Illegal state: No command has been assigned to Model.");
     }
-    try {
-      Command c = instantiateCommand(args);
-      c.execute();
-    } catch (Exception e) {
-      // @todo add relevant exceptions.
-    }
+    Command c = instantiateCommand(args);
+    c.execute();
   }
 
   /**
@@ -114,7 +110,7 @@ public enum CommandEnum {
     } catch (InvocationTargetException e) {
       // @todo Catch all exceptions thrown by constructors from Command.
       throw new UnsupportedOperationException(
-          "Internal Error: There was an error in constructor invocation of command  : "
+          "There was an error in constructor invocation of command : "
               + e.getCause().getMessage());
     } catch (InstantiationException e) {
       throw new InternalError("Internal Error: The specified command cannot be instantiated.");
