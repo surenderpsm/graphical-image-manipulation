@@ -2,7 +2,7 @@ package model.command;
 
 import model.Image;
 
-public class Filter {
+class Filter {
 
   public int[][][] filterImage(Image currentImage, double[][] filter){
     int height = currentImage.getHeight();
