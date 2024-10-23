@@ -26,11 +26,19 @@ class Brighten extends AbstractCommand {
     int[][] redChannelData = currentImage.getRedChannelData();
     int[][] greenChannelData = currentImage.getGreenChannelData();
     int[][] blueChannelData = currentImage.getBlueChannelData();
+    int temp;
 
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
         if (redChannelData[i][j] != 0){
-          imageArray[i][j][0] = (redChannelData[i][j] + value);
+          temp = (redChannelData[i][j] + value);
+          if(temp>255){
+            temp = 255;
+          }
+          else if(temp<0){
+            temp = 0;
+          }
+          imageArray[i][j][0] = temp;
         }
       }
     }
@@ -39,7 +47,14 @@ class Brighten extends AbstractCommand {
       for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
           if (greenChannelData[i][j] != 0){
-            imageArray[i][j][1] = (greenChannelData[i][j] + value);
+            temp = (greenChannelData[i][j] + value);
+            if(temp>255){
+              temp = 255;
+            }
+            else if(temp<0){
+              temp = 0;
+            }
+            imageArray[i][j][1] = temp;
           }
         }
       }
@@ -49,7 +64,14 @@ class Brighten extends AbstractCommand {
       for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
           if (blueChannelData[i][j] != 0){
-            imageArray[i][j][2] = (blueChannelData[i][j] + value);
+            temp = (blueChannelData[i][j] + value);
+            if(temp>255){
+              temp = 255;
+            }
+            else if(temp<0){
+              temp = 0;
+            }
+            imageArray[i][j][2] = temp;
           }
         }
       }

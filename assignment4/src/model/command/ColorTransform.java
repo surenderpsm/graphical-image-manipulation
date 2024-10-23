@@ -32,14 +32,14 @@ class ColorTransform extends AbstractCommand {
     int[][] greenChannelData = currentImage.getGreenChannelData();
     int[][] blueChannelData = currentImage.getBlueChannelData();
 
-    for (int i = 1; i < height - 1; i++) {
-      for (int j = 1; j < width - 1; j++) {
-        imageArray[i][j][0] = (int) (a11 * redChannelData[i][j] + a12 * greenChannelData[i][j]
-                + a13 * blueChannelData[i][j]);
-        imageArray[i][j][1] = (int) (a21 * redChannelData[i][j] + a22 * greenChannelData[i][j]
-                + a23 * blueChannelData[i][j]);
-        imageArray[i][j][2] = (int) (a31 * redChannelData[i][j] + a32 * greenChannelData[i][j]
-                + a33 * blueChannelData[i][j]);
+    for (int i = 0; i < height ; i++) {
+      for (int j = 0; j < width ; j++) {
+        imageArray[i][j][0] = Math.min(255, (int) Math.round(a11 * redChannelData[i][j] + a12 * greenChannelData[i][j]
+                + a13 * blueChannelData[i][j]));
+        imageArray[i][j][1] = Math.min(255, (int) Math.round(a21 * redChannelData[i][j] + a22 * greenChannelData[i][j]
+                + a23 * blueChannelData[i][j]));
+        imageArray[i][j][2] = Math.min(255, (int) Math.round(a31 * redChannelData[i][j] + a32 * greenChannelData[i][j]
+                + a33 * blueChannelData[i][j]));
       }
     }
 

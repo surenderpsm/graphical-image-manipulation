@@ -13,7 +13,7 @@ import model.Model;
 import org.junit.Test;
 
 public class ModelTest4x4 {
-  String root = "test/model/img4x4/";
+  String root = "assignment4/test/model/img4x4/";
 
   int[][][] originalImage = get3DArrayFromFile(root+"original.txt");
 
@@ -26,6 +26,7 @@ public class ModelTest4x4 {
     assertTrue(isEqual(brighten, executor("brighten")));
   }
 
+  @Test
   public void darkenTest(){
       int[][][] darken = get3DArrayFromFile(root + "darken.txt");
 
@@ -35,43 +36,60 @@ public class ModelTest4x4 {
   @Test
   public void RedComponentTest() {
     int[][][] redComponent = get3DArrayFromFile(root + "redComponent.txt");
-
-    assertTrue(isEqual(redComponent, executor("redComponent")));
+    Model model = new Model();
+    model.setImage(originalImage, "image");
+    model.execute("red-component", "image " + "redComponent");
+    int[][][] expectedImage = model.getImage("redComponent");
+    assertTrue(isEqual(redComponent, expectedImage));
   }
 
   @Test
   public void greenComponentTest() {
     int[][][] greenComponent = get3DArrayFromFile(root + "greenComponent.txt");
+    Model model = new Model();
+    model.setImage(originalImage, "image");
+    model.execute("green-component", "image " + "greenComponent");
+    int[][][] expectedImage = model.getImage("greenComponent");
 
-    assertTrue(isEqual(greenComponent, executor("greenComponent")));
+    assertTrue(isEqual(greenComponent, expectedImage));
   }
 
   @Test
   public void blueComponentTest() {
     int[][][] blueComponent = get3DArrayFromFile(root + "blueComponent.txt");
+    Model model = new Model();
+    model.setImage(originalImage, "image");
+    model.execute("blue-component", "image " + "blueComponent");
+    int[][][] expectedImage = model.getImage("blueComponent");
+    assertTrue(isEqual(blueComponent, expectedImage));
 
-    assertTrue(isEqual(blueComponent, executor("blueComponent")));
   }
 
   @Test
   public void horizontalFlipTest() {
     int[][][] horizontalFlip = get3DArrayFromFile(root + "horizontalFlip.txt");
-
-    assertTrue(isEqual(horizontalFlip, executor("horizontalFlip")));
+    Model model = new Model();
+    model.setImage(originalImage, "image");
+    model.execute("horizontal-flip", "image " + "horizontalFlip");
+    int[][][] expectedImage = model.getImage("horizontalFlip");
+    assertTrue(isEqual(horizontalFlip, expectedImage));
   }
 
   @Test
   public void verticalFlipTest() {
     int[][][] verticalFlip = get3DArrayFromFile(root + "verticalFlip.txt");
-
-    assertTrue(isEqual(verticalFlip, executor("verticalFlip")));
+    Model model = new Model();
+    model.setImage(originalImage, "image");
+    model.execute("vertical-flip", "image " + "verticalFlip");
+    int[][][] expectedImage = model.getImage("verticalFlip");
+    assertTrue(isEqual(verticalFlip, expectedImage));
   }
 
   @Test
   public void blurredTest() {
     int[][][] blurred = get3DArrayFromFile(root + "blurred.txt");
 
-    assertTrue(isEqual(blurred, executor("blurred")));
+    assertTrue(isEqual(blurred, executor("blur")));
   }
 
   @Test
@@ -114,7 +132,7 @@ public class ModelTest4x4 {
       model.execute(command, "10 image " + command);
     }
     else if (Objects.equals(command, "darken")) {
-      model.execute(command, "-10 image " + command);
+      model.execute("brighten", "-10 image " + command);
     }
     else{
       model.execute(command, "image " + command);
@@ -124,6 +142,7 @@ public class ModelTest4x4 {
 
   private int[][][] get3DArrayFromFile(String path) {
     try {
+      System.out.println("Current working directory: " + System.getProperty("user.dir"));
       File file = new File(path);
       BufferedReader reader = new BufferedReader(new FileReader(file));
 
