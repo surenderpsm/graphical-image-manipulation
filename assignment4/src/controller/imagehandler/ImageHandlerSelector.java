@@ -39,7 +39,8 @@ public enum ImageHandlerSelector {
    */
   private ImageHandler instantiateCommand(String path) {
     try {
-      return handlerClass.getDeclaredConstructor(String.class, String.class).newInstance(path, getSupportingFormat());
+      return handlerClass.getDeclaredConstructor(String.class, String.class)
+          .newInstance(path, getSupportingFormat());
     } catch (NoSuchMethodException e) {
       throw new InternalError(
           "Internal Error: The specified format " + format + " has no String constructor.");

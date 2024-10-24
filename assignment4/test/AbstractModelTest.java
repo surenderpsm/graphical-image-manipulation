@@ -1,5 +1,3 @@
-package model;
-
 import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
@@ -8,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import model.Model;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,6 +14,7 @@ public abstract class AbstractModelTest {
 
   /**
    * method to get root directory.
+   *
    * @return root in string format.
    */
   protected abstract String getRoot();

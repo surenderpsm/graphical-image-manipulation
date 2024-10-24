@@ -16,7 +16,7 @@ public class Controller {
     this.out = out;
   }
 
-  public void go(Model model) {
+  public void run(Model model) {
     Scanner sc = new Scanner(in);
 
     while (true) {

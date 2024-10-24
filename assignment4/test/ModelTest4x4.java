@@ -1,15 +1,16 @@
-package model.img4x4;
-
 import static org.junit.Assert.assertTrue;
 
-import model.AbstractModelTest;
 import org.junit.Test;
 
+/**
+ * Tests for the model on a 4x4 matrix image stored as an array in res/img4x4/original.txt. Expected
+ * outputs are also stored as arrays in text files.
+ */
 public class ModelTest4x4 extends AbstractModelTest {
 
   @Override
   protected String getRoot() {
-    return "assignment4/test/model/img4x4/";
+    return "res/img4x4/";
   }
 
   /**

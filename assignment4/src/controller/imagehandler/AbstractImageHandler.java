@@ -12,7 +12,10 @@ abstract class AbstractImageHandler implements ImageHandler {
     this.extension = extension;
   }
 
-  protected String getExtension() {return extension;}
+  protected String getExtension() {
+    return extension;
+  }
+
   protected File getPath() {
     return path;
   }

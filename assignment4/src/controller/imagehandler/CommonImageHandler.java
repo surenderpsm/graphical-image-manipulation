@@ -50,7 +50,7 @@ class CommonImageHandler extends AbstractImageHandler {
     int width = pixelData[0].length;
     int num_channels = pixelData[0][0].length;
 
-    var type =  (num_channels == 3) ? BufferedImage.TYPE_3BYTE_BGR : BufferedImage.TYPE_4BYTE_ABGR;
+    var type = (num_channels == 3) ? BufferedImage.TYPE_3BYTE_BGR : BufferedImage.TYPE_4BYTE_ABGR;
 
     BufferedImage image = new BufferedImage(width, height, type);
 

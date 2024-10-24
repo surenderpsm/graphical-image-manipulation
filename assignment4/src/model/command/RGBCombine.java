@@ -4,6 +4,7 @@ package model.command;
 import model.Image;
 
 class RGBCombine extends AbstractCommand {
+
   private final Image currentImage2;
   private final Image currentImage3;
 
@@ -36,7 +37,6 @@ class RGBCombine extends AbstractCommand {
         imageArray[i][j][2] = blueChannelData[i][j];
       }
     }
-
 
     Image rgbCombine = new Image(imageArray);
     Image.Cache.set(imageName, rgbCombine);

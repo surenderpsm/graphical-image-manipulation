@@ -19,11 +19,8 @@ class Blur extends AbstractCommand {
     int height = currentImage.getHeight();
     int width = currentImage.getWidth();
     int[][][] imageArray = new int[height][width][3];
-    double[][] filter = {
-            {1 / 16.0, 2 / 16.0, 1 / 16.0},
-            {2 / 16.0, 4 / 16.0, 2 / 16.0},
-            {1 / 16.0, 2 / 16.0, 1 / 16.0}
-    };
+    double[][] filter = {{1 / 16.0, 2 / 16.0, 1 / 16.0}, {2 / 16.0, 4 / 16.0, 2 / 16.0},
+        {1 / 16.0, 2 / 16.0, 1 / 16.0}};
     Filter F = new Filter();
     imageArray = F.filterImage(currentImage, filter);
     Image blurredImage = new Image(imageArray);

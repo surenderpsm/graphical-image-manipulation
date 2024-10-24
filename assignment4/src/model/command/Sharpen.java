@@ -19,13 +19,9 @@ class Sharpen extends AbstractCommand {
     int height = currentImage.getHeight();
     int width = currentImage.getWidth();
     int[][][] imageArray = new int[height][width][3];
-    double[][] filter = {
-            {-0.125, -0.125, -0.125, -0.125, -0.125},
-            {-0.125,  0.25,   0.25,   0.25,  -0.125},
-            {-0.125,  0.25,   1.0,    0.25,  -0.125},
-            {-0.125,  0.25,   0.25,   0.25,  -0.125},
-            {-0.125, -0.125, -0.125, -0.125, -0.125}
-    };
+    double[][] filter = {{-0.125, -0.125, -0.125, -0.125, -0.125},
+        {-0.125, 0.25, 0.25, 0.25, -0.125}, {-0.125, 0.25, 1.0, 0.25, -0.125},
+        {-0.125, 0.25, 0.25, 0.25, -0.125}, {-0.125, -0.125, -0.125, -0.125, -0.125}};
     Filter F = new Filter();
     imageArray = F.filterImage(currentImage, filter);
     Image sharpenedImage = new Image(imageArray);

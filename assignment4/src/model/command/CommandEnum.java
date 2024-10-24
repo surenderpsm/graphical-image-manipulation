@@ -73,8 +73,7 @@ public enum CommandEnum {
    */
   public void executeCommandWith(String args) {
     if (this == CommandEnum.NONE) {
-      throw new IllegalStateException(
-          "Illegal state: No command has been assigned to Model.");
+      throw new IllegalStateException("Illegal state: No command has been assigned to Model.");
     }
     Command c = instantiateCommand(args);
     c.execute();
@@ -108,10 +107,8 @@ public enum CommandEnum {
       throw new InternalError(
           "Internal Error: The specified command" + commandName + " has no String constructor.");
     } catch (InvocationTargetException e) {
-      // @todo Catch all exceptions thrown by constructors from Command.
-      throw new UnsupportedOperationException(
-          "There was an error in constructor invocation of command : "
-              + e.getCause().getMessage());
+      throw new IllegalArgumentException(
+          "There was an error in constructor invocation of command : " + e.getCause().getMessage());
     } catch (InstantiationException e) {
       throw new InternalError("Internal Error: The specified command cannot be instantiated.");
     } catch (IllegalAccessException e) {

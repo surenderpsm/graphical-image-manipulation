@@ -1,10 +1,14 @@
 package controller;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import model.Model;
 import org.junit.Test;
+import org.junit.Test.None;
 
 /**
  * Test class for the IOHandler in the controller package. This class contains unit tests for
@@ -13,7 +17,7 @@ import org.junit.Test;
 public class IOHandlerTest {
 
   Model model = new Model();
-  String root = "test/test_imgs/";
+  String root = "res/img/other/";
   String jpg = root + "parrot.jpg";
   String ppm = root + "parrot.ppm";
   String png = root + "parrot.png";
@@ -23,7 +27,7 @@ public class IOHandlerTest {
    *
    * @throws IOException if the image file cannot be loaded
    */
-  @Test
+  @Test(expected = None.class)
   public void loadExistingFile() throws IOException {
     IOHandler ih = new IOHandler(model, "load", jpg + " parrot");
   }
@@ -48,7 +52,7 @@ public class IOHandlerTest {
     IOHandler ih = new IOHandler(model, "load", jpg + " parrot");
     ih = new IOHandler(model, "save", root + "newParrot.png parrot");
     File file = new File(root + "newParrot.png");
-    assert file.exists();
+    assertTrue(file.exists());
   }
 
   /**
@@ -61,7 +65,8 @@ public class IOHandlerTest {
     IOHandler ih = new IOHandler(model, "load", jpg + " parrot");
     ih = new IOHandler(model, "save", root + "newParrot.png noparrot");
     File file = new File(root + "newParrot.png");
-    assert !file.exists();
+    assertFalse(file.exists());
+
   }
 
   /**
@@ -69,7 +74,7 @@ public class IOHandlerTest {
    *
    * @throws IOException if the image file cannot be loaded
    */
-  @Test
+  @Test(expected = None.class)
   public void loadJPG() throws IOException {
     IOHandler ih = new IOHandler(model, "load", jpg + " parrot");
   }
@@ -92,7 +97,7 @@ public class IOHandlerTest {
    *
    * @throws IOException if the image file cannot be loaded
    */
-  @Test
+  @Test(expected = None.class)
   public void loadPNG() throws IOException {
     IOHandler ih = new IOHandler(model, "load", png + " parrot");
   }
@@ -107,7 +112,7 @@ public class IOHandlerTest {
     IOHandler ih = new IOHandler(model, "load", ppm + " parrot");
     ih = new IOHandler(model, "save", root + "newParrot.png parrot");
     File file = new File(root + "newParrot.png");
-    assert file.exists();
+    assertTrue(file.exists());
   }
 
   /**
@@ -115,7 +120,7 @@ public class IOHandlerTest {
    *
    * @throws IOException if the image file cannot be loaded
    */
-  @Test
+  @Test(expected = None.class)
   public void loadPPM() throws IOException {
     IOHandler ih = new IOHandler(model, "load", ppm + " parrot");
   }
@@ -130,7 +135,7 @@ public class IOHandlerTest {
     IOHandler ih = new IOHandler(model, "load", png + " parrot");
     ih = new IOHandler(model, "save", root + "newParrot.ppm parrot");
     File file = new File(root + "newParrot.ppm");
-    assert file.exists();
+    assertTrue(file.exists());
   }
 
   /**
