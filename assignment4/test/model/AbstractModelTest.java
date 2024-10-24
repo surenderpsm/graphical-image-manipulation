@@ -11,6 +11,11 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * this is a test class which abstracts out the common functionality.
+ * its is applicable for any NXN image.
+ */
+
 public abstract class AbstractModelTest {
 
   /**

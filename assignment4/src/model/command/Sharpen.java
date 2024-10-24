@@ -26,8 +26,8 @@ class Sharpen extends AbstractCommand {
             {-0.125,  0.25,   0.25,   0.25,  -0.125},
             {-0.125, -0.125, -0.125, -0.125, -0.125}
     };
-    Filter F = new Filter();
-    imageArray = F.filterImage(currentImage, filter);
+    Filter filterInstance = new Filter();
+    imageArray = filterInstance.filterImage(currentImage, filter);
     Image sharpenedImage = new Image(imageArray);
     Image.Cache.set(imageName, sharpenedImage);
 

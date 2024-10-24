@@ -24,8 +24,8 @@ class Blur extends AbstractCommand {
             {2 / 16.0, 4 / 16.0, 2 / 16.0},
             {1 / 16.0, 2 / 16.0, 1 / 16.0}
     };
-    Filter F = new Filter();
-    imageArray = F.filterImage(currentImage, filter);
+    Filter filterInstance = new Filter();
+    imageArray = filterInstance.filterImage(currentImage, filter);
     Image blurredImage = new Image(imageArray);
     Image.Cache.set(imageName, blurredImage);
 

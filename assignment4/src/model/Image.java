@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 /**
- * This class represents an image. @todo documentation
+ * This class represents an image.
  *
  * @see Image.Cache
  */
@@ -15,7 +15,7 @@ public class Image {
   private boolean isEmpty = false;
 
 
-  // @todo add private final members as required.
+
   private int height;
   private int width;
   private int noOfChannels;
@@ -26,12 +26,14 @@ public class Image {
 
   /**
    * This constructor is used to instantiate an "empty" Image object.
-   *
-   * @todo IDK if this is needed anymore.
    */
   public Image() {
     isEmpty = true;
   }
+
+  /**
+   * method to construct the image object.
+   */
 
   public Image(int[][][] arr) {
     height = arr.length;
@@ -65,13 +67,28 @@ public class Image {
     }
   }
 
+  /**
+   * method to get height of image data.
+   * @return  int array.
+   */
+
   public int getHeight() {
     return height;
   }
 
+  /**
+   * method to get width of image data.
+   * @return  int array.
+   */
+
   public int getWidth() {
     return width;
   }
+
+  /**
+   * method to get no of channels of image data.
+   * @return  int array.
+   */
 
   public int getNoOfChannels() {
     return noOfChannels;
@@ -86,9 +103,19 @@ public class Image {
     return isEmpty;
   }
 
+  /**
+   * method to get red channel data.
+   * @return  int array.
+   */
+
   public int[][] getRedChannelData() {
     return redChannelData;
   }
+
+  /**
+   * method to get green channel data.
+   * @return  int array.
+   */
 
   public int[][] getGreenChannelData() {
     if (noOfChannels < 2) {
@@ -97,6 +124,11 @@ public class Image {
     return greenChannelData;
   }
 
+  /**
+   * method to get blue channel data.
+   * @return  int array.
+   */
+
   public int[][] getBlueChannelData() {
     if (noOfChannels < 3) {
       return null;
@@ -104,12 +136,22 @@ public class Image {
     return blueChannelData;
   }
 
+  /**
+   * method to get transparency.
+   * @return  int array.
+   */
+
   public int[][] getTransparencyData() {
     if (noOfChannels < 4) {
       return null;
     }
     return transparency;
   }
+
+  /**
+   * method to get image pixel data in array format(r,g,b).
+   * @return  int array.
+   */
 
   public int[] getPixelData(int i, int j) {
     int[] arr = new int[noOfChannels];
@@ -127,6 +169,11 @@ public class Image {
     }
     return arr;
   }
+
+  /**
+   * method to get image in array format.
+   * @return 3d int array.
+   */
 
   public int[][][] getImageArray() {
     int[][][] imageArr = new int[this.height][this.width][this.noOfChannels];

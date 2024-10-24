@@ -2,6 +2,10 @@ package controller.imagehandler;
 
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * takes care of handling / selecting the different file types.
+ */
+
 public enum ImageHandlerSelector {
   PPM("ppm", PPMHandler.class),
   PNG("png", CommonImageHandler.class),

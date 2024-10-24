@@ -1,10 +1,18 @@
 package controller;
+import org.junit.Test;
+//import org.junit.Assert;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import model.Model;
-import org.junit.Test;
+//import org.junit.Test;
 
 /**
  * Test class for the IOHandler in the controller package. This class contains unit tests for
@@ -26,6 +34,7 @@ public class IOHandlerTest {
   @Test
   public void loadExistingFile() throws IOException {
     IOHandler ih = new IOHandler(model, "load", jpg + " parrot");
+    fail("Expected IOException was not thrown");
   }
 
   /**
@@ -36,6 +45,7 @@ public class IOHandlerTest {
   @Test(expected = IOException.class)
   public void loadNonExistingFile() throws IOException {
     IOHandler ih = new IOHandler(model, "load", root + "notparrot.jpg parrot");
+    fail("Expected IOException was not thrown");
   }
 
   /**
@@ -48,7 +58,7 @@ public class IOHandlerTest {
     IOHandler ih = new IOHandler(model, "load", jpg + " parrot");
     ih = new IOHandler(model, "save", root + "newParrot.png parrot");
     File file = new File(root + "newParrot.png");
-    assert file.exists();
+    assertTrue(file.exists());
   }
 
   /**
@@ -61,7 +71,8 @@ public class IOHandlerTest {
     IOHandler ih = new IOHandler(model, "load", jpg + " parrot");
     ih = new IOHandler(model, "save", root + "newParrot.png noparrot");
     File file = new File(root + "newParrot.png");
-    assert !file.exists();
+    assertFalse(file.exists());
+
   }
 
   /**
@@ -72,6 +83,7 @@ public class IOHandlerTest {
   @Test
   public void loadJPG() throws IOException {
     IOHandler ih = new IOHandler(model, "load", jpg + " parrot");
+    fail("Expected IOException was not thrown");
   }
 
   /**
@@ -84,7 +96,7 @@ public class IOHandlerTest {
     IOHandler ih = new IOHandler(model, "load", png + " parrot");
     ih = new IOHandler(model, "save", root + "newParrot.jpg parrot");
     File file = new File(root + "newParrot.jpg");
-    assert file.exists();
+    assertTrue(file.exists());
   }
 
   /**
@@ -95,6 +107,7 @@ public class IOHandlerTest {
   @Test
   public void loadPNG() throws IOException {
     IOHandler ih = new IOHandler(model, "load", png + " parrot");
+    fail("Expected IOException was not thrown");
   }
 
   /**
@@ -107,7 +120,7 @@ public class IOHandlerTest {
     IOHandler ih = new IOHandler(model, "load", ppm + " parrot");
     ih = new IOHandler(model, "save", root + "newParrot.png parrot");
     File file = new File(root + "newParrot.png");
-    assert file.exists();
+    assertTrue(file.exists());
   }
 
   /**
@@ -118,6 +131,7 @@ public class IOHandlerTest {
   @Test
   public void loadPPM() throws IOException {
     IOHandler ih = new IOHandler(model, "load", ppm + " parrot");
+    fail("Expected IOException was not thrown");
   }
 
   /**
@@ -130,7 +144,7 @@ public class IOHandlerTest {
     IOHandler ih = new IOHandler(model, "load", png + " parrot");
     ih = new IOHandler(model, "save", root + "newParrot.ppm parrot");
     File file = new File(root + "newParrot.ppm");
-    assert file.exists();
+    assertTrue(file.exists());
   }
 
   /**
@@ -142,6 +156,7 @@ public class IOHandlerTest {
   @Test(expected = IllegalArgumentException.class)
   public void loadInvalidFormat() throws IOException {
     IOHandler ih = new IOHandler(model, "load", root + "parrot.invalid parrot");
+    fail("Expected IOException was not thrown");
   }
 
   /**
@@ -154,6 +169,7 @@ public class IOHandlerTest {
   public void saveInvalidFormat() throws IOException {
     IOHandler ih = new IOHandler(model, "load", png + " parrot");
     ih = new IOHandler(model, "save", root + "parrot.invalid parrot");
+    fail("Expected IllegalArgumentException was not thrown");
   }
 
   /**
@@ -165,6 +181,7 @@ public class IOHandlerTest {
   @Test(expected = IllegalArgumentException.class)
   public void loadUnsupportedFormat() throws IOException {
     IOHandler ih = new IOHandler(model, "load", root + "parrot.gif parrot");
+    fail("Expected IllegalArgumentException was not thrown");
   }
 
   /**
@@ -177,6 +194,7 @@ public class IOHandlerTest {
   public void saveUnsupportedFormat() throws IOException {
     IOHandler ih = new IOHandler(model, "load", ppm + " parrot");
     ih = new IOHandler(model, "save", root + "parrot.gif parrot");
+    fail("Expected IllegalArgumentException was not thrown");
   }
 
 }
