@@ -8,7 +8,7 @@ import model.Model;
 /**
  * The {@code IOHandler} class is responsible for executing  out IO related commands.
  */
-public class IOHandler {
+class IOHandler {
 
   public IOHandler(Model model, String command, String args) throws IOException {
     if (!command.equals("load") && !command.equals("save")) {
