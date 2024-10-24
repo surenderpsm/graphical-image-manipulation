@@ -23,12 +23,12 @@ class IntensityComponent extends AbstractCommand {
     int[][] blueChannelData = currentImage.getBlueChannelData();
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        imageArray[i][j][0] = Math.min(255, Math.max(0,(int) Math.round((redChannelData[i][j]
-                + greenChannelData[i][j] + blueChannelData[i][j]) / 3.0)));
-        imageArray[i][j][1] = Math.min(255, Math.max(0,(int) Math.round((redChannelData[i][j]
-                + greenChannelData[i][j] + blueChannelData[i][j]) / 3.0)));
-        imageArray[i][j][2] = Math.min(255, Math.max(0,(int) Math.round((redChannelData[i][j]
-                + greenChannelData[i][j] + blueChannelData[i][j]) / 3.0)));
+        imageArray[i][j][0] = Math.min(255, Math.max(0, (int) Math.round(
+            (redChannelData[i][j] + greenChannelData[i][j] + blueChannelData[i][j]) / 3.0)));
+        imageArray[i][j][1] = Math.min(255, Math.max(0, (int) Math.round(
+            (redChannelData[i][j] + greenChannelData[i][j] + blueChannelData[i][j]) / 3.0)));
+        imageArray[i][j][2] = Math.min(255, Math.max(0, (int) Math.round(
+            (redChannelData[i][j] + greenChannelData[i][j] + blueChannelData[i][j]) / 3.0)));
       }
     }
 

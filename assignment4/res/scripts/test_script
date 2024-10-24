@@ -1,0 +1,2 @@
+# load parrot.jpg and call it parrot.
+load res/img/parrot.jpg parrot

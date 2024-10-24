@@ -52,7 +52,6 @@ class VerticalFlip extends AbstractCommand {
 
     }
 
-
     Image vFlipped = new Image(imageArray);
     Image.Cache.set(imageName, vFlipped);
   }

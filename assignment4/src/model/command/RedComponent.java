@@ -3,6 +3,7 @@ package model.command;
 import model.Image;
 
 class RedComponent extends AbstractCommand {
+
   public RedComponent(String rawArguments) {
     super(rawArguments);
     if (numberOfArgs() != 2) {
@@ -29,7 +30,6 @@ class RedComponent extends AbstractCommand {
 
       }
     }
-
 
     Image redComp = new Image(imageArray);
     Image.Cache.set(imageName, redComp);

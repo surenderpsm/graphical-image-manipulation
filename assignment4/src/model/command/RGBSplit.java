@@ -4,6 +4,7 @@ package model.command;
 import model.Image;
 
 class RGBSplit extends AbstractCommand {
+
   private final String imageName2;
   private final String imageName3;
 
@@ -54,7 +55,6 @@ class RGBSplit extends AbstractCommand {
         imageArray3[i][j][2] = blueChannelData[i][j];
       }
     }
-
 
     Image redComp = new Image(imageArray);
     Image greenComp = new Image(imageArray2);

@@ -53,7 +53,6 @@ class HorizontalFlip extends AbstractCommand {
 
     }
 
-
     Image hFlipped = new Image(imageArray);
     Image.Cache.set(imageName, hFlipped);
   }

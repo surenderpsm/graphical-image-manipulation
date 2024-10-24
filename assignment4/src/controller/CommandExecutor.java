@@ -22,7 +22,7 @@ import model.Model;
  *     boolean success = executor.isSuccess();
  * </pre>
  */
-public class CommandExecutor {
+class CommandExecutor {
 
   /**
    * Constructs a {@code CommandExecutor} with a command string.

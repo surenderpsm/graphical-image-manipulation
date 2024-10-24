@@ -1,6 +1,5 @@
 package model.command;
 
-
 //import java.lang.reflect.InvocationTargetException;
 
 import model.Image;

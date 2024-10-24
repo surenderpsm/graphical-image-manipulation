@@ -3,6 +3,7 @@ package model.command;
 import model.Image;
 
 class GreenComponent extends AbstractCommand {
+
   public GreenComponent(String rawArguments) {
     super(rawArguments);
     if (numberOfArgs() != 2) {
@@ -28,7 +29,6 @@ class GreenComponent extends AbstractCommand {
         imageArray[i][j][2] = greenChannelData[i][j];
       }
     }
-
 
     Image greenComp = new Image(imageArray);
     Image.Cache.set(imageName, greenComp);

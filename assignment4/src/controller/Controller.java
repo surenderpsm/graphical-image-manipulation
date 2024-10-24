@@ -6,11 +6,6 @@ import java.util.List;
 import java.util.Scanner;
 import model.Model;
 
-/**
- * in the MVC architecture. this is the controller that interacts with the external environment.
- * it is the delegator.
- */
-
 public class Controller {
 
   private final InputStream in;
@@ -20,11 +15,6 @@ public class Controller {
     this.in = in;
     this.out = out;
   }
-
-  /**
-   * method that starts the controller. takes model as input.
-   * @param model is a model object.
-   */
 
   public void go(Model model) {
     Scanner sc = new Scanner(in);
