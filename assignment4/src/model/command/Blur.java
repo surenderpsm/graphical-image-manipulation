@@ -3,32 +3,11 @@ package model.command;
 
 import model.Image;
 
-class Blur extends AbstractCommand {
+class Blur extends Filter {
 
   public Blur(String rawArguments) {
-    super(rawArguments);
-    if (numberOfArgs() != 2) {
-      throw new IllegalArgumentException("Expected 2 arguments.");
-    }
-    currentImage = Image.Cache.get(getArg(0));
-    imageName = getArg(1);
+    super(rawArguments,
+        new double[][]{{1 / 16.0, 2 / 16.0, 1 / 16.0}, {2 / 16.0, 4 / 16.0, 2 / 16.0},
+            {1 / 16.0, 2 / 16.0, 1 / 16.0}});
   }
-
-  public void execute() {
-
-    int height = currentImage.getHeight();
-    int width = currentImage.getWidth();
-    int[][][] imageArray = new int[height][width][3];
-    double[][] filter = {
-            {1 / 16.0, 2 / 16.0, 1 / 16.0},
-            {2 / 16.0, 4 / 16.0, 2 / 16.0},
-            {1 / 16.0, 2 / 16.0, 1 / 16.0}
-    };
-    Filter filterInstance = new Filter();
-    imageArray = filterInstance.filterImage(currentImage, filter);
-    Image blurredImage = new Image(imageArray);
-    Image.Cache.set(imageName, blurredImage);
-
-  }
-
 }

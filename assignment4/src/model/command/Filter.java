@@ -2,63 +2,44 @@ package model.command;
 
 import model.Image;
 
-class Filter {
+abstract class Filter extends AbstractCommand {
 
-  public int[][][] filterImage(Image currentImage, double[][] filter) {
-    int height = currentImage.getHeight();
-    int width = currentImage.getWidth();
-    int filterRows = filter.length;
-    int filterColumns = filter[0].length;
+
+  private final double[][] filter;
+  private final int height;
+  private final int width;
+  private final int filterRows;
+  private final int filterColumns;
+
+  public Filter(String rawArguments, double[][] filter) {
+    super(rawArguments);
+    if (numberOfArgs() != 2) {
+      throw new IllegalArgumentException("Expected 2 arguments.");
+    }
+    currentImage = Image.Cache.get(getArg(0));
+    imageName = getArg(1);
+    this.filter = filter;
+    this.height = currentImage.getHeight();
+    this.width = currentImage.getWidth();
+    this.filterRows = filter.length;
+    this.filterColumns = filter[0].length;
+  }
+
+  @Override
+  public void execute() {
+    Image.Cache.set(imageName, new Image(filterImage()));
+  }
+
+  private int[][][] filterImage() {
     int[][][] imageArray = new int[height][width][3];
     int[][] redChannelData = currentImage.getRedChannelData();
     int[][] greenChannelData = currentImage.getGreenChannelData();
     int[][] blueChannelData = currentImage.getBlueChannelData();
 
-    // padding size
-    int padRowSize = filterRows / 2;
-    int padColSize = filterColumns / 2;
-
-    int[][] redChannelDataPadded = new int[height + 2 * padRowSize][width + 2 * padColSize];
-    int[][] greenChannelDataPadded = new int[height + 2 * padRowSize][width + 2 * padColSize];
-    int[][] blueChannelDataPadded = new int[height + 2 * padRowSize][width + 2 * padColSize];
-
-    // fill the padded channels with zeros and then with our image data
-    for (int i = 0; i < redChannelDataPadded.length; i++) {
-      for (int j = 0; j < redChannelDataPadded[0].length; j++) {
-        redChannelDataPadded[i][j] = 0;
-      }
-    }
-
-    for (int i = 0; i < greenChannelDataPadded.length; i++) {
-      for (int j = 0; j < greenChannelDataPadded[0].length; j++) {
-        greenChannelDataPadded[i][j] = 0;
-      }
-    }
-
-    for (int i = 0; i < blueChannelDataPadded.length; i++) {
-      for (int j = 0; j < blueChannelDataPadded[0].length; j++) {
-        blueChannelDataPadded[i][j] = 0;
-      }
-    }
-
-    // fill in the image data into our padded channels
-    for (int i = 0; i < height; i++) {
-      for (int j = 0; j < width; j++) {
-        redChannelDataPadded[i + padRowSize][j + padColSize] = redChannelData[i][j];
-      }
-    }
-
-    for (int i = 0; i < height; i++) {
-      for (int j = 0; j < width; j++) {
-        greenChannelDataPadded[i + padRowSize][j + padColSize] = greenChannelData[i][j];
-      }
-    }
-
-    for (int i = 0; i < height; i++) {
-      for (int j = 0; j < width; j++) {
-        blueChannelDataPadded[i + padRowSize][j + padColSize] = blueChannelData[i][j];
-      }
-    }
+    // Create and fill each padded channel
+    int[][] redChannelDataPadded = createAndFillPaddedChannel(redChannelData);
+    int[][] greenChannelDataPadded = createAndFillPaddedChannel(greenChannelData);
+    int[][] blueChannelDataPadded = createAndFillPaddedChannel(blueChannelData);
 
     double sumRed = 0.0;
     double sumBlue = 0.0;
@@ -79,11 +60,22 @@ class Filter {
         imageArray[i][j][0] = Math.min(255, Math.max(0, (int) Math.round(sumRed)));
         imageArray[i][j][1] = Math.min(255, Math.max(0, (int) Math.round(sumGreen)));
         imageArray[i][j][2] = Math.min(255, Math.max(0, (int) Math.round(sumBlue)));
-
       }
     }
     return imageArray;
 
+  }
+
+  private int[][] createAndFillPaddedChannel(int[][] sourceChannel) {
+    // padding size
+    int padRowSize = filterRows / 2;
+    int padColSize = filterColumns / 2;
+
+    int[][] paddedChannel = new int[height + 2 * padRowSize][width + 2 * padColSize];
+    for (int i = 0; i < sourceChannel.length; i++) {
+      System.arraycopy(sourceChannel[i], 0, paddedChannel[i + padRowSize], padColSize, width);
+    }
+    return paddedChannel;
   }
 
 }
