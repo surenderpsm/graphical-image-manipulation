@@ -15,6 +15,9 @@ abstract class AbstractColorComponent extends Abstract2ArgCommand {
     currentImage = Image.Cache.get(getArg(0));
     imageName = getArg(1);
   }
+  AbstractColorComponent(Image image, String imageName) {
+    super(image, imageName);
+  }
 
   @Override
   public void execute() {
