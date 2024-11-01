@@ -11,8 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * this is a test class which abstracts out the common functionality.
- * its is applicable for any NXN image.
+ * this is a test class which abstracts out the common functionality. its is applicable for any NXN
+ * image.
  */
 
 public abstract class AbstractModelTest {
@@ -356,7 +356,6 @@ public abstract class AbstractModelTest {
 
   protected int[][][] get3DArrayFromFile(String path) {
     try {
-//      System.out.println("Current working directory: " + System.getProperty("user.dir"));
       File file = new File(path);
       BufferedReader reader = new BufferedReader(new FileReader(file));
 
