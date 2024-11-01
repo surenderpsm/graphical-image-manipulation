@@ -24,9 +24,9 @@ class GreenComponent extends AbstractCommand {
 
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        imageArray[i][j][0] = greenChannelData[i][j];
+        imageArray[i][j][0] = 0;
         imageArray[i][j][1] = greenChannelData[i][j];
-        imageArray[i][j][2] = greenChannelData[i][j];
+        imageArray[i][j][2] = 0;
       }
     }
 

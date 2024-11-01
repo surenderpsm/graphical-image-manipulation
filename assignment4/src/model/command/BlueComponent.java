@@ -24,8 +24,8 @@ class BlueComponent extends AbstractCommand {
 
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        imageArray[i][j][0] = blueChannelData[i][j];
-        imageArray[i][j][1] = blueChannelData[i][j];
+        imageArray[i][j][0] = 0;
+        imageArray[i][j][1] = 0;
         imageArray[i][j][2] = blueChannelData[i][j];
       }
     }

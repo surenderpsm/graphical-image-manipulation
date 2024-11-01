@@ -25,8 +25,8 @@ class RedComponent extends AbstractCommand {
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
         imageArray[i][j][0] = redChannelData[i][j];
-        imageArray[i][j][1] = redChannelData[i][j];
-        imageArray[i][j][2] = redChannelData[i][j];
+        imageArray[i][j][1] = 0;
+        imageArray[i][j][2] = 0;
 
       }
     }
