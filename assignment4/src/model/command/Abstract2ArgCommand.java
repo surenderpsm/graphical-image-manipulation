@@ -16,4 +16,10 @@ abstract class Abstract2ArgCommand extends AbstractCommand {
     currentImage = Image.Cache.get(getArg(0));
     imageName = getArg(1);
   }
+
+  Abstract2ArgCommand(Image image, String imageName) {
+    super();
+    currentImage = image;
+    this.imageName = imageName;
+  }
 }

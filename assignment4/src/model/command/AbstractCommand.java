@@ -15,6 +15,12 @@ abstract class AbstractCommand implements Command {
     args = rawArguments.split(" ");
   }
 
+  /**
+   * Used when Commands are used for other commands.
+   */
+  AbstractCommand() {
+    args = null;
+  }
   protected String getArg(int argumentNumber) throws IndexOutOfBoundsException {
     return args[argumentNumber];
   }
