@@ -1,8 +1,6 @@
 package model.command;
 
 
-import model.Image;
-
 class Blur extends Filter {
 
   public Blur(String rawArguments) {

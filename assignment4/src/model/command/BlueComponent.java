@@ -7,6 +7,7 @@ class BlueComponent extends AbstractColorComponent {
   public BlueComponent(String rawArguments) {
     super(rawArguments);
   }
+
   BlueComponent(Image image, String imageName) {
     super(image, imageName);
   }

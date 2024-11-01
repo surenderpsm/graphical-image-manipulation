@@ -2,7 +2,7 @@ package model.command;
 
 import model.Image;
 
-abstract class Filter extends AbstractCommand {
+abstract class Filter extends Abstract2ArgCommand {
 
 
   private final double[][] filter;
@@ -11,13 +11,8 @@ abstract class Filter extends AbstractCommand {
   private final int filterRows;
   private final int filterColumns;
 
-  public Filter(String rawArguments, double[][] filter) {
+  protected Filter(String rawArguments, double[][] filter) {
     super(rawArguments);
-    if (numberOfArgs() != 2) {
-      throw new IllegalArgumentException("Expected 2 arguments.");
-    }
-    currentImage = Image.Cache.get(getArg(0));
-    imageName = getArg(1);
     this.filter = filter;
     this.height = currentImage.getHeight();
     this.width = currentImage.getWidth();

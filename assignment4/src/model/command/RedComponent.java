@@ -7,6 +7,7 @@ class RedComponent extends AbstractColorComponent {
   public RedComponent(String rawArguments) {
     super(rawArguments);
   }
+
   RedComponent(Image image, String imageName) {
     super(image, imageName);
   }
