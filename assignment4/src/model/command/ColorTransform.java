@@ -1,55 +1,27 @@
 package model.command;
 
 
-import model.Image;
+class ColorTransform extends ImageProcessor {
 
-class ColorTransform extends AbstractCommand {
+  protected final double[][] matrix;
 
-  protected double a11;
-  protected double a12;
-  protected double a13;
-  protected double a21;
-  protected double a22;
-  protected double a23;
-  protected double a31;
-  protected double a32;
-  protected double a33;
-
-  public ColorTransform(String rawArguments) {
+  public ColorTransform(String rawArguments, double[][] matrix) {
     super(rawArguments);
-    if (numberOfArgs() != 2) {
-      throw new IllegalArgumentException("Expected 2 arguments.");
-    }
-    currentImage = Image.Cache.get(getArg(0));
-    imageName = getArg(1);
+    this.matrix = matrix;
   }
 
+  @Override
   public void execute() {
-
-    int height = currentImage.getHeight();
-    int width = currentImage.getWidth();
-    int[][][] imageArray = new int[height][width][3];
-    int[][] redChannelData = currentImage.getRedChannelData();
-    int[][] greenChannelData = currentImage.getGreenChannelData();
-    int[][] blueChannelData = currentImage.getBlueChannelData();
-
-    for (int i = 0; i < height; i++) {
-      for (int j = 0; j < width; j++) {
-        imageArray[i][j][0] = Math.min(255, (int) Math.round(
-            a11 * redChannelData[i][j] + a12 * greenChannelData[i][j]
-                + a13 * blueChannelData[i][j]));
-        imageArray[i][j][1] = Math.min(255, (int) Math.round(
-            a21 * redChannelData[i][j] + a22 * greenChannelData[i][j]
-                + a23 * blueChannelData[i][j]));
-        imageArray[i][j][2] = Math.min(255, (int) Math.round(
-            a31 * redChannelData[i][j] + a32 * greenChannelData[i][j]
-                + a33 * blueChannelData[i][j]));
+    processImage(new PixelTransformer() {
+      @Override
+      public int[] transformPixel(int r, int g, int b) {
+        int[] result = new int[3];
+        for (int i = 0; i < 3; i++) {
+          result[i] = clamp(
+              (int) Math.round(matrix[i][0] * r + matrix[i][1] * g + matrix[i][2] * b));
+        }
+        return result;
       }
-    }
-
-    Image transformedImage = new Image(imageArray);
-    Image.Cache.set(imageName, transformedImage);
-
+    });
   }
-
 }
