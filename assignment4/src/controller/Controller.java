@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Scanner;
 import model.Model;
 
+/**
+ * This is the controller.
+ */
 public class Controller {
 
   private final InputStream in;
@@ -16,7 +19,11 @@ public class Controller {
     this.out = out;
   }
 
-  public void go(Model model) {
+  /**
+   * Run the controller.
+   * @param model new model.
+   */
+  public void run(Model model) {
     Scanner sc = new Scanner(in);
 
     while (true) {
