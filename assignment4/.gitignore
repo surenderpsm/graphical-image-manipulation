@@ -31,3 +31,4 @@ bin/
 ### intellij ###
 /.idea/*
 *.iml
+*.zip
