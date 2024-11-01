@@ -4,13 +4,8 @@ import model.Image;
 
 abstract class AbstractFlip extends Abstract2ArgCommand {
 
-  protected int height;
-  protected int width;
-
-  public AbstractFlip(String rawArguments) {
+  protected AbstractFlip(String rawArguments) {
     super(rawArguments);
-    height = currentImage.getHeight();
-    width = currentImage.getWidth();
   }
 
   protected abstract int getRowIndex(int currentRow);
@@ -23,18 +18,14 @@ abstract class AbstractFlip extends Abstract2ArgCommand {
     int noOfChannels = currentImage.getNoOfChannels();
 
     int[][][] imageArray = new int[height][width][noOfChannels];
-    int[][] redChannelData = currentImage.getRedChannelData();
-    int[][] greenChannelData = currentImage.getGreenChannelData();
-    int[][] blueChannelData = currentImage.getBlueChannelData();
-    int[][] transparency = currentImage.getTransparencyData();
 
     // Process all channels using the same flipping logic
-    processChannel(imageArray, redChannelData, 0);
-    processChannel(imageArray, greenChannelData, 1);
-    processChannel(imageArray, blueChannelData, 2);
+    processChannel(imageArray, currentImage.getRedChannelData(), 0);
+    processChannel(imageArray, currentImage.getGreenChannelData(), 1);
+    processChannel(imageArray, currentImage.getBlueChannelData(), 2);
 
     if (noOfChannels == 4) {
-      processChannel(imageArray, transparency, 3);
+      processChannel(imageArray, currentImage.getTransparencyData(), 3);
     }
 
     Image flippedImage = new Image(imageArray);

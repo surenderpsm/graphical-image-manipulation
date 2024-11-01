@@ -8,18 +8,25 @@ import model.Image;
  */
 abstract class Abstract2ArgCommand extends AbstractCommand {
 
-  Abstract2ArgCommand(String rawArguments) {
+  protected final int height;
+  protected final int width;
+
+  protected Abstract2ArgCommand(String rawArguments) {
     super(rawArguments);
     if (numberOfArgs() != 2) {
       throw new IllegalArgumentException("Expected 2 arguments.");
     }
     currentImage = Image.Cache.get(getArg(0));
     imageName = getArg(1);
+    height = currentImage.getHeight();
+    width = currentImage.getWidth();
   }
 
-  Abstract2ArgCommand(Image image, String imageName) {
+  protected Abstract2ArgCommand(Image image, String imageName) {
     super();
     currentImage = image;
     this.imageName = imageName;
+    height = currentImage.getHeight();
+    width = currentImage.getWidth();
   }
 }

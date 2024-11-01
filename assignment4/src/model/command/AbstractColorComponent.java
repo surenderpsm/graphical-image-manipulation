@@ -7,7 +7,7 @@ import model.Image;
  */
 abstract class AbstractColorComponent extends Abstract2ArgCommand {
 
-  AbstractColorComponent(String rawArguments) {
+  protected AbstractColorComponent(String rawArguments) {
     super(rawArguments);
     if (numberOfArgs() != 2) {
       throw new IllegalArgumentException("Expected 2 arguments.");
@@ -15,15 +15,13 @@ abstract class AbstractColorComponent extends Abstract2ArgCommand {
     currentImage = Image.Cache.get(getArg(0));
     imageName = getArg(1);
   }
-  AbstractColorComponent(Image image, String imageName) {
+
+  protected AbstractColorComponent(Image image, String imageName) {
     super(image, imageName);
   }
 
   @Override
   public void execute() {
-    int height = currentImage.getHeight();
-    int width = currentImage.getWidth();
-    //int noOfChannels = currentImage.getNoOfChannels();
     // @todo deal with transparency
     int[][][] imageArray = new int[height][width][3];
 
