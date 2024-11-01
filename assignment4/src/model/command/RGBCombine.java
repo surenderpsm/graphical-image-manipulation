@@ -5,42 +5,45 @@ import model.Image;
 
 class RGBCombine extends AbstractCommand {
 
-  private final Image currentImage2;
-  private final Image currentImage3;
+  private final Image redImage;
+  private final Image greenImage;
+  private final Image blueImage;
 
   public RGBCombine(String rawArguments) {
     super(rawArguments);
     if (numberOfArgs() != 4) {
       throw new IllegalArgumentException("Expected 4 arguments.");
     }
-    currentImage = Image.Cache.get(getArg(1));
-    currentImage2 = Image.Cache.get(getArg(2));
-    currentImage3 = Image.Cache.get(getArg(3));
+    redImage = Image.Cache.get(getArg(1));
+    greenImage = Image.Cache.get(getArg(2));
+    blueImage = Image.Cache.get(getArg(3));
+    // need to validate if all three images have same height and width.
+    if (redImage.getHeight() != greenImage.getHeight()
+        || redImage.getHeight() != blueImage.getHeight()
+        || redImage.getWidth() != greenImage.getWidth()
+        || redImage.getWidth() != blueImage.getWidth()) {
+      throw new IllegalArgumentException("RGB image has incorrect dimensions.");
+    }
     imageName = getArg(0);
   }
 
   public void execute() {
 
-    int height = currentImage.getHeight();
-    int width = currentImage.getWidth();
-    //int noOfChannels = currentImage.getNoOfChannels();
+    int height = redImage.getHeight();
+    int width = redImage.getWidth();
 
     int[][][] imageArray = new int[height][width][3];
-    int[][] redChannelData = currentImage.getRedChannelData();
-    int[][] greenChannelData = currentImage2.getGreenChannelData();
-    int[][] blueChannelData = currentImage3.getBlueChannelData();
 
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        imageArray[i][j][0] = redChannelData[i][j];
-        imageArray[i][j][1] = greenChannelData[i][j];
-        imageArray[i][j][2] = blueChannelData[i][j];
+        imageArray[i][j][0] = redImage.getRedChannelData()[i][j];
+        imageArray[i][j][1] = greenImage.getGreenChannelData()[i][j];
+        imageArray[i][j][2] = blueImage.getBlueChannelData()[i][j];
       }
     }
 
     Image rgbCombine = new Image(imageArray);
     Image.Cache.set(imageName, rgbCombine);
-
   }
 
 }
