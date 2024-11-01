@@ -2,36 +2,21 @@ package model.command;
 
 import model.Image;
 
-class BlueComponent extends AbstractCommand {
+class BlueComponent extends AbstractColorComponent {
 
   public BlueComponent(String rawArguments) {
     super(rawArguments);
-    if (numberOfArgs() != 2) {
-      throw new IllegalArgumentException("Expected 2 arguments.");
-    }
-    currentImage = Image.Cache.get(getArg(0));
-    imageName = getArg(1);
   }
 
-  public void execute() {
+  BlueComponent(Image image, String imageName) {
+    super(image, imageName);
+  }
 
-    int height = currentImage.getHeight();
-    int width = currentImage.getWidth();
-    //int noOfChannels = currentImage.getNoOfChannels();
-
-    int[][][] imageArray = new int[height][width][3];
-    int[][] blueChannelData = currentImage.getBlueChannelData();
-
-    for (int i = 0; i < height; i++) {
-      for (int j = 0; j < width; j++) {
-        imageArray[i][j][0] = blueChannelData[i][j];
-        imageArray[i][j][1] = blueChannelData[i][j];
-        imageArray[i][j][2] = blueChannelData[i][j];
-      }
-    }
-
-    Image blueComp = new Image(imageArray);
-    Image.Cache.set(imageName, blueComp);
+  @Override
+  protected int[] getPixel(int x, int y) {
+    int[] pixel = new int[3];
+    pixel[2] = currentImage.getBlueChannelData()[x][y];
+    return pixel;
   }
 
 }

@@ -11,8 +11,15 @@ abstract class AbstractCommand implements Command {
   protected Image currentImage;
   protected String imageName;
 
-  AbstractCommand(String rawArguments) {
+  protected AbstractCommand(String rawArguments) {
     args = rawArguments.split(" ");
+  }
+
+  /**
+   * Used when Commands are used for other commands.
+   */
+  protected AbstractCommand() {
+    args = null;
   }
 
   protected String getArg(int argumentNumber) throws IndexOutOfBoundsException {

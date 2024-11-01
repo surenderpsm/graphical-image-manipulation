@@ -29,14 +29,11 @@ class PPMHandler extends AbstractImageHandler {
 
     String token = sc.next();
     if (!token.equals("P3")) {
-      System.out.println("Invalid PPM file: plain RAW file should begin with P3");
+      throw new IllegalArgumentException("Invalid PPM file");
     }
     int width = sc.nextInt();
-    System.out.println("Width of image: " + width);
     int height = sc.nextInt();
-    System.out.println("Height of image: " + height);
     int maxValue = sc.nextInt();
-    System.out.println("Maximum value of a color in this file (usually 255): " + maxValue);
 
     int[][][] image = new int[width][height][3];
 
