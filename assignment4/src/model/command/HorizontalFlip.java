@@ -1,10 +1,12 @@
 package model.command;
 
+import model.Cache;
+
 // horizontal flip deals with columns
 class HorizontalFlip extends AbstractFlip {
 
-  public HorizontalFlip(String rawArguments) {
-    super(rawArguments);
+  public HorizontalFlip(String rawArguments, Cache cache) {
+    super(rawArguments, cache);
   }
 
   @Override

@@ -1,13 +1,15 @@
 package model.command;
 
+import model.Cache;
+
 class LumaComponent extends ImageProcessor {
 
   private static final double RED_WEIGHT = 0.2126;
   private static final double GREEN_WEIGHT = 0.7152;
   private static final double BLUE_WEIGHT = 0.0722;
 
-  public LumaComponent(String rawArguments) {
-    super(rawArguments);
+  public LumaComponent(String rawArguments, Cache cache) {
+    super(rawArguments, cache);
   }
 
   @Override

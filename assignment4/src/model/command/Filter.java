@@ -1,5 +1,6 @@
 package model.command;
 
+import model.Cache;
 import model.Image;
 
 abstract class Filter extends Abstract2ArgCommand {
@@ -11,8 +12,8 @@ abstract class Filter extends Abstract2ArgCommand {
   private final int filterRows;
   private final int filterColumns;
 
-  protected Filter(String rawArguments, double[][] filter) {
-    super(rawArguments);
+  protected Filter(String rawArguments, double[][] filter, Cache cache) {
+    super(rawArguments, cache);
     this.filter = filter;
     this.height = currentImage.getHeight();
     this.width = currentImage.getWidth();
@@ -22,7 +23,7 @@ abstract class Filter extends Abstract2ArgCommand {
 
   @Override
   public void execute() {
-    Image.Cache.set(imageName, new Image(filterImage()));
+    cache.set(imageName, new Image(filterImage()));
   }
 
   private int[][][] filterImage() {

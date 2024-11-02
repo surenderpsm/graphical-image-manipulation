@@ -1,10 +1,12 @@
 package model.command;
 
+import model.Cache;
+
 class ValueComponent extends ImageProcessor {
 
 
-  public ValueComponent(String rawArguments) {
-    super(rawArguments);
+  public ValueComponent(String rawArguments, Cache cache) {
+    super(rawArguments, cache);
   }
 
   @Override

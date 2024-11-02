@@ -1,11 +1,12 @@
 package model.command;
 
+import model.Cache;
 import model.Image;
 
 abstract class AbstractFlip extends Abstract2ArgCommand {
 
-  protected AbstractFlip(String rawArguments) {
-    super(rawArguments);
+  protected AbstractFlip(String rawArguments, Cache cache) {
+    super(rawArguments,cache);
   }
 
   protected abstract int getRowIndex(int currentRow);
@@ -29,7 +30,7 @@ abstract class AbstractFlip extends Abstract2ArgCommand {
     }
 
     Image flippedImage = new Image(imageArray);
-    Image.Cache.set(imageName, flippedImage);
+    cache.set(imageName, flippedImage);
   }
 
   private void processChannel(int[][][] imageArray, int[][] channelData, int channelIndex) {

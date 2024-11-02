@@ -2,6 +2,7 @@ package model.command;
 
 
 import java.lang.reflect.InvocationTargetException;
+import model.Cache;
 
 
 /**
@@ -17,7 +18,7 @@ import java.lang.reflect.InvocationTargetException;
  * </p>
  *
  * <p>
- * The enum provides the {@link CommandEnum#executeCommandWith(String)} method to run commands with
+ * The enum provides the {@link CommandEnum#executeCommandWith(String, Cache)} method to run commands with
  * the provided arguments, abstracting the details of command instantiation.
  * </p>
  *
@@ -71,11 +72,11 @@ public enum CommandEnum {
    *
    * @param args the arguments to be passed to the command constructor.
    */
-  public void executeCommandWith(String args) {
+  public void executeCommandWith(String args, Cache cache) {
     if (this == CommandEnum.NONE) {
       throw new IllegalStateException("Illegal state: No command has been assigned to Model.");
     }
-    Command c = instantiateCommand(args);
+    Command c = instantiateCommand(args, cache);
     c.execute();
   }
 
@@ -100,9 +101,9 @@ public enum CommandEnum {
    *
    * @return an instance of the {@link Command} associated with this enum constant
    */
-  private Command instantiateCommand(String args) {
+  private Command instantiateCommand(String args, Cache cache) {
     try {
-      return commandClass.getDeclaredConstructor(String.class).newInstance(args);
+      return commandClass.getDeclaredConstructor(String.class, Cache.class).newInstance(args, cache);
     } catch (NoSuchMethodException e) {
       throw new InternalError(
           "Internal Error: The specified command" + commandName + " has no String constructor.");

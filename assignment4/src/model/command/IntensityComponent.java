@@ -1,9 +1,11 @@
 package model.command;
 
+import model.Cache;
+
 class IntensityComponent extends ImageProcessor {
 
-  public IntensityComponent(String rawArguments) {
-    super(rawArguments);
+  public IntensityComponent(String rawArguments, Cache cache) {
+    super(rawArguments, cache);
   }
 
   @Override

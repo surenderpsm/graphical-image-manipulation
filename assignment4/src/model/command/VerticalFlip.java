@@ -1,9 +1,11 @@
 package model.command;
 
+import model.Cache;
+
 class VerticalFlip extends AbstractFlip {
 
-  public VerticalFlip(String rawArguments) {
-    super(rawArguments);
+  public VerticalFlip(String rawArguments, Cache cache) {
+    super(rawArguments, cache);
   }
 
   @Override

@@ -1,12 +1,14 @@
 package model.command;
 
 
+import model.Cache;
+
 class ColorTransform extends ImageProcessor {
 
   protected final double[][] matrix;
 
-  public ColorTransform(String rawArguments, double[][] matrix) {
-    super(rawArguments);
+  public ColorTransform(String rawArguments, double[][] matrix, Cache cache) {
+    super(rawArguments, cache);
     this.matrix = matrix;
   }
 

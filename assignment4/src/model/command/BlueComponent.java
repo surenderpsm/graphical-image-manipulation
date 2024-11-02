@@ -1,15 +1,16 @@
 package model.command;
 
+import model.Cache;
 import model.Image;
 
 class BlueComponent extends AbstractColorComponent {
 
-  public BlueComponent(String rawArguments) {
-    super(rawArguments);
+  public BlueComponent(String rawArguments, Cache cache) {
+    super(rawArguments, cache);
   }
 
-  BlueComponent(Image image, String imageName) {
-    super(image, imageName);
+  BlueComponent(Image image, String imageName, Cache cache) {
+    super(image, imageName, cache);
   }
 
   @Override

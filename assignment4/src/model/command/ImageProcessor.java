@@ -1,5 +1,6 @@
 package model.command;
 
+import model.Cache;
 import model.Image;
 
 /**
@@ -55,8 +56,8 @@ abstract class ImageProcessor extends Abstract2ArgCommand {
    * @param rawArguments the space-separated string of command arguments
    * @throws IllegalArgumentException if the arguments are invalid or insufficient
    */
-  protected ImageProcessor(String rawArguments) {
-    super(rawArguments);
+  protected ImageProcessor(String rawArguments, Cache cache) {
+    super(rawArguments, cache);
   }
 
   /**
@@ -65,8 +66,8 @@ abstract class ImageProcessor extends Abstract2ArgCommand {
    * @param image     Image
    * @param imageName String
    */
-  protected ImageProcessor(Image image, String imageName) {
-    super(image, imageName);
+  protected ImageProcessor(Image image, String imageName, Cache cache) {
+    super(image, imageName, cache);
   }
 
   /**
@@ -102,7 +103,7 @@ abstract class ImageProcessor extends Abstract2ArgCommand {
     }
 
     Image processedImage = new Image(imageArray);
-    Image.Cache.set(imageName, processedImage);
+    cache.set(imageName, processedImage);
   }
 
   /**

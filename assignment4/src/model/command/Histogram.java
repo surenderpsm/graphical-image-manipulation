@@ -1,12 +1,13 @@
 package model.command;
 
+import model.Cache;
 import model.Image;
 
 class Histogram extends Abstract2ArgCommand{
 
 
-  public Histogram(String rawArguments) {
-    super(rawArguments);
+  public Histogram(String rawArguments, Cache cache) {
+    super(rawArguments, cache);
 
   }
 
@@ -28,6 +29,6 @@ class Histogram extends Abstract2ArgCommand{
         histogram[2][blue]++;  // Blue channel
       }
     }
-    Image.Cache.set(imageName, new Histogram(histogram));
+//    cache.set(imageName, new Histogram(histogram));
   }
 }

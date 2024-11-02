@@ -1,5 +1,6 @@
 package model.command;
 
+import model.Cache;
 import model.Image;
 
 /**
@@ -16,8 +17,8 @@ class Brighten extends AbstractCommand {
    *
    * @param rawArguments Raw Arguments string.
    */
-  public Brighten(String rawArguments) {
-    super(rawArguments);
+  public Brighten(String rawArguments, Cache cache) {
+    super(rawArguments, cache);
     if (numberOfArgs() != 3) {
       throw new IllegalArgumentException("Expected 3 arguments.");
     }
@@ -26,10 +27,10 @@ class Brighten extends AbstractCommand {
     } catch (NumberFormatException e) {
       throw new IllegalArgumentException("Expected integer argument at position 0.");
     }
-    currentImage = Image.Cache.get(getArg(1));
+    currentImage = cache.get(getArg(1));
     imageName = getArg(2);
     // set up processor to brighten image.
-    processor = new ImageProcessor(currentImage, imageName) {
+    processor = new ImageProcessor(currentImage, imageName, cache) {
       @Override
       public void execute() {
         processImage(createBrightenTransformer());

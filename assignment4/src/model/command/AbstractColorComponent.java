@@ -1,5 +1,6 @@
 package model.command;
 
+import model.Cache;
 import model.Image;
 
 /**
@@ -7,17 +8,17 @@ import model.Image;
  */
 abstract class AbstractColorComponent extends Abstract2ArgCommand {
 
-  protected AbstractColorComponent(String rawArguments) {
-    super(rawArguments);
+  protected AbstractColorComponent(String rawArguments, Cache cache) {
+    super(rawArguments, cache);
     if (numberOfArgs() != 2) {
       throw new IllegalArgumentException("Expected 2 arguments.");
     }
-    currentImage = Image.Cache.get(getArg(0));
+    currentImage = cache.get(getArg(0));
     imageName = getArg(1);
   }
 
-  protected AbstractColorComponent(Image image, String imageName) {
-    super(image, imageName);
+  protected AbstractColorComponent(Image image, String imageName, Cache cache) {
+    super(image, imageName, cache);
   }
 
   @Override
@@ -31,7 +32,7 @@ abstract class AbstractColorComponent extends Abstract2ArgCommand {
       }
     }
 
-    Image.Cache.set(imageName, new Image(imageArray));
+    cache.set(imageName, new Image(imageArray));
   }
 
   protected abstract int[] getPixel(int x, int y);

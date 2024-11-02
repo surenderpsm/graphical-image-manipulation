@@ -1,5 +1,6 @@
 package model.command;
 
+import model.Cache;
 import model.Image;
 
 /**
@@ -11,19 +12,19 @@ abstract class Abstract2ArgCommand extends AbstractCommand {
   protected final int height;
   protected final int width;
 
-  protected Abstract2ArgCommand(String rawArguments) {
-    super(rawArguments);
+  protected Abstract2ArgCommand(String rawArguments, Cache cache) {
+    super(rawArguments, cache);
     if (numberOfArgs() != 2) {
       throw new IllegalArgumentException("Expected 2 arguments.");
     }
-    currentImage = Image.Cache.get(getArg(0));
+    currentImage = cache.get(getArg(0));
     imageName = getArg(1);
     height = currentImage.getHeight();
     width = currentImage.getWidth();
   }
 
-  protected Abstract2ArgCommand(Image image, String imageName) {
-    super();
+  protected Abstract2ArgCommand(Image image, String imageName, Cache cache) {
+    super(cache);
     currentImage = image;
     this.imageName = imageName;
     height = currentImage.getHeight();
