@@ -32,7 +32,7 @@ import model.command.CommandEnum;
  *
  * @see CommandEnum
  */
-public class Model implements ModelRunner, ImageCacheProvider {
+public class Model implements ModelRunner, ImageCacheProvider, HistogramCacheProvider {
 
   private CommandEnum commandClass = CommandEnum.NONE;
   private final Cache cache = new Cache();
@@ -69,5 +69,15 @@ public class Model implements ModelRunner, ImageCacheProvider {
    */
   private void runCommand(String args) {
     commandClass.executeCommandWith(args, cache);
+  }
+
+  @Override
+  public boolean isHistogram(String name) {
+    return false;
+  }
+
+  @Override
+  public int[][] getHistogram(String name) throws NoSuchElementException {
+    return new int[0][];
   }
 }
