@@ -6,17 +6,18 @@ public interface HistogramCacheProvider {
 
   /**
    * Checks if there exists a histogram for the given name.
+   *
    * @param name
    * @return true if it exists.
    */
   boolean isHistogram(String name);
+
   /**
-   * Retrieves the histogram data for a specified name from the cache. If the image is not found,
-   * a {@link NoSuchElementException} is thrown.
+   * Retrieves the histogram data for a specified name from the cache. If the image is not found, a
+   * {@link NoSuchElementException} is thrown.
    *
    * <p>
-   * The histogram data is returned as a 2D array formatted as
-   * {@code int[num_channels][bins]}:
+   * The histogram data is returned as a 2D array formatted as {@code int[num_channels][bins]}:
    * <ul>
    *   <li>num_channels: the number of color channels (e.g., RGB, RGBA) default 3</li>
    *   <li>bins: the number of bins default 256</li>*

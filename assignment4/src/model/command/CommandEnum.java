@@ -18,8 +18,8 @@ import model.Cache;
  * </p>
  *
  * <p>
- * The enum provides the {@link CommandEnum#executeCommandWith(String, Cache)} method to run commands with
- * the provided arguments, abstracting the details of command instantiation.
+ * The enum provides the {@link CommandEnum#executeCommandWith(String, Cache)} method to run
+ * commands with the provided arguments, abstracting the details of command instantiation.
  * </p>
  *
  * <h3>Example Usage:</h3>
@@ -46,6 +46,7 @@ public enum CommandEnum {
   VALUE_COMPONENT(ValueComponent.class, "value-component"),
   LUMA_COMPONENT(LumaComponent.class, "luma-component"),
   INTENSITY_COMPONENT(IntensityComponent.class, "intensity-component"),
+  HISTOGRAM(Histogram.class, "histogram"),
   ;
 
 
@@ -103,7 +104,8 @@ public enum CommandEnum {
    */
   private Command instantiateCommand(String args, Cache cache) {
     try {
-      return commandClass.getDeclaredConstructor(String.class, Cache.class).newInstance(args, cache);
+      return commandClass.getDeclaredConstructor(String.class, Cache.class)
+          .newInstance(args, cache);
     } catch (NoSuchMethodException e) {
       throw new InternalError(
           "Internal Error: The specified command" + commandName + " has no String constructor.");

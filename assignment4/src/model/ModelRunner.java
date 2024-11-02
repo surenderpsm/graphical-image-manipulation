@@ -3,6 +3,7 @@ package model;
 import model.command.CommandEnum;
 
 public interface ModelRunner {
+
   /**
    * Execute a {@code Model} command by passing a {@code command} and {@code arguments}.
    *

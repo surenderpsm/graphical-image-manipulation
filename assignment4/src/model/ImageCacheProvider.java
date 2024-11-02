@@ -3,6 +3,7 @@ package model;
 import java.util.NoSuchElementException;
 
 public interface ImageCacheProvider {
+
   /**
    * Retrieves the image data for a specified image name from the cache. If the image is not found,
    * a {@link NoSuchElementException} is thrown.
@@ -22,6 +23,7 @@ public interface ImageCacheProvider {
    * @throws NoSuchElementException if the specified image is not found in the cache
    */
   int[][][] getImage(String name) throws NoSuchElementException;
+
   /**
    * Stores an image in the cache with the specified name. This method updates the status flag to
    * {@code true} once the image is successfully set.

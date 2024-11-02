@@ -30,7 +30,12 @@ class IOHandler {
         model.setImage(ih.loadImage(), name);
         break;
       case "save":
-        ih.saveImage(model.getImage(name));
+        if (model.isHistogram(name)) {
+          ih.saveImage(new HistogramGenerator(model.getHistogram(name)).getImage());
+        }
+        else {
+          ih.saveImage(model.getImage(name));
+        }
         break;
       default:
         throw new UnsupportedOperationException("Unsupported command: " + command);

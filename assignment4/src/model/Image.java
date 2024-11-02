@@ -1,9 +1,5 @@
 package model;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NoSuchElementException;
-
 /**
  * This class represents an image.
  *
@@ -13,7 +9,6 @@ public class Image {
 
   // isEmpty tracks whether an Image is instantiated as an empty object or with parameters.
   private boolean isEmpty = false;
-
 
 
   private int height;
@@ -69,7 +64,8 @@ public class Image {
 
   /**
    * method to get height of image data.
-   * @return  int array.
+   *
+   * @return int array.
    */
 
   public int getHeight() {
@@ -78,7 +74,8 @@ public class Image {
 
   /**
    * method to get width of image data.
-   * @return  int array.
+   *
+   * @return int array.
    */
 
   public int getWidth() {
@@ -87,7 +84,8 @@ public class Image {
 
   /**
    * method to get no of channels of image data.
-   * @return  int array.
+   *
+   * @return int array.
    */
 
   public int getNoOfChannels() {
@@ -105,7 +103,8 @@ public class Image {
 
   /**
    * method to get red channel data.
-   * @return  int array.
+   *
+   * @return int array.
    */
 
   public int[][] getRedChannelData() {
@@ -114,7 +113,8 @@ public class Image {
 
   /**
    * method to get green channel data.
-   * @return  int array.
+   *
+   * @return int array.
    */
 
   public int[][] getGreenChannelData() {
@@ -126,7 +126,8 @@ public class Image {
 
   /**
    * method to get blue channel data.
-   * @return  int array.
+   *
+   * @return int array.
    */
 
   public int[][] getBlueChannelData() {
@@ -138,7 +139,8 @@ public class Image {
 
   /**
    * method to get transparency.
-   * @return  int array.
+   *
+   * @return int array.
    */
 
   public int[][] getTransparencyData() {
@@ -150,7 +152,8 @@ public class Image {
 
   /**
    * method to get image pixel data in array format(r,g,b).
-   * @return  int array.
+   *
+   * @return int array.
    */
 
   public int[] getPixelData(int i, int j) {
@@ -172,6 +175,7 @@ public class Image {
 
   /**
    * method to get image in array format.
+   *
    * @return 3d int array.
    */
 

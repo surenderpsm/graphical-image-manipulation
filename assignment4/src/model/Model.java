@@ -36,6 +36,7 @@ public class Model implements ModelRunner, ImageCacheProvider, HistogramCachePro
 
   private CommandEnum commandClass = CommandEnum.NONE;
   private final Cache cache = new Cache();
+
   @Override
   public void execute(String command, String args) throws UnsupportedOperationException {
     for (CommandEnum c : CommandEnum.values()) {
@@ -50,11 +51,7 @@ public class Model implements ModelRunner, ImageCacheProvider, HistogramCachePro
 
   @Override
   public int[][][] getImage(String name) throws NoSuchElementException {
-    try {
-      return cache.get(name).getImageArray();
-    } catch (NoSuchElementException e) {
-      throw new NoSuchElementException(e.getMessage());
-    }
+    return cache.get(name).getImageArray();
   }
 
   @Override
@@ -73,11 +70,11 @@ public class Model implements ModelRunner, ImageCacheProvider, HistogramCachePro
 
   @Override
   public boolean isHistogram(String name) {
-    return false;
+    return cache.isHistogram(name);
   }
 
   @Override
   public int[][] getHistogram(String name) throws NoSuchElementException {
-    return new int[0][];
+    return cache.getHistogram(name).getHistogram();
   }
 }

@@ -23,3 +23,7 @@ save res/img/parrot-sharpen-sepia.jpg sepia-parrot
 
 red-component parrot redp
 save res/img/parrot-test.jpg redp
+
+
+histogram parrot parrot_hist
+save res/img/parrot_hist.jpg parrot_hist

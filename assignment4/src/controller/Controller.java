@@ -21,6 +21,7 @@ public class Controller {
 
   /**
    * Run the controller.
+   *
    * @param model new model.
    */
   public void run(Model model) {

@@ -6,7 +6,7 @@ import model.Image;
 abstract class AbstractFlip extends Abstract2ArgCommand {
 
   protected AbstractFlip(String rawArguments, Cache cache) {
-    super(rawArguments,cache);
+    super(rawArguments, cache);
   }
 
   protected abstract int getRowIndex(int currentRow);

@@ -2,7 +2,6 @@ package model.command;
 
 
 import model.Cache;
-import model.Image;
 
 class RGBSplit extends AbstractCommand {
 

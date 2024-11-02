@@ -1,7 +1,6 @@
 package model.command;
 
 import model.Cache;
-import model.Image;
 
 /**
  * Adjusts the brightness of an image by adding a constant value to each color channel. Handles both
