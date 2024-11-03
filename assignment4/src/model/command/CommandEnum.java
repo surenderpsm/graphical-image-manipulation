@@ -47,6 +47,7 @@ public enum CommandEnum {
   LUMA_COMPONENT(LumaComponent.class, "luma-component"),
   INTENSITY_COMPONENT(IntensityComponent.class, "intensity-component"),
   HISTOGRAM(Histogram.class, "histogram"),
+  COMPRESS(Compress.class, "compress"),
   ;
 
 
