@@ -1,0 +1,23 @@
+# load the parrot
+load res/img/parrot.jpg parrot
+
+compress 20 parrot cparrot
+save res/img/parrot_20.png cparrot
+
+compress 40 parrot cparrot
+save res/img/parrot_40.png cparrot
+
+compress 60 parrot cparrot
+save res/img/parrot_60.png cparrot
+
+compress 80 parrot cparrot
+save res/img/parrot_80.png cparrot
+
+compress 90 parrot cparrot
+save res/img/parrot_90.png cparrot
+
+compress 95 parrot cparrot
+save res/img/parrot_95.png cparrot
+
+compress 99 parrot cparrot
+save res/img/parrot_99.png cparrot
