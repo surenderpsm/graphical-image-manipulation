@@ -10,12 +10,9 @@ class IntensityComponent extends ImageProcessor {
 
   @Override
   public void execute() {
-    processImage(new PixelTransformer() {
-      @Override
-      public int[] transformPixel(int r, int g, int b) {
-        int intensity = clamp((int) Math.round((r + g + b) / 3.0));
-        return new int[]{intensity, intensity, intensity};
-      }
+    processImage((r, g, b) -> {
+      int intensity = clamp((int) Math.round((r + g + b) / 3.0));
+      return new int[]{intensity, intensity, intensity};
     });
   }
 }

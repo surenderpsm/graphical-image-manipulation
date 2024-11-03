@@ -14,12 +14,9 @@ class LumaComponent extends ImageProcessor {
 
   @Override
   public void execute() {
-    processImage(new PixelTransformer() {
-      @Override
-      public int[] transformPixel(int r, int g, int b) {
-        int luma = clamp((int) Math.round(RED_WEIGHT * r + GREEN_WEIGHT * g + BLUE_WEIGHT * b));
-        return new int[]{luma, luma, luma};
-      }
+    processImage((r, g, b) -> {
+      int luma = clamp((int) Math.round(RED_WEIGHT * r + GREEN_WEIGHT * g + BLUE_WEIGHT * b));
+      return new int[]{luma, luma, luma};
     });
   }
 
