@@ -1,5 +1,5 @@
 package model.command;
-// @todo Refactor
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,6 +8,7 @@ import model.Cache;
 import model.Image;
 
 public class Compress extends AbstractCommand {
+
   private final int compressionRatio;
   private static final int BLACK_THRESHOLD = 10;
   private static final int MAX_COLOR_VALUE = 255;
@@ -38,11 +39,9 @@ public class Compress extends AbstractCommand {
 
   @Override
   public void execute() {
-    int[][] processedRed = processColorChannel(currentImage.getRedChannelData());
-    int[][] processedGreen = processColorChannel(currentImage.getGreenChannelData());
-    int[][] processedBlue = processColorChannel(currentImage.getBlueChannelData());
-
-    int[][][] imageArray = combineChannels(processedRed, processedGreen, processedBlue);
+    int[][][] imageArray = combineChannels(processColorChannel(currentImage.getRedChannelData()),
+        processColorChannel(currentImage.getGreenChannelData()),
+        processColorChannel(currentImage.getBlueChannelData()));
     cache.set(imageName, new Image(imageArray));
   }
 
@@ -73,6 +72,7 @@ public class Compress extends AbstractCommand {
 
   // Array conversion utility class
   private static class ArrayConverter {
+
     public double[][] toDouble(int[][] array) {
       double[][] result = new double[array.length][array[0].length];
       for (int i = 0; i < array.length; i++) {
@@ -93,9 +93,10 @@ public class Compress extends AbstractCommand {
       return result;
     }
   }
+
   private final ArrayConverter arrayConverter = new ArrayConverter();
 
-  public static void zeroSmallestPercentage(double[][] array, int nPercent, int blackThreshold) {
+  public void zeroSmallestPercentage(double[][] array, int nPercent, int blackThreshold) {
     List<Double> significantValues = collectSignificantValues(array, blackThreshold);
     double threshold = calculateThreshold(significantValues, nPercent);
     applyThreshold(array, threshold);
@@ -113,7 +114,7 @@ public class Compress extends AbstractCommand {
     return values;
   }
 
-  private static double calculateThreshold(List<Double> values, int nPercent) {
+  private double calculateThreshold(List<Double> values, int nPercent) {
     Collections.sort(values);
     return values.get((int) (nPercent / 100.0 * values.size() - 1));
   }
@@ -128,8 +129,34 @@ public class Compress extends AbstractCommand {
     }
   }
 
+  private double[][] haar2D(double[][] arr) {
+    int size = calculatePaddedSize(arr);
+    double[][] matrix = padMatrix(arr, size);
+
+    int c = size;
+    while (c > 1) {
+      transformRows(matrix, c);
+      transformColumns(matrix, c);
+      c = c / 2;
+    }
+    return matrix;
+  }
+
+  private double[][] haar2DInverse(double[][] arr) {
+    int size = calculatePaddedSize(arr);
+    double[][] matrix = padMatrix(arr, size);
+
+    int c = 2;
+    while (c <= size) {
+      inverseColumns(matrix, c);
+      inverseRows(matrix, c);
+      c = c * 2;
+    }
+    return matrix;
+  }
+
   // Haar transform methods
-  public static double[] transform(double[] s) {
+  public double[] transform(double[] s) {
     int size = s.length / 2;
     double[] avg = new double[size];
     double[] diff = new double[size];
@@ -147,7 +174,7 @@ public class Compress extends AbstractCommand {
     return result;
   }
 
-  public static double[] inverse(double[] s) {
+  public double[] inverse(double[] s) {
     int half = s.length / 2;
     double[] result = new double[s.length];
     List<Double> temp = new ArrayList<>();
@@ -165,7 +192,7 @@ public class Compress extends AbstractCommand {
     return result;
   }
 
-  private static double[] getColumn(double[][] matrix, int column) {
+  private double[] getColumn(double[][] matrix, int column) {
     double[] columnArr = new double[matrix.length];
     for (int i = 0; i < matrix.length; i++) {
       columnArr[i] = matrix[i][column];
@@ -173,33 +200,7 @@ public class Compress extends AbstractCommand {
     return columnArr;
   }
 
-  public static double[][] haar2D(double[][] arr) {
-    int size = calculatePaddedSize(arr);
-    double[][] matrix = padMatrix(arr, size);
-
-    int c = size;
-    while (c > 1) {
-      transformRows(matrix, c);
-      transformColumns(matrix, c);
-      c = c / 2;
-    }
-    return matrix;
-  }
-
-  public static double[][] haar2DInverse(double[][] arr) {
-    int size = calculatePaddedSize(arr);
-    double[][] matrix = padMatrix(arr, size);
-
-    int c = 2;
-    while (c <= size) {
-      inverseColumns(matrix, c);
-      inverseRows(matrix, c);
-      c = c * 2;
-    }
-    return matrix;
-  }
-
-  private static int calculatePaddedSize(double[][] arr) {
+  private int calculatePaddedSize(double[][] arr) {
     int max = Math.max(arr.length, arr[0].length);
     int size = 1;
     while (size < max) {
@@ -208,7 +209,7 @@ public class Compress extends AbstractCommand {
     return size;
   }
 
-  private static double[][] padMatrix(double[][] arr, int size) {
+  private double[][] padMatrix(double[][] arr, int size) {
     double[][] matrix = new double[size][size];
     for (int i = 0; i < arr.length; i++) {
       matrix[i] = Arrays.copyOf(arr[i], size);
@@ -216,7 +217,7 @@ public class Compress extends AbstractCommand {
     return matrix;
   }
 
-  private static void transformRows(double[][] matrix, int c) {
+  private void transformRows(double[][] matrix, int c) {
     for (int i = 0; i < c; i++) {
       double[] subArr = Arrays.copyOfRange(matrix[i], 0, c);
       subArr = transform(subArr);
@@ -224,7 +225,7 @@ public class Compress extends AbstractCommand {
     }
   }
 
-  private static void transformColumns(double[][] matrix, int c) {
+  private void transformColumns(double[][] matrix, int c) {
     for (int j = 0; j < c; j++) {
       double[] subArr = Arrays.copyOfRange(getColumn(matrix, j), 0, c);
       subArr = transform(subArr);
@@ -234,7 +235,7 @@ public class Compress extends AbstractCommand {
     }
   }
 
-  private static void inverseColumns(double[][] matrix, int c) {
+  private void inverseColumns(double[][] matrix, int c) {
     for (int j = 0; j < c; j++) {
       double[] subArr = Arrays.copyOfRange(getColumn(matrix, j), 0, c);
       subArr = inverse(subArr);
@@ -244,7 +245,7 @@ public class Compress extends AbstractCommand {
     }
   }
 
-  private static void inverseRows(double[][] matrix, int c) {
+  private void inverseRows(double[][] matrix, int c) {
     for (int i = 0; i < c; i++) {
       double[] subArr = Arrays.copyOfRange(matrix[i], 0, c);
       subArr = inverse(subArr);
