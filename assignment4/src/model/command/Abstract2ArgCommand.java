@@ -24,9 +24,7 @@ abstract class Abstract2ArgCommand extends AbstractCommand {
   }
 
   protected Abstract2ArgCommand(Image image, String imageName, Cache cache) {
-    super(cache);
-    currentImage = image;
-    this.imageName = imageName;
+    super(image, imageName, cache);
     height = currentImage.getHeight();
     width = currentImage.getWidth();
   }

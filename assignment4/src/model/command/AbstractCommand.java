@@ -22,8 +22,10 @@ abstract class AbstractCommand implements Command {
   /**
    * Used when Commands are used for other commands.
    */
-  protected AbstractCommand(Cache cache) {
+  protected AbstractCommand(Image image, String imageName, Cache cache) {
     args = null;
+    this.imageName = imageName;
+    currentImage = image;
     this.cache = cache;
   }
 
