@@ -1,2 +1,11 @@
 # load parrot.jpg and call it parrot.
-load res/img/parrot.jpg parrot
+# load res/img/parrot.jpg parrot
+load C:\Users\psmsu\Downloads\galaxy.png galaxy
+# load res/img/image.jpg cat
+
+
+color-correct galaxy corrected-cat
+save res/img/cat-corrected.jpg corrected-cat
+
+histogram corrected-cat galaxy-hist
+save res/img/galaxy-hist.jpg galaxy-hist

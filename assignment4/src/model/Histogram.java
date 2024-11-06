@@ -25,7 +25,7 @@ public class Histogram {
     return histogram;
   }
 
-  public int getChannelValue(int channel, int value) {
+  public int getChannelFrequencyValue(int channel, int value) {
     return histogram[channel][value];
   }
 }
