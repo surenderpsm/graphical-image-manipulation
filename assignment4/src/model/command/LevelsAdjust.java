@@ -1,6 +1,6 @@
 package model.command;
 
-import static model.command.AbstractImageProcessor.clamp;
+import static model.command.ImageProcessor.clamp;
 
 import model.Cache;
 

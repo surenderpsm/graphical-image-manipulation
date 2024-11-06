@@ -3,7 +3,7 @@ package model.command;
 import model.Cache;
 import model.Image;
 
-abstract class SimpleImageProcessor extends AbstractImageProcessor {
+abstract class SimpleImageProcessor extends ImageProcessor {
 private PixelTransformer transformer;
   protected SimpleImageProcessor(String rawArguments, Cache cache, PixelTransformer transformer) {
     super(rawArguments, cache);

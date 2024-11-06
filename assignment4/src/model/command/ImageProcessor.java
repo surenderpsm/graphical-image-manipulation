@@ -18,14 +18,14 @@ import model.Image;
  *
  * <p>To implement a new image processing operation:
  * <ol>
- *   <li>Create a new class extending {@code AbstractImageProcessor}
+ *   <li>Create a new class extending {@code ImageProcessor}
  *   <li>Implement the {@code execute()} method using {@code processImage()}
  *   <li>Provide a {@code PixelTransformer} implementation for your specific transformation
  * </ol>
  *
  * <p>Example implementation for a sepia tone effect:
  * <pre>
- * class SepiaProcessor extends AbstractImageProcessor {
+ * class SepiaProcessor extends ImageProcessor {
  *     public SepiaProcessor(String rawArguments) {
  *         super(rawArguments);
  *     }
@@ -48,15 +48,15 @@ import model.Image;
  * @see PixelTransformer
  * @see Image
  */
-abstract class AbstractImageProcessor extends Abstract2ArgCommand {
+abstract class ImageProcessor extends Abstract2ArgCommand {
 
   /**
-   * Constructs a new AbstractImageProcessor with the specified raw arguments.
+   * Constructs a new ImageProcessor with the specified raw arguments.
    *
    * @param rawArguments the space-separated string of command arguments
    * @throws IllegalArgumentException if the arguments are invalid or insufficient
    */
-  protected AbstractImageProcessor(String rawArguments, Cache cache) {
+  protected ImageProcessor(String rawArguments, Cache cache) {
     super(rawArguments, cache);
   }
 
@@ -66,7 +66,7 @@ abstract class AbstractImageProcessor extends Abstract2ArgCommand {
    * @param image     Image
    * @param imageName String
    */
-  protected AbstractImageProcessor(Image image, String imageName, Cache cache) {
+  protected ImageProcessor(Image image, String imageName, Cache cache) {
     super(image, imageName, cache);
   }
 

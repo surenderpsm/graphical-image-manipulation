@@ -3,7 +3,7 @@ package model.command;
 import model.Cache;
 import model.Image;
 
-abstract class Filter extends AbstractImageProcessor {
+abstract class Filter extends ImageProcessor {
 
   private final double[][] filter;
   private final int height;
