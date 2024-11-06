@@ -1,5 +1,7 @@
 package model.command;
 
+import static model.command.AbstractImageProcessor.clamp;
+
 import model.Cache;
 
 /**
@@ -31,13 +33,12 @@ class Brighten extends AbstractCommand {
 
   @Override
   public void execute() {
-    new ImageProcessor(currentImage, imageName, cache) {
-      @Override
-      public void execute() {
-        processImage((r, g, b) -> {
-          return new int[]{clamp(r + value), clamp(g + value), clamp(b + value)};
-        });
-      }
-    }.execute();
+    new SimpleImageProcessor(currentImage, imageName, cache, (r, g, b) ->
+    {
+      return new int[]{
+          clamp(r + value),
+          clamp(g + value),
+          clamp(b + value)};
+    }){}.execute();
   }
 }

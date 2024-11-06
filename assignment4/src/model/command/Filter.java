@@ -3,8 +3,7 @@ package model.command;
 import model.Cache;
 import model.Image;
 
-abstract class Filter extends Abstract2ArgCommand {
-
+abstract class Filter extends AbstractImageProcessor {
 
   private final double[][] filter;
   private final int height;
@@ -21,31 +20,31 @@ abstract class Filter extends Abstract2ArgCommand {
     this.filterColumns = filter[0].length;
   }
 
-  @Override
-  public void execute() {
-    cache.set(imageName, new Image(filterImage()));
+  protected Filter(Image image,
+                   String imageName,
+                   Cache cache,
+                   double[][] filter) {
+    super(image, imageName, cache);
+    this.filter = filter;
+    this.height = currentImage.getHeight();
+    this.width = currentImage.getWidth();
+    this.filterRows = filter.length;
+    this.filterColumns = filter[0].length;
   }
 
-  private int[][][] filterImage() {
+  @Override
+  protected void processImage() {
     int[][][] imageArray = new int[height][width][3];
-    int[][] redChannelData = currentImage.getRedChannelData();
-    int[][] greenChannelData = currentImage.getGreenChannelData();
-    int[][] blueChannelData = currentImage.getBlueChannelData();
 
-    // Create and fill each padded channel
-    int[][] redChannelDataPadded = createAndFillPaddedChannel(redChannelData);
-    int[][] greenChannelDataPadded = createAndFillPaddedChannel(greenChannelData);
-    int[][] blueChannelDataPadded = createAndFillPaddedChannel(blueChannelData);
-
-    double sumRed = 0.0;
-    double sumBlue = 0.0;
-    double sumGreen = 0.0;
+    int[][] redChannelDataPadded = createAndFillPaddedChannel(currentImage.getRedChannelData());
+    int[][] greenChannelDataPadded = createAndFillPaddedChannel(currentImage.getGreenChannelData());
+    int[][] blueChannelDataPadded = createAndFillPaddedChannel(currentImage.getBlueChannelData());
 
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        sumRed = 0;
-        sumGreen = 0;
-        sumBlue = 0;
+        double sumRed = 0;
+        double sumGreen = 0;
+        double sumBlue = 0;
         for (int a = 0; a < filterRows; a++) {
           for (int b = 0; b < filterColumns; b++) {
             sumRed += redChannelDataPadded[i + a][j + b] * filter[a][b];
@@ -58,8 +57,9 @@ abstract class Filter extends Abstract2ArgCommand {
         imageArray[i][j][2] = Math.min(255, Math.max(0, (int) Math.round(sumBlue)));
       }
     }
-    return imageArray;
 
+    Image processedImage = new Image(imageArray);
+    cache.set(imageName, processedImage);
   }
 
   private int[][] createAndFillPaddedChannel(int[][] sourceChannel) {

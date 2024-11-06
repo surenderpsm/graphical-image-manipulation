@@ -18,14 +18,14 @@ import model.Image;
  *
  * <p>To implement a new image processing operation:
  * <ol>
- *   <li>Create a new class extending {@code ImageProcessor}
+ *   <li>Create a new class extending {@code AbstractImageProcessor}
  *   <li>Implement the {@code execute()} method using {@code processImage()}
  *   <li>Provide a {@code PixelTransformer} implementation for your specific transformation
  * </ol>
  *
  * <p>Example implementation for a sepia tone effect:
  * <pre>
- * class SepiaProcessor extends ImageProcessor {
+ * class SepiaProcessor extends AbstractImageProcessor {
  *     public SepiaProcessor(String rawArguments) {
  *         super(rawArguments);
  *     }
@@ -48,15 +48,15 @@ import model.Image;
  * @see PixelTransformer
  * @see Image
  */
-abstract class ImageProcessor extends Abstract2ArgCommand {
+abstract class AbstractImageProcessor extends Abstract2ArgCommand {
 
   /**
-   * Constructs a new ImageProcessor with the specified raw arguments.
+   * Constructs a new AbstractImageProcessor with the specified raw arguments.
    *
    * @param rawArguments the space-separated string of command arguments
    * @throws IllegalArgumentException if the arguments are invalid or insufficient
    */
-  protected ImageProcessor(String rawArguments, Cache cache) {
+  protected AbstractImageProcessor(String rawArguments, Cache cache) {
     super(rawArguments, cache);
   }
 
@@ -66,7 +66,7 @@ abstract class ImageProcessor extends Abstract2ArgCommand {
    * @param image     Image
    * @param imageName String
    */
-  protected ImageProcessor(Image image, String imageName, Cache cache) {
+  protected AbstractImageProcessor(Image image, String imageName, Cache cache) {
     super(image, imageName, cache);
   }
 
@@ -84,27 +84,9 @@ abstract class ImageProcessor extends Abstract2ArgCommand {
    *   <li>Stores the result in the image cache
    * </ul>
    *
-   * @param transformer the PixelTransformer implementation that defines how each pixel should be
-   *                    transformed
    * @throws IllegalStateException if the current image is null or invalid
    */
-  protected void processImage(PixelTransformer transformer) {
-    int[][][] imageArray = new int[height][width][3];
-    int[][] redChannel = currentImage.getRedChannelData();
-    int[][] greenChannel = currentImage.getGreenChannelData();
-    int[][] blueChannel = currentImage.getBlueChannelData();
-
-    for (int i = 0; i < height; i++) {
-      for (int j = 0; j < width; j++) {
-        int[] transformedPixel = transformer.transformPixel(redChannel[i][j], greenChannel[i][j],
-            blueChannel[i][j]);
-        imageArray[i][j] = transformedPixel;
-      }
-    }
-
-    Image processedImage = new Image(imageArray);
-    cache.set(imageName, processedImage);
-  }
+  protected abstract void processImage();
 
   /**
    * Clamps a value to the valid pixel intensity range [0, 255]. This utility method ensures that
@@ -115,6 +97,10 @@ abstract class ImageProcessor extends Abstract2ArgCommand {
    */
   protected static int clamp(int value) {
     return Math.min(255, Math.max(0, value));
+  }
+
+  public void execute() {
+    processImage();
   }
 
 }

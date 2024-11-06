@@ -24,7 +24,7 @@ package model.command;
  * };
  * </pre>
  *
- * @see ImageProcessor
+ * @see AbstractImageProcessor
  */
 interface PixelTransformer {
 
