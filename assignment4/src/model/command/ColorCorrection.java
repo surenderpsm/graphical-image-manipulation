@@ -1,6 +1,5 @@
 package model.command;
 
-import java.util.Arrays;
 import model.Cache;
 import model.Histogram;
 
