@@ -35,4 +35,31 @@ abstract class AbstractCommand implements Command {
     return args.length;
   }
 
+  protected int parseInt(int argumentNumber, int min, int max) {
+    try {
+      return intValidation(Integer.parseInt(getArg(argumentNumber)), min, max);
+    } catch (NumberFormatException e) {
+      throw new IllegalArgumentException(
+          "Expected integer argument at position " + argumentNumber + ".");
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException(
+          "Expected " + e.getMessage() + " at position " + argumentNumber + ".");
+    }
+  }
+
+  protected int parseInt(int argumentNumber) {
+    try {
+      return Integer.parseInt(getArg(argumentNumber));
+    } catch (NumberFormatException e) {
+      throw new IllegalArgumentException(
+          "Expected integer argument at position " + argumentNumber + ".");
+    }
+  }
+
+  private int intValidation(int value, int min, int max) {
+    if (value < min || value > max) {
+      throw new IllegalArgumentException("value must be between " +min +" and " + max);
+    }
+    return value;
+  }
 }

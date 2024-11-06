@@ -4,10 +4,13 @@ import model.Cache;
 import model.Image;
 
 abstract class SimpleImageProcessor extends AbstractImageProcessor {
-private final PixelTransformer transformer;
+private PixelTransformer transformer;
   protected SimpleImageProcessor(String rawArguments, Cache cache, PixelTransformer transformer) {
     super(rawArguments, cache);
     this.transformer = transformer;
+  }
+  protected SimpleImageProcessor(String rawArguments, Cache cache) {
+    super(rawArguments, cache);
   }
 
   protected SimpleImageProcessor(Image image, String imageName, Cache cache, PixelTransformer transformer) {
@@ -15,8 +18,13 @@ private final PixelTransformer transformer;
     this.transformer = transformer;
   }
 
+  protected void setTransformer(PixelTransformer transformer) {
+    this.transformer = transformer;
+  }
+
   @Override
   protected void processImage() {
+    if (transformer == null) throw new IllegalStateException("Internal error: No transformer set");
     int[][][] imageArray = new int[height][width][3];
     int[][] redChannel = currentImage.getRedChannelData();
     int[][] greenChannel = currentImage.getGreenChannelData();

@@ -22,23 +22,17 @@ class Brighten extends AbstractCommand {
     if (numberOfArgs() != 3) {
       throw new IllegalArgumentException("Expected 3 arguments.");
     }
-    try {
-      value = Integer.parseInt(getArg(0));
-    } catch (NumberFormatException e) {
-      throw new IllegalArgumentException("Expected integer argument at position 0.");
-    }
+    value = parseInt(0);
     currentImage = cache.get(getArg(1));
     imageName = getArg(2);
   }
 
   @Override
   public void execute() {
-    new SimpleImageProcessor(currentImage, imageName, cache, (r, g, b) ->
-    {
-      return new int[]{
-          clamp(r + value),
-          clamp(g + value),
-          clamp(b + value)};
-    }){}.execute();
+    new SimpleImageProcessor(currentImage, imageName, cache, (r, g, b) -> new int[]{
+        clamp(r + value),
+        clamp(g + value),
+        clamp(b + value)}) {
+    }.execute();
   }
 }

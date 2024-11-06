@@ -24,4 +24,8 @@ public class Histogram {
   public int[][] getHistogram() {
     return histogram;
   }
+
+  public int getChannelValue(int channel, int value) {
+    return histogram[channel][value];
+  }
 }

@@ -49,6 +49,8 @@ public enum CommandEnum {
   HISTOGRAM(Histogram.class, "histogram"),
   COMPRESS(Compress.class, "compress"),
   GRAYSCALE(LumaComponent.class, "grayscale"),
+  COLOR_CORRECTION(ColorCorrection.class, "color-correct"),
+  LEVELS_ADJUSTMENT(LevelsAdjust.class, "levels-adjust"),
   ;
 
 
@@ -113,7 +115,7 @@ public enum CommandEnum {
           "Internal Error: The specified command" + commandName + " has no String constructor.");
     } catch (InvocationTargetException e) {
       throw new IllegalArgumentException(
-          "There was an error in constructor invocation of command : " + e.getCause().getMessage());
+          "ERROR : " + e.getCause().getMessage());
     } catch (InstantiationException e) {
       throw new InternalError("Internal Error: The specified command cannot be instantiated.");
     } catch (IllegalAccessException e) {
