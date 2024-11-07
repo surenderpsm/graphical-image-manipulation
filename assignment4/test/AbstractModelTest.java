@@ -1,8 +1,10 @@
 import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -470,5 +472,38 @@ public abstract class AbstractModelTest {
     }
     // All elements are equal
     return true;
+  }
+
+  protected static void writeImage(int[][][] array, String path){
+    // Initialize the 2D arrays for each channel
+    int[][][] channels = new int[3][4][4];
+    // Loop through the expected array and split into channels
+    for (int i = 0; i < 4; i++) {
+      for (int j = 0; j < 4; j++) {
+        channels[0][i][j] = array[i][j][0];
+        channels[1][i][j] = array[i][j][1];
+        channels[2][i][j] = array[i][j][2];
+      }
+    }
+    write3DArrayToFile(channels, path);
+  }
+
+  private static void write3DArrayToFile(int[][][] array, String path) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
+      for (int i = 0; i < array.length; i++) {  // Loop through each 2D array layer
+        for (int[] row : array[i]) {  // Write each row in the current 2D array
+          for (int value : row) {
+            writer.write(value + " ");
+          }
+          writer.newLine(); // Move to the next line after each row
+        }
+        if (i < array.length - 1) {  // Add a blank line between layers
+          writer.newLine();
+        }
+      }
+      System.out.println("3x4x4 array written to file at " + path);
+    } catch (IOException e) {
+      throw new RuntimeException("Error writing 3x4x4 array to file", e);
+    }
   }
 }
