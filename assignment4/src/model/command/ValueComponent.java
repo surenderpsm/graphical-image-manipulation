@@ -2,7 +2,7 @@ package model.command;
 
 import model.Cache;
 
-class ValueComponent extends SimpleImageProcessor {
+class ValueComponent extends Abstract2ArgSimpleImageProcessor {
 
 
   public ValueComponent(String rawArguments, Cache cache) {

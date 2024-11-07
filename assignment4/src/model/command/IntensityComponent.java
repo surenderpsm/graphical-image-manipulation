@@ -2,7 +2,7 @@ package model.command;
 
 import model.Cache;
 
-class IntensityComponent extends SimpleImageProcessor {
+class IntensityComponent extends Abstract2ArgSimpleImageProcessor {
 
   public IntensityComponent(String rawArguments, Cache cache) {
     super(rawArguments, cache, (r, g, b) ->

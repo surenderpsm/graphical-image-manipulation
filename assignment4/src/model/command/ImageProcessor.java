@@ -48,7 +48,14 @@ import model.Image;
  * @see PixelTransformer
  * @see Image
  */
-abstract class ImageProcessor extends Abstract2ArgCommand {
+abstract class ImageProcessor extends AbstractCommand {
+
+  protected int workingWidth;
+  protected int height;
+  protected int width;
+  protected int split = 100;
+
+  protected int[][][] imageArray;
 
   /**
    * Constructs a new ImageProcessor with the specified raw arguments.
@@ -58,6 +65,7 @@ abstract class ImageProcessor extends Abstract2ArgCommand {
    */
   protected ImageProcessor(String rawArguments, Cache cache) {
     super(rawArguments, cache);
+    checkForSplit();
   }
 
   /**
@@ -68,6 +76,7 @@ abstract class ImageProcessor extends Abstract2ArgCommand {
    */
   protected ImageProcessor(Image image, String imageName, Cache cache) {
     super(image, imageName, cache);
+    checkForSplit();
   }
 
   /**
@@ -100,7 +109,30 @@ abstract class ImageProcessor extends Abstract2ArgCommand {
   }
 
   public void execute() {
+    calculateWorkingWidth();
     processImage();
+  }
+
+  private void checkForSplit() {
+    try {
+      // Check if the 2nd last argument is "split"
+      if (getArg(numberOfArgs() - 2).equals("split")) {
+        // can the last argument be parsed?
+        split = parseInt(numberOfArgs() - 1, 0, 100);
+        setNumberofArgs(numberOfArgs() - 2);
+      }
+    } catch (IndexOutOfBoundsException ignored) {
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException("Incorrect use of split command: " + e.getMessage());
+    }
+  }
+
+  private void calculateWorkingWidth() {
+    if (width == 0) {
+      throw new IllegalStateException("Internal error: width not set.");
+    }
+    workingWidth = (int) ((double) split / 100 * width);
+    imageArray = (split < 100) ? currentImage.getImageArray().clone() : new int[height][width][3];
   }
 
 }

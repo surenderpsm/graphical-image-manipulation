@@ -3,7 +3,7 @@ package model.command;
 import model.Cache;
 import model.Histogram;
 
-class ColorCorrection extends SimpleImageProcessor {
+class ColorCorrection extends Abstract2ArgSimpleImageProcessor {
 
   Histogram histogram;
   int average;

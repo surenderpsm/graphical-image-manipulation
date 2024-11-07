@@ -6,25 +6,16 @@ import model.Image;
 abstract class Filter extends ImageProcessor {
 
   private final double[][] filter;
-  private final int height;
-  private final int width;
   private final int filterRows;
   private final int filterColumns;
 
   protected Filter(String rawArguments, double[][] filter, Cache cache) {
     super(rawArguments, cache);
-    this.filter = filter;
-    this.height = currentImage.getHeight();
-    this.width = currentImage.getWidth();
-    this.filterRows = filter.length;
-    this.filterColumns = filter[0].length;
-  }
-
-  protected Filter(Image image,
-                   String imageName,
-                   Cache cache,
-                   double[][] filter) {
-    super(image, imageName, cache);
+    if (numberOfArgs() != 2) {
+      throw new IllegalArgumentException("Expected 2 arguments.");
+    }
+    currentImage = cache.get(getArg(0));
+    imageName = getArg(1);
     this.filter = filter;
     this.height = currentImage.getHeight();
     this.width = currentImage.getWidth();
@@ -34,14 +25,13 @@ abstract class Filter extends ImageProcessor {
 
   @Override
   protected void processImage() {
-    int[][][] imageArray = new int[height][width][3];
 
     int[][] redChannelDataPadded = createAndFillPaddedChannel(currentImage.getRedChannelData());
     int[][] greenChannelDataPadded = createAndFillPaddedChannel(currentImage.getGreenChannelData());
     int[][] blueChannelDataPadded = createAndFillPaddedChannel(currentImage.getBlueChannelData());
 
     for (int i = 0; i < height; i++) {
-      for (int j = 0; j < width; j++) {
+      for (int j = 0; j < workingWidth; j++) {
         double sumRed = 0;
         double sumGreen = 0;
         double sumBlue = 0;

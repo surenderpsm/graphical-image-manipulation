@@ -2,7 +2,7 @@ package model.command;
 
 import model.Cache;
 
-class LumaComponent extends SimpleImageProcessor {
+class LumaComponent extends Abstract2ArgSimpleImageProcessor {
 
   private static final double RED_WEIGHT = 0.2126;
   private static final double GREEN_WEIGHT = 0.7152;

@@ -1,10 +1,8 @@
 package model.command;
 
-import static model.command.ImageProcessor.clamp;
-
 import model.Cache;
 
-class LevelsAdjust extends AbstractCommand {
+class LevelsAdjust extends SimpleImageProcessor {
 
   final private int b;
   final private int m;
@@ -20,11 +18,17 @@ class LevelsAdjust extends AbstractCommand {
     w = parseInt(2, m, 255);
     currentImage = cache.get(getArg(3));
     imageName = getArg(4);
+    height = currentImage.getHeight();
+    width = currentImage.getWidth();
+    setTransformer((r, g, b) -> new int[]{
+        clamp(levelsAdjust(r)),
+        clamp(levelsAdjust(g)),
+        clamp(levelsAdjust(b)),});
   }
 
 
   // levels adjust function
-  public int levelsAdjust(int pValue) {
+  private int levelsAdjust(int pValue) {
     double A = b * b * (m - w) - b * (m * m - w * w) + w * m * m - m * w * w;
     double Ap = -b * (128 - 255) + 128 * w - 255 * m;
     double Aq = b * b * (128 - 255) + 255 * m * m - 128 * w * w;
@@ -34,14 +38,4 @@ class LevelsAdjust extends AbstractCommand {
     double r = Ar / A;
     return (int) ( p * pValue * pValue + q * pValue + r);
   }
-
-  @Override
-  public void execute() {
-    new SimpleImageProcessor(currentImage, imageName, cache, (r, g, b) -> new int[]{
-        clamp(levelsAdjust(r)),
-        clamp(levelsAdjust(g)),
-        clamp(levelsAdjust(b)),}) {
-    }.execute();
-  }
-
 }

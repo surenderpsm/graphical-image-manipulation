@@ -3,9 +3,7 @@ package model.command;
 
 import model.Cache;
 
-class ColorTransform extends SimpleImageProcessor {
-
-  protected final double[][] matrix;
+class ColorTransform extends Abstract2ArgSimpleImageProcessor {
 
   public ColorTransform(String rawArguments, double[][] matrix, Cache cache) {
     super(rawArguments, cache, (r, g, b) ->
@@ -16,6 +14,5 @@ class ColorTransform extends SimpleImageProcessor {
       }
       return result;
     });
-    this.matrix = matrix;
   }
 }
