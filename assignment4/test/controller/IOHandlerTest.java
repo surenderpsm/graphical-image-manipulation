@@ -142,7 +142,7 @@ public class IOHandlerTest {
    *
    * @throws IOException if the image file cannot be loaded
    */
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = UnsupportedOperationException.class)
   public void loadInvalidFormat() throws IOException {
     IOHandler ih = new IOHandler(model, "load", root + "parrot.invalid parrot");
   }
@@ -153,7 +153,7 @@ public class IOHandlerTest {
    *
    * @throws IOException if there is an issue saving the image
    */
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = UnsupportedOperationException.class)
   public void saveInvalidFormat() throws IOException {
     IOHandler ih = new IOHandler(model, "load", png + " parrot");
     ih = new IOHandler(model, "save", root + "parrot.invalid parrot");
@@ -165,7 +165,7 @@ public class IOHandlerTest {
    *
    * @throws IOException if the image file cannot be loaded
    */
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = UnsupportedOperationException.class)
   public void loadUnsupportedFormat() throws IOException {
     IOHandler ih = new IOHandler(model, "load", root + "parrot.gif parrot");
   }
@@ -176,7 +176,7 @@ public class IOHandlerTest {
    *
    * @throws IOException if there is an issue saving the image
    */
-  @Test(expected = IllegalArgumentException.class)
+  @Test(expected = UnsupportedOperationException.class)
   public void saveUnsupportedFormat() throws IOException {
     IOHandler ih = new IOHandler(model, "load", ppm + " parrot");
     ih = new IOHandler(model, "save", root + "parrot.gif parrot");

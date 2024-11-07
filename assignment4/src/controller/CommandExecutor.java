@@ -5,23 +5,21 @@ import model.Model;
 
 
 /**
- * The {@code CommandExecutor} class is responsible for executing a command given a user input.
+ * The {@code CommandExecutor} class is responsible for parsing and executing a command based on
+ * user input.
  *
- * <p>This class processes the input command string, determines which command to executeWith
- * from the {@code CommandEnum} enum, and invokes the corresponding command's execution method.
- * </p>
+ * <p>This class processes the input command string, identifies the appropriate action,
+ * and delegates the execution to the corresponding method based on the command type.</p>
  *
- * <p>If an error occurs during command
- * instantiation or execution, an {@code UnsupportedOperationException} is thrown.
- * </p>
+ * <p>If an error occurs during the parsing or execution of the command, an
+ * {@code IllegalArgumentException} or {@code UnsupportedOperationException} may be thrown.</p>
  *
  * <h2>Example Usage:</h2>
  * <pre>
- *     CommandExecutor executor = new CommandExecutor("load somefile.png koala");
- *     executor.executeWith();
- *     boolean success = executor.isSuccess();
+ *     new CommandExecutor(model, "load somefile.png koala");
  * </pre>
  */
+
 class CommandExecutor {
 
   /**
@@ -44,10 +42,12 @@ class CommandExecutor {
     } catch (IndexOutOfBoundsException e) {
       throw new IllegalArgumentException("Insufficient arguments.");
     }
+    // check if a IO command.
     if (command.equals("load") || command.equals("save")) {
       new IOHandler(model, command, args);
       return;
     }
+    // otherwise pass it to the model.
     model.execute(command, args);
   }
 }
