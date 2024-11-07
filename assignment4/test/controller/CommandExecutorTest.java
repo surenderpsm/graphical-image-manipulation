@@ -22,7 +22,7 @@ public class CommandExecutorTest {
    */
   @Before
   public void setUp() throws Exception {
-    CommandExecutor ce = new CommandExecutor(model, "load res/img/parrot.jpg parrot");
+    CommandExecutor ce = new CommandExecutor(model, "load res/img/other/parrot.jpg parrot");
   }
 
   /**
@@ -52,7 +52,7 @@ public class CommandExecutorTest {
    */
   @Test(expected = None.class)
   public void testIOCommand() throws IOException {
-    CommandExecutor ce = new CommandExecutor(model, "load res/img/parrot.jpg parrot");
+    CommandExecutor ce = new CommandExecutor(model, "load res/img/other/parrot.jpg parrot");
     ce = new CommandExecutor(model, "save res/img/parrot.jpg parrot");
   }
 

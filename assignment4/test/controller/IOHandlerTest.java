@@ -16,10 +16,10 @@ import org.junit.Test.None;
 public class IOHandlerTest {
 
   Model model = new Model();
-  String root = "res/img/other/";
-  String jpg = root + "parrot.jpg";
-  String ppm = root + "parrot.ppm";
-  String png = root + "parrot.png";
+  String root = "res/img/";
+  String jpg = root + "other/parrot.jpg";
+  String ppm = root + "other/parrot.ppm";
+  String png = root + "other/parrot.png";
 
   /**
    * Test loading an existing image file.
