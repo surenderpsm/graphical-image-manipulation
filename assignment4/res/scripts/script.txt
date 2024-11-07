@@ -101,26 +101,38 @@ save res/img/output/histogram/flowers.jpg res
 
 # compress donuts
 compress 95 donuts res
+histogram res histogram
+save res/img/output/histogram/compression/donut_95.jpg histogram
 save res/img/output/compression/donut_95.jpg res
 
 # compress donuts
 compress 90 donuts res
+histogram res histogram
+save res/img/output/histogram/compression/donut_90.jpg histogram
 save res/img/output/compression/donut_90.jpg res
 
 # compress donuts
 compress 80 donuts res
+histogram res histogram
+save res/img/output/histogram/compression/donut_80.jpg histogram
 save res/img/output/compression/donut_80.jpg res
 
 # compress donuts
 compress 60 donuts res
+histogram res histogram
+save res/img/output/histogram/compression/donut_60.jpg histogram
 save res/img/output/compression/donut_60.jpg res
 
 # compress donuts
 compress 40 donuts res
+histogram res histogram
+save res/img/output/histogram/compression/donut_40.jpg histogram
 save res/img/output/compression/donut_40.jpg res
 
 # compress donuts
 compress 20 donuts res
+histogram res histogram
+save res/img/output/histogram/compression/donut_20.jpg histogram
 save res/img/output/compression/donut_20.jpg res
 
 # grayscale donuts split 50
