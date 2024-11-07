@@ -26,9 +26,9 @@ public class App {
       try (FileInputStream fileInputStream = new FileInputStream(filePath)) {
         new Controller(fileInputStream, System.out).run(new Model());
       } catch (FileNotFoundException e) {
-        System.err.println("File not found: " + filePath);
+        System.out.println("File not found: " + filePath);
       } catch (IOException e) {
-        System.err.println("Error reading file: " + filePath);
+        System.out.println("Error reading file: " + filePath);
       }
     }
     else {
