@@ -31,25 +31,29 @@ public class Controller {
       out.println("Enter command: ");
       String command = sc.nextLine();
       String[] tokens = command.split(" ");
-      command = tokens[0].toLowerCase();
-      if (command.equals("run")) {
-        try {
-          List<String> scriptCommands = new ScriptHandler(tokens[1]).getCommands();
-          for (String cmd : scriptCommands) {
-            out.print("EXC: " + cmd);
-            new CommandExecutor(model, cmd);
-            out.println("\tSTATUS: DONE");
-          }
-        } catch (Exception e) {
-          out.println("\n\n: " + e.getMessage());
+      String commandHead = tokens[0].toLowerCase();
+      if (commandHead.equals("run")) {
+        List<String> scriptCommands = new ScriptHandler(tokens[1]).getCommands();
+        for (String cmd : scriptCommands) {
+          out.print("EXC: " + cmd);
+          commandRunner(model, cmd);
         }
       }
-      else if (command.equals("quit")) {
+      else if (commandHead.equals("quit")) {
         break;
       }
       else {
-        out.println("ERROR: Unknown command: " + command);
+        commandRunner(model, command);
       }
+    }
+  }
+
+  private void commandRunner(Model model, String command) {
+    try {
+      new CommandExecutor(model, command);
+      out.println("\tSTATUS: DONE");
+    } catch (Exception e) {
+      out.println(e.getMessage());
     }
   }
 

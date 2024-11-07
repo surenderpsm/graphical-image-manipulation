@@ -36,8 +36,14 @@ class CommandExecutor {
    */
   public CommandExecutor(Model model, String commandString) throws IOException {
     String[] tokens = commandString.split(" ", 2);
-    String command = tokens[0];
-    String args = tokens[1];
+    String command = null;
+    String args = null;
+    try {
+      command = tokens[0];
+      args = tokens[1];
+    } catch (IndexOutOfBoundsException e) {
+      throw new IllegalArgumentException("Insufficient arguments.");
+    }
     if (command.equals("load") || command.equals("save")) {
       new IOHandler(model, command, args);
       return;

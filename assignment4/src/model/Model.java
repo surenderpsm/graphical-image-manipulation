@@ -46,7 +46,7 @@ public class Model implements ModelRunner, ImageCacheProvider, HistogramCachePro
         return;
       }
     }
-    throw new UnsupportedOperationException("User Error: Input command not found.");
+    throw new UnsupportedOperationException("User Error: Input command \""+command+"\" not found.");
   }
 
   @Override

@@ -14,7 +14,7 @@ class ScriptHandler {
     file = new File(path);
   }
 
-  public List<String> getCommands() throws FileNotFoundException {
+  public List<String> getCommands() {
     List<String> commands = new ArrayList<>();
     try (Scanner sc = new Scanner(file)) {
       while (sc.hasNextLine()) {
@@ -24,7 +24,7 @@ class ScriptHandler {
         }
       }
     } catch (FileNotFoundException e) {
-      throw new FileNotFoundException("File not found: The specified path is invalid.");
+      throw new IllegalArgumentException("File not found: The specified path is invalid.");
     }
     return commands;
   }
