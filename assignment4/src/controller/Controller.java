@@ -71,12 +71,14 @@ public class Controller {
     try {
       // Only execute commands that aren't comments or empty
       if (!command.startsWith("#") && !command.isEmpty()) {
-        out.print("EXC: " + command); // Print the command being executed
+        out.println("EXC: " + command); // Print the command being executed
         new CommandExecutor(model, command); // Execute the command on the model
-        out.println("\tSTATUS: DONE"); // Print status if the command was successfully executed
+        out.println("\nSTATUS: DONE"); // Print status if the command was successfully executed
+        out.println("--------------------------\n");
       }
     } catch (Exception e) {
       out.println("\n" + e.getMessage()); // Print any exceptions that occur during execution
+      out.println("--------------------------\n");
     }
   }
 
