@@ -1,7 +1,5 @@
 package model.command;
 
-//import java.lang.reflect.InvocationTargetException;
-
 import model.Cache;
 import model.Image;
 
@@ -11,11 +9,13 @@ abstract class AbstractCommand implements Command {
   protected final String[] args;
   protected Image currentImage;
   protected String imageName;
+  private int numberofArgs;
 
   protected final Cache cache;
 
   protected AbstractCommand(String rawArguments, Cache cache) {
     args = rawArguments.split(" ");
+    numberofArgs = args.length;
     this.cache = cache;
   }
 
@@ -24,6 +24,7 @@ abstract class AbstractCommand implements Command {
    */
   protected AbstractCommand(Image image, String imageName, Cache cache) {
     args = null;
+    numberofArgs = 0;
     this.imageName = imageName;
     currentImage = image;
     this.cache = cache;
@@ -32,9 +33,11 @@ abstract class AbstractCommand implements Command {
   protected String getArg(int argumentNumber) throws IndexOutOfBoundsException {
     return args[argumentNumber];
   }
-
+  protected void setNumberofArgs(int numberofArgs) {
+    this.numberofArgs = numberofArgs;
+  }
   protected int numberOfArgs() {
-    return args.length;
+    return numberofArgs;
   }
 
   protected int parseInt(int argumentNumber, int min, int max) {
