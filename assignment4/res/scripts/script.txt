@@ -11,121 +11,121 @@ load res/img/other/donuts.jpg donuts
 load res/img/other/parrot.ppm sample-ppm
 
 # save the sample ppm as a jpg
-save res/img/out/sample.jpg sample-ppm
+save res/img/output/sample.jpg sample-ppm
 
 # brighten the flowers image by 50 and save
 brighten 10 flowers res
-save res/img/out/flowers_brighten50.jpg res
+save res/img/output/flowers_brighten50.jpg res
 
 # darken the parrot image by 45 and save
 brighten -45 parrot res
-save res/img/out/parrots_darken50.jpg res
+save res/img/output/parrots_darken50.jpg res
 
 # brighten flowers image by 60 and split 50 and save
 brighten 60 flowers res split 50
-save res/img/out/split/flowers_brighten60split50.jpg res
+save res/img/output/split/flowers_brighten60split50.jpg res
 
 # vertical flip flowers
 vertical-flip flowers res
-save res/img/out/flip/flowers_vflip.jpg res
+save res/img/output/flip/flowers_vflip.jpg res
 
 # horizontal flip parrot
 horizontal-flip parrot res
-save res/img/out/flip/parrot_hflip.jpg res
+save res/img/output/flip/parrot_hflip.jpg res
 
 # rgb split parrot, brighten red component by 30 and rgb combine (red tint)
 rgb-split parrot red green blue
 brighten 30 red red
 rgb-combine res red green blue
-save res/img/out/parrot_redTint.jpg res
+save res/img/output/parrot_redTint.jpg res
 
 # blur donuts
 blur donuts res
-save res/img/out/donuts_blurred.jpg res
+save res/img/output/donuts_blurred.jpg res
 
 # blur donuts and split 50
 blur donuts res split 50
-save res/img/out/split/donuts_blurSplit50.jpg res
+save res/img/output/split/donuts_blurSplit50.jpg res
 
 # sharpen flowers
 sharpen flowers res
-save res/img/out/flowers_sharpen.jpg res
+save res/img/output/flowers_sharpen.jpg res
 
 # sharpen flowers split 50
 sharpen flowers res split 50
-save res/img/out/split/flowers_sharpenSplit50.jpg res
+save res/img/output/split/flowers_sharpenSplit50.jpg res
 
 # sepia on donuts
 sepia donuts res
-save res/img/out/donuts_sepia.jpg res
+save res/img/output/donuts_sepia.jpg res
 
 # sepia on donuts split 50
 sepia donuts res split 50
-save res/img/out/split/donuts_sepiaSplit50.jpg res
+save res/img/output/split/donuts_sepiaSplit50.jpg res
 
 # red component on parrot
 red-component parrot res
-save res/img/out/red_component_parrot.jpg res
+save res/img/output/red_component_parrot.jpg res
 
 # green component on parrot
 green-component parrot res
-save res/img/out/green_component_parrot.jpg res
+save res/img/output/green_component_parrot.jpg res
 
 # blue component on parrot
 blue-component parrot res
-save res/img/out/blue_component_parrot.jpg res
+save res/img/output/blue_component_parrot.jpg res
 
 # value component for donuts
 value-component donuts res
-save res/img/out/donut_value_component.jpg res
+save res/img/output/donut_value_component.jpg res
 
 # intensity component for donuts
 intensity-component donuts res
-save res/img/out/donut_intensity_component.jpg res
+save res/img/output/donut_intensity_component.jpg res
 
 # luma component for donuts
 luma-component donuts res
-save res/img/out/donuts_luma_component.jpg res
+save res/img/output/donuts_luma_component.jpg res
 
 # histogram for donuts
 histogram donuts res
-save res/img/out/histogram/donuts.jpg res
+save res/img/output/histogram/donuts.jpg res
 
 # histogram for parrot
 histogram parrot res
-save res/img/out/histogram/parrot.jpg res
+save res/img/output/histogram/parrot.jpg res
 
 # histogram for flowers
 histogram flowers res
-save res/img/out/histogram/flowers.jpg res
+save res/img/output/histogram/flowers.jpg res
 
 # compress donuts
 compress 95 donuts res
-save res/img/out/compression/donut_95.jpg res
+save res/img/output/compression/donut_95.jpg res
 
 # compress donuts
 compress 90 donuts res
-save res/img/out/compression/donut_90.jpg res
+save res/img/output/compression/donut_90.jpg res
 
 # compress donuts
 compress 80 donuts res
-save res/img/out/compression/donut_80.jpg res
+save res/img/output/compression/donut_80.jpg res
 
 # compress donuts
 compress 60 donuts res
-save res/img/out/compression/donut_60.jpg res
+save res/img/output/compression/donut_60.jpg res
 
 # compress donuts
 compress 40 donuts res
-save res/img/out/compression/donut_40.jpg res
+save res/img/output/compression/donut_40.jpg res
 
 # compress donuts
 compress 20 donuts res
-save res/img/out/compression/donut_20.jpg res
+save res/img/output/compression/donut_20.jpg res
 
 # grayscale donuts split 50
 grayscale donuts res split 50
-save res/img/out/split/donut_grayscale.jpg res
+save res/img/output/split/donut_grayscale.jpg res
 
 # color correct donuts and generate histogram.
 # res is for saving
@@ -133,8 +133,8 @@ color-correct donuts res split 75
 # actual is to pass to histogram.
 color-correct donuts actual
 histogram actual cc
-save res/img/out/histogram/donuts_color_corrected.jpg cc
-save res/img/out/color-correction/donuts.jpg res
+save res/img/output/histogram/donuts_color_corrected.jpg cc
+save res/img/output/color-correction/donuts.jpg res
 
 
 # color correct parrot
@@ -142,37 +142,37 @@ color-correct parrot res split 75
 # actual is to pass to histogram.
 color-correct parrot actual
 histogram actual cc
-save res/img/out/histogram/parrot_color_corrected.jpg cc
-save res/img/out/color-correction/parrot.jpg res
+save res/img/output/histogram/parrot_color_corrected.jpg cc
+save res/img/output/color-correction/parrot.jpg res
 
 # color correct flowers
 color-correct flowers res split 75
 # actual is to pass to histogram.
 color-correct flowers actual
 histogram actual cc
-save res/img/out/histogram/flowers_color_corrected.jpg cc
-save res/img/out/color-correction/flowers.jpg res
+save res/img/output/histogram/flowers_color_corrected.jpg cc
+save res/img/output/color-correction/flowers.jpg res
 
 # levels-adjust parrot
 levels-adjust 0 90 245 parrot res split 50
 # actual is to pass to histogram.
 levels-adjust 0 90 245 parrot actual
 histogram actual cc
-save res/img/out/histogram/parrot_level_adjusted.jpg cc
-save res/img/out/levels-adjust/parrot.jpg res
+save res/img/output/histogram/parrot_level_adjusted.jpg cc
+save res/img/output/levels-adjust/parrot.jpg res
 
 # levels-adjust flowers
 levels-adjust 0 196 250 flowers res split 75
 # actual is to pass to histogram.
 levels-adjust 0 196 250 flowers actual
 histogram actual cc
-save res/img/out/histogram/flowers_level_adjusted.jpg cc
-save res/img/out/levels-adjust/flowers.jpg res
+save res/img/output/histogram/flowers_level_adjusted.jpg cc
+save res/img/output/levels-adjust/flowers.jpg res
 
 # levels-adjust donuts
 levels-adjust 0 90 225 donuts res split 50
 # actual is to pass to histogram.
 levels-adjust 0 90 225 donuts actual
 histogram actual cc
-save res/img/out/histogram/donuts_level_adjusted.jpg cc
-save res/img/out/levels-adjust/donuts.jpg res
+save res/img/output/histogram/donuts_level_adjusted.jpg cc
+save res/img/output/levels-adjust/donuts.jpg res
