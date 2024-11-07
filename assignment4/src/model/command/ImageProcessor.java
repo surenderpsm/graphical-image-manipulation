@@ -119,7 +119,7 @@ abstract class ImageProcessor extends AbstractCommand {
       if (getArg(numberOfArgs() - 2).equals("split")) {
         // can the last argument be parsed?
         split = parseInt(numberOfArgs() - 1, 0, 100);
-        setNumberofArgs(numberOfArgs() - 2);
+        setNumberOfArgs(numberOfArgs() - 2);
       }
     } catch (IndexOutOfBoundsException ignored) {
     } catch (IllegalArgumentException e) {
