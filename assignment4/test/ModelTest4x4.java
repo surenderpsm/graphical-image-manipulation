@@ -15,7 +15,7 @@ public class ModelTest4x4 extends AbstractModelTest {
 
   @Override
   protected String getRoot() {
-    return "res/img4x4/";
+    return "assignment4/res/img4x4/";
   }
 
   /**
@@ -220,6 +220,7 @@ public class ModelTest4x4 extends AbstractModelTest {
    */
   @Test(expected = IllegalArgumentException.class)
   public void splitOnRedComponent(){
+
     model.execute("red-component", "image rimage split 10");
   }
 
@@ -228,6 +229,7 @@ public class ModelTest4x4 extends AbstractModelTest {
    */
   @Test(expected = IllegalArgumentException.class)
   public void splitOnGreenComponent(){
+
     model.execute("green-component", "image gimage split 10");
   }
 
@@ -236,6 +238,7 @@ public class ModelTest4x4 extends AbstractModelTest {
    */
   @Test(expected = IllegalArgumentException.class)
   public void splitOnBlueComponent(){
+
     model.execute("blue-component", "image bimage split 10");
   }
 
@@ -244,6 +247,42 @@ public class ModelTest4x4 extends AbstractModelTest {
    */
   @Test(expected = IllegalArgumentException.class)
   public void splitOnHistogram(){
+
     model.execute("histogram", "image histogram split 10");
   }
+
+  /**
+   * Apply blur on 25% of the image.
+   */
+  @Test
+  public void splitOnBlur(){
+    int[][][] expected = get3DArrayFromFile(getRoot() + "BlurSplit25.txt");
+    model.execute("blur", "image blurSplit split 25");
+    int[][][] arr = model.getImage("blurSplit");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply blur on 50% of the image.
+   */
+  @Test
+  public void splitOnSharpen(){
+    int[][][] expected = get3DArrayFromFile(getRoot() + "SharpenSplit50.txt");
+    model.execute("sharpen", "image sharpenSplit split 50");
+    int[][][] arr = model.getImage("sharpenSplit");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply Sepia tone on 75% of the image.
+   */
+  @Test
+  public void splitOnSepia(){
+    int[][][] expected = get3DArrayFromFile(getRoot() + "SepiaSplit75.txt");
+    model.execute("sepia", "image sepiaSplit split 75");
+    int[][][] arr = model.getImage("sepiaSplit");
+    assertTrue(isEqual(expected, arr));
+  }
+
+
 }
