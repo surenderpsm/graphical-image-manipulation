@@ -12,7 +12,7 @@ import org.junit.Test;
 
 /**
  * Unit tests for the {@link Controller} class. This class tests various functionalities of the
- * {@link Controller}, such as executing commands from a script, handling unknown commands, and
+ * {@link Controller}, such as executing commands from a script.txt, handling unknown commands, and
  * processing a quit command.
  */
 public class ControllerTest {
@@ -32,7 +32,7 @@ public class ControllerTest {
   }
 
   /**
-   * Tests if the 'run' command correctly executes a script containing valid commands. Ensures that
+   * Tests if the 'run' command correctly executes a script.txt containing valid commands. Ensures that
    * the output contains the expected execution of commands and their statuses.
    *
    * @throws Exception if an error occurs during execution
@@ -94,7 +94,7 @@ public class ControllerTest {
   }
 
   /**
-   * Tests if the Controller correctly handles the case where a script file does not exist. Verifies
+   * Tests if the Controller correctly handles the case where a script.txt file does not exist. Verifies
    * that the appropriate error message is displayed.
    */
   @Test
@@ -106,7 +106,7 @@ public class ControllerTest {
     Controller controller = new Controller(inContent, System.out) {
       @Override
       public void run(Model model) {
-        // Simulating the scenario when the script does not exist
+        // Simulating the scenario when the script.txt does not exist
         System.out.println("ERROR: Script not found");
       }
     };
