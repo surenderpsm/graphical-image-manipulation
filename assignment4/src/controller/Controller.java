@@ -28,14 +28,15 @@ public class Controller {
     Scanner sc = new Scanner(in);
 
     while (true) {
-      out.println("Enter command: ");
+      if (!sc.hasNextLine()) {
+        break;
+      }
       String command = sc.nextLine();
       String[] tokens = command.split(" ");
       String commandHead = tokens[0].toLowerCase();
       if (commandHead.equals("run")) {
         List<String> scriptCommands = new ScriptHandler(tokens[1]).getCommands();
         for (String cmd : scriptCommands) {
-          out.print("EXC: " + cmd);
           commandRunner(model, cmd);
         }
       }
@@ -50,10 +51,13 @@ public class Controller {
 
   private void commandRunner(Model model, String command) {
     try {
-      new CommandExecutor(model, command);
-      out.println("\tSTATUS: DONE");
+      if (!command.startsWith("#") && !command.isEmpty()) {
+        out.print("EXC: " + command);
+        new CommandExecutor(model, command);
+        out.println("\tSTATUS: DONE");
+      }
     } catch (Exception e) {
-      out.println(e.getMessage());
+      out.println("\n"+e.getMessage());
     }
   }
 

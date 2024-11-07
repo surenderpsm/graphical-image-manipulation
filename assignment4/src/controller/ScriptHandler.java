@@ -19,9 +19,7 @@ class ScriptHandler {
     try (Scanner sc = new Scanner(file)) {
       while (sc.hasNextLine()) {
         String line = sc.nextLine().trim();
-        if (!line.startsWith("#") && !line.isEmpty()) {
-          commands.add(line);
-        }
+        commands.add(line);
       }
     } catch (FileNotFoundException e) {
       throw new IllegalArgumentException("File not found: The specified path is invalid.");
