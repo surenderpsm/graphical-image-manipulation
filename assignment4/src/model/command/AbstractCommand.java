@@ -9,13 +9,13 @@ abstract class AbstractCommand implements Command {
   protected final String[] args;
   protected Image currentImage;
   protected String imageName;
-  private int numberofArgs;
+  private int numberOfArgs;
 
   protected final Cache cache;
 
   protected AbstractCommand(String rawArguments, Cache cache) {
     args = rawArguments.split(" ");
-    numberofArgs = args.length;
+    numberOfArgs = args.length;
     this.cache = cache;
   }
 
@@ -24,20 +24,24 @@ abstract class AbstractCommand implements Command {
    */
   protected AbstractCommand(Image image, String imageName, Cache cache) {
     args = null;
-    numberofArgs = 0;
+    numberOfArgs = 0;
     this.imageName = imageName;
     currentImage = image;
     this.cache = cache;
   }
 
-  protected String getArg(int argumentNumber) throws IndexOutOfBoundsException {
-    return args[argumentNumber];
+  protected String getArg(int argumentNumber) {
+    try {
+      return args[argumentNumber];
+    } catch (IndexOutOfBoundsException e) {
+      throw new IndexOutOfBoundsException("Insufficient arguments.");
+    }
   }
-  protected void setNumberofArgs(int numberofArgs) {
-    this.numberofArgs = numberofArgs;
+  protected void setNumberOfArgs(int numberOfArgs) {
+    this.numberOfArgs = numberOfArgs;
   }
   protected int numberOfArgs() {
-    return numberofArgs;
+    return numberOfArgs;
   }
 
   protected int parseInt(int argumentNumber, int min, int max) {
