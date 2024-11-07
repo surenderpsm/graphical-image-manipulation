@@ -1,5 +1,8 @@
 import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -47,7 +50,6 @@ public class ModelTest4x4 extends AbstractModelTest {
     int[][][] expected = get3DArrayFromFile(getRoot() + "compression.txt");
     model.execute("compress", "60 image compressed");
     int[][][] arr = model.getImage("compressed");
-    System.out.println(Arrays.deepToString(arr));
     assertTrue(isEqual(expected, arr));
   }
 
@@ -95,7 +97,6 @@ public class ModelTest4x4 extends AbstractModelTest {
         , 0, 0, 0, 0, 0, 0, 0}};
     model.execute("histogram", "image histogram");
     int[][] arr = model.getHistogram("histogram");
-    System.out.println(Arrays.deepToString(arr));
     assertTrue(isEqual2D(expected, arr));
   }
 
@@ -104,14 +105,9 @@ public class ModelTest4x4 extends AbstractModelTest {
    */
   @Test
   public void ColorCorrectionTest() {
-    int[][][] expected = {{{142, 119, 122}, {147, 133, 140}, {155, 152, 153}, {113, 112, 126}},
-        {{135, 111, 119}, {119, 119, 141}, {134, 158, 170}, {120, 131, 144}},
-        {{109, 104, 129}, {89, 93, 129}, {123, 113, 133}, {143, 163, 156}},
-        {{88, 103, 131}, {83, 82, 119}, {153, 149, 150}, {119, 128, 135}}};
-
+    int[][][] expected = get3DArrayFromFile(getRoot() + "colorCorrection.txt");
     model.execute("color-correct", "image colorCorrected");
     int[][][] arr = model.getImage("colorCorrected");
-    System.out.println(Arrays.deepToString(arr));
     assertTrue(isEqual(expected, arr));
   }
 
@@ -120,19 +116,134 @@ public class ModelTest4x4 extends AbstractModelTest {
    */
   @Test
   public void levelsAdjustTest() {
-    int[][][] expected  =  {
-        {{199, 95, 90}, {204, 109, 108}, {212, 128, 121}, {170, 88, 94}},
-        {{192, 87, 87}, {176, 95, 109}, {191, 134, 138}, {177, 107, 112}},
-        {{166, 80, 97}, {146, 69, 97}, {180, 89, 101}, {200, 139, 124}},
-        {{145, 79, 99}, {140, 58, 87}, {210, 125, 118}, {176, 104, 103}}
-    };
-
+    int[][][] expected = get3DArrayFromFile(getRoot() + "levelsAdjust.txt");
+    // levels-adjust b m w image-name dest-image-name
     model.execute("levels-adjust", "0 128 255 image levelAdjusted");
-    // levels-adjust b m w image-name dest-image-name"
     int[][][] arr = model.getImage("levelAdjusted");
-    System.out.println(Arrays.deepToString(arr));
-    System.out.println(Arrays.deepToString(expected));
     assertTrue(isEqual(expected, arr));
   }
 
+  /**
+   * Apply "brighten 50" on only first 50% of the image.
+   */
+  @Test
+  public void splitOnBrightenTest() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "brighten50split50.txt");
+    model.execute("brighten", "50 image brighten-by-50-split split 50");
+    int[][][] arr = model.getImage("brighten-by-50-split");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply "luma" on 25% of image.
+   */
+  @Test
+  public void splitOnLumaComponent(){
+    int[][][] expected = get3DArrayFromFile(getRoot() + "lumaSplit25.txt");
+    model.execute("luma-component", "image luma-split-25 split 25");
+    int[][][] arr = model.getImage("luma-split-25");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply "brighten -10" on 100% of image.
+   */
+  @Test
+  public void splitOnDarkenTest() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "darken.txt");
+    model.execute("brighten", "-10 image darkened split 100");
+    int[][][] arr = model.getImage("darkened");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply "color-correct" on 75% of image.
+   */
+  @Test
+  public void splitOnColorCorrect() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "colorCorrectSplit75.txt");
+    model.execute("color-correct", "image colorCorrected split 75");
+    int[][][] arr = model.getImage("colorCorrected");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply "levels-adjust" on 20% of the image.
+   */
+  @Test
+  public void splitOnLevelAdjust() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "levelsAdjustSplit25.txt");
+    model.execute("levels-adjust", "0 128 255 image levelAdjusted split 20");
+    int[][][] arr = model.getImage("levelAdjusted");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply "value-component" on 0% of the image.
+   */
+  @Test
+  public void splitOnValueComponent(){
+    int[][][] expected = get3DArrayFromFile(getRoot() + "original.txt");
+    model.execute("value-component", "image valueComponent split 0");
+    int[][][] arr = model.getImage("valueComponent");
+  }
+
+  /**
+   * Apply intensity-component on 90% of the image.
+   */
+  @Test
+  public void splitOnIntensityComponent(){
+    int[][][] expected = get3DArrayFromFile(getRoot() + "IntensityComponentSplit75.txt");
+    model.execute("intensity-component", "image intensityComponent split 90");
+    int[][][] arr = model.getImage("intensityComponent");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply split operation on horizontal flip.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void splitOnHorizontalFlip(){
+    model.execute("horizontal-flip", "image horizontal-flip split 10");
+  }
+
+  /**
+   * Apply split operation on vertical flip.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void splitOnVerticalFlip(){
+    model.execute("vertical-flip", "image vertical-flip split 10");
+  }
+
+  /**
+   * Apply split operation on red component.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void splitOnRedComponent(){
+    model.execute("red-component", "image rimage split 10");
+  }
+
+  /**
+   * Apply split operation on green component.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void splitOnGreenComponent(){
+    model.execute("green-component", "image gimage split 10");
+  }
+
+  /**
+   * Apply split operation on blue component.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void splitOnBlueComponent(){
+    model.execute("blue-component", "image bimage split 10");
+  }
+
+  /**
+   * Add split on Histogram.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void splitOnHistogram(){
+    model.execute("histogram", "image histogram split 10");
+  }
 }
