@@ -42,7 +42,10 @@ Explanation of Commands in the Script
 - save res/img/parrot-sharpen-sepia.jpg sepia-parrot: Saves the sepia-toned image.
 
 
-## Image License
-The image used in res/img/parrot.jpg is:
+## Image Licenses
 
-"Blue Orange and Green Bird on Yellow Flower" by Mark Broadhurst, licensed under CC BY 4.0.
+Photo by mark broadhurst: https://www.pexels.com/photo/blue-orange-and-green-bird-on-yellow-flower-105808/
+
+Photo by Srikanth Popuri: https://www.pexels.com/photo/close-up-photography-of-egyptian-starcluster-713777/
+
+Photo by Lucie Liz: https://www.pexels.com/photo/doughnuts-on-pink-surface-4945142/
