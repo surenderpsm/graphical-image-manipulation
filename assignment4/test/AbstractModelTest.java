@@ -442,4 +442,33 @@ public abstract class AbstractModelTest {
     // All elements are equal
     return true;
   }
+
+  /**
+   * is equal 2d to check 2 2D arrays if they are equal or not.
+   * @param array1 2d array 1
+   * @param array2 2d array 2
+   * @return boolean true or false
+   */
+  protected boolean isEqual2D(int[][] array1, int[][] array2) {
+    // Check if both arrays are the same size
+    if (array1.length != array2.length) {
+      return false;
+    }
+
+    // Compare elements in each dimension
+    for (int i = 0; i < array1.length; i++) {
+      if (array1[i].length != array2[i].length) {
+        return false;
+      }
+
+      for (int j = 0; j < array1[i].length; j++) {
+        // Compare individual elements
+        if (array1[i][j] != array2[i][j]) {
+          return false;
+        }
+      }
+    }
+    // All elements are equal
+    return true;
+  }
 }
