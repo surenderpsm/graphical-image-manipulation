@@ -8,8 +8,7 @@ import model.Cache;
 import model.Image;
 
 /**
- * Implements image compression using the Haar wavelet transform.
- * This class compresses images by:
+ * Implements image compression using the Haar wavelet transform. This class compresses images by:
  * 1. Converting the image to the Haar wavelet domain
  * 2. Zeroing out the smallest coefficients based on a compression ratio
  * 3. Converting back to the spatial domain
@@ -24,8 +23,9 @@ public class Compress extends AbstractCommand {
   /**
    * Constructs a new Compress processor.
    *
-   * @param rawArguments The command arguments in format: "compressionRatio sourceImage destinationImage"
-   * @param cache The cache storing the images
+   * @param rawArguments The command arguments in format: "compressionRatio sourceImage
+   *                     destinationImage"
+   * @param cache        The cache storing the images
    * @throws IllegalArgumentException if compression ratio is invalid or arguments are incorrect
    */
 
@@ -52,7 +52,7 @@ public class Compress extends AbstractCommand {
       int value = Integer.parseInt(ratio);
       if (value <= 0 || value >= 100) {
         throw new IllegalArgumentException(
-            "Invalid compression range. Expected between 0 and 100.");
+            "Invalid compression range. " + " Expected between 0 and 100.");
       }
       return value;
     } catch (NumberFormatException e) {
@@ -66,8 +66,8 @@ public class Compress extends AbstractCommand {
   @Override
   public void execute() {
     int[][][] imageArray = combineChannels(processColorChannel(currentImage.getRedChannelData()),
-        processColorChannel(currentImage.getGreenChannelData()),
-        processColorChannel(currentImage.getBlueChannelData()));
+                                           processColorChannel(currentImage.getGreenChannelData()),
+                                           processColorChannel(currentImage.getBlueChannelData()));
     cache.set(imageName, new Image(imageArray));
   }
 
@@ -87,9 +87,9 @@ public class Compress extends AbstractCommand {
   /**
    * Combines separate color channels into a single RGB image array.
    *
-   * @param red The processed red channel data
+   * @param red   The processed red channel data
    * @param green The processed green channel data
-   * @param blue The processed blue channel data
+   * @param blue  The processed blue channel data
    * @return A 3D array representing the combined RGB image
    */
 
@@ -110,6 +110,7 @@ public class Compress extends AbstractCommand {
 
   /**
    * method to clamp values between 0 and 255. to prevent them from going out of bound.
+   *
    * @param value to be clamped.
    * @return clamped value.
    */
@@ -146,8 +147,8 @@ public class Compress extends AbstractCommand {
   /**
    * Sets the smallest n% of wavelet coefficients to zero.
    *
-   * @param array The wavelet coefficients
-   * @param nPercent The percentage of coefficients to zero out (0-100)
+   * @param array          The wavelet coefficients
+   * @param nPercent       The percentage of coefficients to zero out (0-100)
    * @param blackThreshold The minimum threshold for considering coefficients
    */
 
@@ -160,7 +161,7 @@ public class Compress extends AbstractCommand {
   /**
    * Collects significant wavelet coefficients above the black threshold.
    *
-   * @param array The wavelet coefficients array
+   * @param array          The wavelet coefficients array
    * @param blackThreshold The minimum threshold for considering coefficients
    * @return A list of significant coefficient values
    */
@@ -178,9 +179,10 @@ public class Compress extends AbstractCommand {
   }
 
   /**
-   * Calculates the threshold value for coefficient preservation based on the desired compression ratio.
+   * Calculates the threshold value for coefficient preservation based on the desired compression
+   * ratio.
    *
-   * @param values List of coefficient values to analyze
+   * @param values   List of coefficient values to analyze
    * @param nPercent The percentage of coefficients to preserve
    * @return The threshold value for coefficient preservation
    */
@@ -193,7 +195,7 @@ public class Compress extends AbstractCommand {
   /**
    * Applies the threshold to the wavelet coefficients, zeroing out small values.
    *
-   * @param array The wavelet coefficients array
+   * @param array     The wavelet coefficients array
    * @param threshold The threshold value below which coefficients are zeroed
    */
   private static void applyThreshold(double[][] array, double threshold) {
@@ -208,6 +210,7 @@ public class Compress extends AbstractCommand {
 
   /**
    * performs the haar 2d wavelet transform.
+   *
    * @param arr 2d matrix
    * @return 2d haar transformed array.
    */
@@ -226,6 +229,7 @@ public class Compress extends AbstractCommand {
 
   /**
    * performs the haar 2d wavelet transform inverse.
+   *
    * @param arr 2d matrix
    * @return 2d haar inverse array.
    */
@@ -294,6 +298,7 @@ public class Compress extends AbstractCommand {
 
   /**
    * function to get a column of a matrix.
+   *
    * @param matrix 2d array.
    * @param column column index.
    * @return array containing column values.
@@ -308,6 +313,7 @@ public class Compress extends AbstractCommand {
 
   /**
    * function to calculate the required padding size.
+   *
    * @param arr 2d array.
    * @return padding size.
    */
@@ -322,7 +328,8 @@ public class Compress extends AbstractCommand {
 
   /**
    * method to padd the matrix.
-   * @param arr array to pad.
+   *
+   * @param arr  array to pad.
    * @param size size of the array.
    * @return padded matrix.
    */
@@ -336,8 +343,9 @@ public class Compress extends AbstractCommand {
 
   /**
    * method to forwards transform rows.
+   *
    * @param matrix matrix
-   * @param c till index
+   * @param c      till index
    */
 
   private void transformRows(double[][] matrix, int c) {
@@ -350,8 +358,9 @@ public class Compress extends AbstractCommand {
 
   /**
    * method to forward transform columns.
+   *
    * @param matrix matrix
-   * @param c till index
+   * @param c      till index
    */
   private void transformColumns(double[][] matrix, int c) {
     for (int j = 0; j < c; j++) {
@@ -365,8 +374,9 @@ public class Compress extends AbstractCommand {
 
   /**
    * method to inverse transform columns.
+   *
    * @param matrix matrix
-   * @param c till index
+   * @param c      till index
    */
   private void inverseColumns(double[][] matrix, int c) {
     for (int j = 0; j < c; j++) {
@@ -380,8 +390,9 @@ public class Compress extends AbstractCommand {
 
   /**
    * method to inverse transform rows.
+   *
    * @param matrix matrix
-   * @param c till index
+   * @param c      till index
    */
   private void inverseRows(double[][] matrix, int c) {
     for (int i = 0; i < c; i++) {

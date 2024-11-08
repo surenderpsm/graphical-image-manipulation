@@ -7,10 +7,9 @@ import java.util.Scanner;
 import model.Model;
 
 /**
- * The Controller class is responsible for managing the flow of input and output,
- * handling commands from the user, and interacting with the model.
- * It processes input commands, including script commands and regular commands,
- * and calls the appropriate methods on the model.
+ * The Controller class is responsible for managing the flow of input and output, handling commands
+ * from the user, and interacting with the model. It processes input commands, including script
+ * commands and regular commands, and calls the appropriate methods on the model.
  */
 public class Controller {
 
@@ -29,8 +28,8 @@ public class Controller {
   }
 
   /**
-   * Main method to run the controller. It processes commands in a loop until the user quits.
-   * It handles both individual commands and script files.
+   * Main method to run the controller. It processes commands in a loop until the user quits. It
+   * handles both individual commands and script files.
    *
    * @param model the model to interact with while processing commands
    */
@@ -61,6 +60,7 @@ public class Controller {
       }
     }
   }
+
   /**
    * Executes the given command on the model and handles any exceptions.
    *

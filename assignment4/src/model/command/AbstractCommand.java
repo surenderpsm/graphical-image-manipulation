@@ -4,8 +4,8 @@ import model.Cache;
 import model.Image;
 
 /**
- * Abstract base class for all command operations in the image processing system.
- * Provides common functionality for argument parsing, validation, and command execution.
+ * Abstract base class for all command operations in the image processing system. Provides common
+ * functionality for argument parsing, validation, and command execution.
  */
 
 abstract class AbstractCommand implements Command {
@@ -20,8 +20,9 @@ abstract class AbstractCommand implements Command {
 
   /**
    * constructor of this class.
+   *
    * @param rawArguments string arguments input.
-   * @param cache cache object.
+   * @param cache        cache object.
    */
 
   protected AbstractCommand(String rawArguments, Cache cache) {
@@ -32,9 +33,10 @@ abstract class AbstractCommand implements Command {
 
   /**
    * Alternative constructor for when commands are used within other commands.
-   * @param image The source image to process
+   *
+   * @param image     The source image to process
    * @param imageName The name to store the result under
-   * @param cache The cache for storing and retrieving images
+   * @param cache     The cache for storing and retrieving images
    */
   protected AbstractCommand(Image image, String imageName, Cache cache) {
     args = null;
@@ -46,6 +48,7 @@ abstract class AbstractCommand implements Command {
 
   /**
    * Retrieves an argument at the specified index.
+   *
    * @param argumentNumber the index of the argument required.
    * @return the string argument.
    */
@@ -59,6 +62,7 @@ abstract class AbstractCommand implements Command {
 
   /**
    * to set the number of arguments.
+   *
    * @param numberOfArgs no. of the arguments.
    */
   protected void setNumberOfArgs(int numberOfArgs) {
@@ -67,6 +71,7 @@ abstract class AbstractCommand implements Command {
 
   /**
    * to get the number of arguments.
+   *
    * @return no. of arguments.
    */
   protected int numberOfArgs() {
@@ -75,9 +80,10 @@ abstract class AbstractCommand implements Command {
 
   /**
    * Parses and validates an integer argument within specified bounds.
+   *
    * @param argumentNumber argument index.
-   * @param min value required for the arg.
-   * @param max value required for the arg.
+   * @param min            value required for the arg.
+   * @param max            value required for the arg.
    * @return integer argument.
    */
   protected int parseInt(int argumentNumber, int min, int max) {
@@ -94,6 +100,7 @@ abstract class AbstractCommand implements Command {
 
   /**
    * to parse integer arguments.
+   *
    * @param argumentNumber argument index.
    * @return the integer argument.
    */
@@ -109,14 +116,15 @@ abstract class AbstractCommand implements Command {
 
   /**
    * validate the integer argument. if the value out of bounds then throw error.
+   *
    * @param value of the integer argument.
-   * @param min bound of the arg.
-   * @param max bound of the arg.
+   * @param min   bound of the arg.
+   * @param max   bound of the arg.
    * @return value of the argument if it doesn't throw bounds error.
    */
   private int intValidation(int value, int min, int max) {
     if (value < min || value > max) {
-      throw new IllegalArgumentException("value must be between " +min +" and " + max);
+      throw new IllegalArgumentException("value must be between " + min + " and " + max);
     }
     return value;
   }

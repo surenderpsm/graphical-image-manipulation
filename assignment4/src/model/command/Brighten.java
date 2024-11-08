@@ -25,7 +25,7 @@ class Brighten extends SimpleImageProcessor {
     imageName = getArg(2);
     height = currentImage.getHeight();
     width = currentImage.getWidth();
-    setTransformer( (r, g, b) -> new int[]{
+    setTransformer((r, g, b) -> new int[]{
         clamp(r + value),
         clamp(g + value),
         clamp(b + value)});

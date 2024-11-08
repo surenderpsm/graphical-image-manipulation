@@ -15,6 +15,7 @@ public class Histogram {
   /**
    * this is the constructor that takes in an image object and makes a histogram out of it and.
    * stores it in the above 2d array.
+   *
    * @param image the image object for which we want the histogram.
    */
   public Histogram(Image image) {
@@ -36,6 +37,7 @@ public class Histogram {
 
   /**
    * getter function that returns a 2d array with our histogram data.
+   *
    * @return 2d histogram array.
    */
   public int[][] getHistogram() {
@@ -44,8 +46,9 @@ public class Histogram {
 
   /**
    * get the frequency value for a channel and a specific intensity value.
+   *
    * @param channel channel 0-r , 1-g, 2-b .
-   * @param value intensity value from 0-255.
+   * @param value   intensity value from 0-255.
    * @return frequency value.
    */
   public int getChannelFrequencyValue(int channel, int value) {

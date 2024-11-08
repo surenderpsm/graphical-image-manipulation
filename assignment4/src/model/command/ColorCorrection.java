@@ -2,11 +2,12 @@ package model.command;
 
 import model.Cache;
 import model.Histogram;
+
 /**
- * Performs color correction on an image by analyzing and adjusting the color channels
- * based on their peak frequencies and average values.
- * This processor identifies the peak frequency position for each color channel (R,G,B)
- * within the range of 10-245 and adjusts the channels to align with their average peak position.
+ * Performs color correction on an image by analyzing and adjusting the color channels based on
+ * their peak frequencies and average values. This processor identifies the peak frequency position
+ * for each color channel (R,G,B) within the range of 10-245 and adjusts the channels to align with
+ * their average peak position.
  */
 
 class ColorCorrection extends Abstract2ArgSimpleImageProcessor {
@@ -21,7 +22,7 @@ class ColorCorrection extends Abstract2ArgSimpleImageProcessor {
    * Constructs a new ColorCorrection processor.
    *
    * @param rawArguments The command arguments containing source and destination image names
-   * @param cache The cache storing the images
+   * @param cache        The cache storing the images
    * @throws IllegalArgumentException if the arguments are invalid or images cannot be found
    */
 
@@ -30,21 +31,20 @@ class ColorCorrection extends Abstract2ArgSimpleImageProcessor {
     histogram = new Histogram(currentImage);
     setChannelMax();
     setAverage();
-    setTransformer((r,g,b)-> new int[]{
+    setTransformer((r, g, b) -> new int[]{
         clamp(r + getChannelOffset(0)),
         clamp(g + getChannelOffset(1)),
-        clamp(b + getChannelOffset(2))
-    });
+        clamp(b + getChannelOffset(2))});
   }
 
   /**
-   * Identifies the peak frequency position for each color channel.
-   * Analyzes values between 10 and 245 to avoid extreme outliers.
+   * Identifies the peak frequency position for each color channel. Analyzes values between 10 and
+   * 245 to avoid extreme outliers.
    */
 
   private void setChannelMax() {
     // get peak for each channel.
-    for(int channel = 0; channel < 3; channel++) {
+    for (int channel = 0; channel < 3; channel++) {
       int peakFrequency = 0;
       int maxValue = 0;
       for (int i = 10; i < 245; i++) {
@@ -66,7 +66,7 @@ class ColorCorrection extends Abstract2ArgSimpleImageProcessor {
     for (int i : peakPositions) {
       average += i;
     }
-    this.average = (int) ((double) average/ peakPositions.length);
+    this.average = (int) ((double) average / peakPositions.length);
   }
 
   /**

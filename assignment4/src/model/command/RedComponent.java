@@ -4,8 +4,8 @@ import model.Cache;
 import model.Image;
 
 /**
- * Implementation of red channel extraction from an RGB(A) image.
- * Creates a new image containing only the red channel data.
+ * Implementation of red channel extraction from an RGB(A) image. Creates a new image containing
+ * only the red channel data.
  */
 class RedComponent extends AbstractColorComponent {
 
@@ -13,7 +13,7 @@ class RedComponent extends AbstractColorComponent {
    * Constructs a new RedComponent extractor.
    *
    * @param rawArguments Space-separated string of command arguments
-   * @param cache The cache containing stored images
+   * @param cache        The cache containing stored images
    */
   public RedComponent(String rawArguments, Cache cache) {
     super(rawArguments, cache);
@@ -22,9 +22,9 @@ class RedComponent extends AbstractColorComponent {
   /**
    * Alternative constructor for internal use.
    *
-   * @param image The source image
+   * @param image     The source image
    * @param imageName The name for the resulting image
-   * @param cache The cache for storing the result
+   * @param cache     The cache for storing the result
    */
   RedComponent(Image image, String imageName, Cache cache) {
     super(image, imageName, cache);

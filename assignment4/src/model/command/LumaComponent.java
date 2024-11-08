@@ -3,10 +3,9 @@ package model.command;
 import model.Cache;
 
 /**
- * Creates a grayscale image based on the luma (perceived brightness) of each pixel.
- * <p>
- * Uses standardized weights for RGB channels to calculate perceived brightness:
- * Red (0.2126), Green (0.7152), and Blue (0.0722).
+ * Creates a grayscale image based on the luma (perceived brightness) of each pixel. Uses
+ * standardized weights for RGB channels to calculate perceived brightness: Red (0.2126), Green
+ * (0.7152), and Blue (0.0722).
  */
 
 class LumaComponent extends Abstract2ArgSimpleImageProcessor {
@@ -19,13 +18,12 @@ class LumaComponent extends Abstract2ArgSimpleImageProcessor {
    * Constructs a new LumaComponent processor.
    *
    * @param rawArguments The command arguments containing source and destination image names
-   * @param cache The cache storing the images
+   * @param cache        The cache storing the images
    * @throws IllegalArgumentException if the arguments are invalid or images cannot be found
    */
 
   public LumaComponent(String rawArguments, Cache cache) {
-    super(rawArguments, cache, (r, g, b) ->
-    {
+    super(rawArguments, cache, (r, g, b) -> {
       int luma = clamp((int) Math.round(RED_WEIGHT * r + GREEN_WEIGHT * g + BLUE_WEIGHT * b));
       return new int[]{
           luma,

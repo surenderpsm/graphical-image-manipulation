@@ -1,6 +1,7 @@
 package model.command;
 
 import model.Cache;
+
 /**
  * class representing the command that Flips an image horizontally .
  */
@@ -11,7 +12,7 @@ class HorizontalFlip extends AbstractFlip {
    * Constructs a new HorizontalFlip processor.
    *
    * @param rawArguments The command arguments containing source and destination image names
-   * @param cache The cache storing the images
+   * @param cache        The cache storing the images
    * @throws IllegalArgumentException if the arguments are invalid or images cannot be found
    */
   public HorizontalFlip(String rawArguments, Cache cache) {

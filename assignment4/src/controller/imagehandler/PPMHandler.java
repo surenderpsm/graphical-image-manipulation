@@ -7,14 +7,15 @@ import java.io.IOException;
 import java.util.Scanner;
 
 /**
- * The {@code PPMHandler} class is responsible for handling PPM (Portable Pixel Map) image files.
- * It provides functionality to load and save PPM images using the "P3" text format, which stores
- * pixel values in a human-readable format.
+ * The {@code PPMHandler} class is responsible for handling PPM (Portable Pixel Map) image files. It
+ * provides functionality to load and save PPM images using the "P3" text format, which stores pixel
+ * values in a human-readable format.
  *
  * <p>
  * The {@code loadImage} method reads an image from a PPM file and returns the pixel data as a 3D
  * array, where each pixel is represented by an RGB triplet. The {@code saveImage} method writes
- * pixel data to a PPM file in the "P3" format, which includes the header information and the pixel values.
+ * pixel data to a PPM file in the "P3" format, which includes the header information and the pixel
+ * values.
  * </p>
  *
  * <h3>Usage Example:</h3>
@@ -44,12 +45,13 @@ class PPMHandler extends AbstractImageHandler {
    *
    * <p>
    * This method reads the PPM image file, ignoring any comment lines (lines starting with '#') and
-   * extracting the image's width, height, and RGB pixel values. It returns the image as a 3D array of
-   * integers, where each pixel is represented by three integers for the red, green, and blue components.
+   * extracting the image's width, height, and RGB pixel values. It returns the image as a 3D array
+   * of integers, where each pixel is represented by three integers for the red, green, and blue
+   * components.
    * </p>
    *
    * @return a 3D array containing the RGB values of the image
-   * @throws FileNotFoundException if the PPM file cannot be found
+   * @throws FileNotFoundException    if the PPM file cannot be found
    * @throws IllegalArgumentException if the file is not a valid PPM file
    */
   @Override

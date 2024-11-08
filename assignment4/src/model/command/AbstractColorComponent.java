@@ -4,9 +4,9 @@ import model.Cache;
 import model.Image;
 
 /**
- * An abstract base class for extracting color components from an image.
- * This class provides the framework for implementing various color component
- * extraction operations (like getting red, green, or blue channels).
+ * An abstract base class for extracting color components from an image. This class provides the
+ * framework for implementing various color component extraction operations (like getting red,
+ * green, or blue channels).
  */
 abstract class AbstractColorComponent extends Abstract2ArgCommand {
 
@@ -14,7 +14,7 @@ abstract class AbstractColorComponent extends Abstract2ArgCommand {
    * Constructs a new AbstractColorComponent with the specified arguments.
    *
    * @param rawArguments Space-separated string of command arguments
-   * @param cache The cache containing stored images
+   * @param cache        The cache containing stored images
    * @throws IllegalArgumentException if the number of arguments is not exactly 2
    */
 
@@ -30,9 +30,9 @@ abstract class AbstractColorComponent extends Abstract2ArgCommand {
   /**
    * Constructs a new AbstractColorComponent with the specified image and name.
    *
-   * @param image The source image to process
+   * @param image     The source image to process
    * @param imageName The name to store the result under
-   * @param cache The cache to store the result in
+   * @param cache     The cache to store the result in
    */
 
   protected AbstractColorComponent(Image image, String imageName, Cache cache) {
@@ -40,8 +40,8 @@ abstract class AbstractColorComponent extends Abstract2ArgCommand {
   }
 
   /**
-   * Processes the image by extracting the specified color component and
-   * storing the result in the cache.
+   * Processes the image by extracting the specified color component and storing the result in the
+   * cache.
    */
 
   @Override
@@ -70,9 +70,10 @@ abstract class AbstractColorComponent extends Abstract2ArgCommand {
 
   /**
    * method to add transparency.
+   *
    * @param x The x-coordinate of the pixel
    * @param y The y-coordinate of the pixel
-   * @return  transparency.
+   * @return transparency.
    */
   private int addTransparency(int x, int y) {
     return currentImage.getTransparencyData()[x][y];

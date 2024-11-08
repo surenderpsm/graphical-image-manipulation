@@ -4,9 +4,8 @@ import model.Cache;
 import model.Image;
 
 /**
- * Implementation of green channel extraction from an RGB(A) image.
- * Creates a new image containing only the green channel data, with
- * red and blue channels set to zero.
+ * Implementation of green channel extraction from an RGB(A) image. Creates a new image containing
+ * only the green channel data, with red and blue channels set to zero.
  */
 
 class GreenComponent extends AbstractColorComponent {
@@ -15,7 +14,7 @@ class GreenComponent extends AbstractColorComponent {
    * Constructs a new GreenComponent extractor.
    *
    * @param rawArguments Space-separated string of command arguments
-   * @param cache The cache containing stored images
+   * @param cache        The cache containing stored images
    */
 
   public GreenComponent(String rawArguments, Cache cache) {
@@ -25,9 +24,9 @@ class GreenComponent extends AbstractColorComponent {
   /**
    * Alternative constructor for internal use.
    *
-   * @param image The source image
+   * @param image     The source image
    * @param imageName The name for the resulting image
-   * @param cache The cache for storing the result
+   * @param cache     The cache for storing the result
    */
 
   GreenComponent(Image image, String imageName, Cache cache) {

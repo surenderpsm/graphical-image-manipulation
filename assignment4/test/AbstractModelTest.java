@@ -447,6 +447,7 @@ public abstract class AbstractModelTest {
 
   /**
    * is equal 2d to check 2 2D arrays if they are equal or not.
+   *
    * @param array1 2d array 1
    * @param array2 2d array 2
    * @return boolean true or false
@@ -474,7 +475,7 @@ public abstract class AbstractModelTest {
     return true;
   }
 
-  protected static void writeImage(int[][][] array, String path){
+  protected static void writeImage(int[][][] array, String path) {
     // Initialize the 2D arrays for each channel
     int[][][] channels = new int[3][4][4];
     // Loop through the expected array and split into channels

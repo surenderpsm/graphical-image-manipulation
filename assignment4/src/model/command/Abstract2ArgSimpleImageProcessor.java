@@ -1,12 +1,11 @@
 package model.command;
 
 import model.Cache;
-import model.Image;
 
 /**
- * An abstract base class for image processing operations that require exactly two arguments.
- * This class extends SimpleImageProcessor and handles validation and initialization of
- * two-argument image processing commands.
+ * An abstract base class for image processing operations that require exactly two arguments. This
+ * class extends SimpleImageProcessor and handles validation and initialization of two-argument
+ * image processing commands.
  *
  * <p>The class expects two arguments:
  * <ul>
@@ -21,7 +20,7 @@ abstract class Abstract2ArgSimpleImageProcessor extends SimpleImageProcessor {
    * Constructs a new Abstract2ArgSimpleImageProcessor with the specified arguments.
    *
    * @param rawArguments Space-separated string of command arguments
-   * @param cache The cache containing stored images
+   * @param cache        The cache containing stored images
    * @throws IllegalArgumentException if the number of arguments is not exactly 2
    */
 
@@ -37,11 +36,12 @@ abstract class Abstract2ArgSimpleImageProcessor extends SimpleImageProcessor {
   }
 
   /**
-   * Constructs a new Abstract2ArgSimpleImageProcessor with the specified arguments and transformer.
+   * Constructs a new Abstract2ArgSimpleImageProcessor with the specified arguments and
+   * transformer.
    *
    * @param rawArguments Space-separated string of command arguments
-   * @param cache The cache containing stored images
-   * @param transformer The PixelTransformer to use for image processing
+   * @param cache        The cache containing stored images
+   * @param transformer  The PixelTransformer to use for image processing
    * @throws IllegalArgumentException if the number of arguments is not exactly 2
    */
 

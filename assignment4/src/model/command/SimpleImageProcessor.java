@@ -4,9 +4,9 @@ import model.Cache;
 import model.Image;
 
 /**
- * A simple image processor that works with Image objects and works with the
- * PixelTransformer pattern for image processing operations. This class extends
- * ImageProcessor to provide a streamlined framework for pixel-by-pixel transformations.
+ * A simple image processor that works with Image objects and works with the PixelTransformer
+ * pattern for image processing operations. This class extends ImageProcessor to provide a
+ * streamlined framework for pixel-by-pixel transformations.
  */
 
 abstract class SimpleImageProcessor extends ImageProcessor {
@@ -17,8 +17,8 @@ abstract class SimpleImageProcessor extends ImageProcessor {
    * Constructs a new SimpleImageProcessor with the specified arguments and transformer.
    *
    * @param rawArguments Space-separated string of command arguments
-   * @param cache The cache containing stored images
-   * @param transformer The PixelTransformer to use for image processing
+   * @param cache        The cache containing stored images
+   * @param transformer  The PixelTransformer to use for image processing
    */
 
   protected SimpleImageProcessor(String rawArguments, Cache cache, PixelTransformer transformer) {
@@ -30,7 +30,7 @@ abstract class SimpleImageProcessor extends ImageProcessor {
    * Constructs a new SimpleImageProcessor with the specified arguments.
    *
    * @param rawArguments Space-separated string of command arguments
-   * @param cache The cache containing stored images
+   * @param cache        The cache containing stored images
    */
 
   protected SimpleImageProcessor(String rawArguments, Cache cache) {

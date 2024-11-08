@@ -3,8 +3,8 @@ package model;
 import model.command.CommandEnum;
 
 /**
- * class that depicts the model runner. model must implement this class.
- * each model must have an execute method.
+ * class that depicts the model runner. model must implement this class. each model must have an
+ * execute method.
  */
 
 public interface ModelRunner {

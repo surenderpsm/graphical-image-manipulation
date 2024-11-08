@@ -4,10 +4,9 @@ import model.Cache;
 import model.Image;
 
 /**
- * an abstract class for any flip class. be it horizontal or vertical flip command classes.
- * Abstract base class for image flipping operations. Provides a framework for
- * implementing horizontal and vertical image flips while preserving all image channels.
- *
+ * an abstract class for any flip class. be it horizontal or vertical flip command classes. Abstract
+ * base class for image flipping operations. Provides a framework for implementing horizontal and
+ * vertical image flips while preserving all image channels.
  */
 
 abstract class AbstractFlip extends Abstract2ArgCommand {
@@ -16,7 +15,7 @@ abstract class AbstractFlip extends Abstract2ArgCommand {
    * Constructs a new AbstractFlip operation.
    *
    * @param rawArguments Space-separated string of command arguments
-   * @param cache The cache containing stored images
+   * @param cache        The cache containing stored images
    */
 
   protected AbstractFlip(String rawArguments, Cache cache) {
@@ -67,8 +66,9 @@ abstract class AbstractFlip extends Abstract2ArgCommand {
 
   /**
    * method to process one channel at a time.
-   * @param imageArray the image as a 3d array.
-   * @param channelData channel data as a 2d array.
+   *
+   * @param imageArray   the image as a 3d array.
+   * @param channelData  channel data as a 2d array.
    * @param channelIndex channel index.
    */
   private void processChannel(int[][][] imageArray, int[][] channelData, int channelIndex) {

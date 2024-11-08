@@ -9,17 +9,9 @@ import java.util.Scanner;
 /**
  * The {@code ScriptHandler} class is responsible for reading and parsing a script file. The script
  * contains a series of commands that are executed sequentially. It filters out comments (lines
- * starting with "#") and empty lines, returning only the relevant commands.
- *
- * <p>This class reads the script from a specified file path, processes the content line by line,
- * and returns a list of valid commands for further execution.</p>
- *
- * <h2>Example Usage:</h2>
- * <pre>
- *     ScriptHandler handler = new ScriptHandler("path/to/script.txt");
- *     List<String> commands = handler.getCommands();
- *     // Executes the commands in the list
- * </pre>
+ * starting with "#") and empty lines, returning only the relevant commands. This class reads the
+ * script from a specified file path, processes the content line by line, and returns a list of
+ * valid commands for further execution.
  */
 class ScriptHandler {
 

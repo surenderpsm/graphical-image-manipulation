@@ -12,7 +12,8 @@ import model.Model;
  * such as loading and saving images. It processes commands that interact with the file system,
  * ensuring the appropriate handlers are selected based on the file path and command type.
  *
- * <p>This class supports two main commands: {@code load} and {@code save}, which load an image into
+ * <p>This class supports two main commands: {@code load} and {@code save}, which load an image
+ * into
  * the model or save an image from the model to the file system, respectively.</p>
  *
  * <h2>Example Usage:</h2>
@@ -22,6 +23,7 @@ import model.Model;
  * </pre>
  */
 public class IOHandler {
+
   private final Model model;
   private final String name;
   private final String path;
@@ -29,15 +31,17 @@ public class IOHandler {
   private final String command;
 
   /**
-   * Constructs an {@code IOHandler} that processes a specified command with given arguments.
-   * This method parses the command and arguments, determines the appropriate image handler,
-   * and invokes the appropriate action based on the command (either loading or saving an image).
+   * Constructs an {@code IOHandler} that processes a specified command with given arguments. This
+   * method parses the command and arguments, determines the appropriate image handler, and invokes
+   * the appropriate action based on the command (either loading or saving an image).
    *
-   * @param model The model in which the image will be loaded or saved.
+   * @param model   The model in which the image will be loaded or saved.
    * @param command The command to be executed, either {@code load} or {@code save}.
-   * @param args The arguments associated with the command, containing the path and image name.
-   * @throws IOException If an error occurs during the loading or saving of the image.
-   * @throws IllegalArgumentException If the command is invalid or arguments are incorrectly formatted.
+   * @param args    The arguments associated with the command, containing the path and image name.
+   * @throws IOException                   If an error occurs during the loading or saving of the
+   *                                       image.
+   * @throws IllegalArgumentException      If the command is invalid or arguments are incorrectly
+   *                                       formatted.
    * @throws UnsupportedOperationException If a suitable {@link ImageHandler} is not found.
    */
   public IOHandler(Model model, String command, String args) throws IOException {
@@ -85,11 +89,11 @@ public class IOHandler {
   }
 
   /**
-   * Selects and executes the appropriate action based on the specified command.
-   * This method processes either the {@code load} or {@code save} command and delegates
-   * the task to the corresponding image handler.
+   * Selects and executes the appropriate action based on the specified command. This method
+   * processes either the {@code load} or {@code save} command and delegates the task to the
+   * corresponding image handler.
    *
-   * @throws IOException If an error occurs while loading or saving the image.
+   * @throws IOException              If an error occurs while loading or saving the image.
    * @throws IllegalArgumentException If the model's histogram or image cannot be found.
    */
   private void commandSelector() throws IOException {
@@ -100,7 +104,8 @@ public class IOHandler {
       case "save":
         if (model.isHistogram(name)) {
           ih.saveImage(new HistogramGenerator(model.getHistogram(name)).getImage());
-        } else {
+        }
+        else {
           try {
             ih.saveImage(model.getImage(name));
           } catch (FileNotFoundException e) {
@@ -114,7 +119,8 @@ public class IOHandler {
   }
 
   /**
-   * Parses the arguments string and splits it into an array containing the file path and image name.
+   * Parses the arguments string and splits it into an array containing the file path and image
+   * name.
    *
    * @param args The arguments string containing the file path and image name.
    * @return A string array containing the path at index 0 and the image name at index 1.
@@ -129,8 +135,8 @@ public class IOHandler {
   }
 
   /**
-   * Finds the appropriate {@code ImageHandler} based on the provided file path.
-   * It iterates through the available {@code ImageHandlerSelector} options to find a matching handler.
+   * Finds the appropriate {@code ImageHandler} based on the provided file path. It iterates through
+   * the available {@code ImageHandlerSelector} options to find a matching handler.
    *
    * @param path The file path to the image.
    * @return The matching {@code ImageHandler}, or {@code null} if no handler is found.

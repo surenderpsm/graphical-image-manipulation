@@ -114,8 +114,7 @@ public enum CommandEnum {
       throw new InternalError(
           "Internal Error: The specified command" + commandName + " has no String constructor.");
     } catch (InvocationTargetException e) {
-      throw new IllegalArgumentException(
-          "ERROR : " + e.getCause().getMessage());
+      throw new IllegalArgumentException("ERROR : " + e.getCause().getMessage());
     } catch (InstantiationException e) {
       throw new InternalError("Internal Error: The specified command cannot be instantiated.");
     } catch (IllegalAccessException e) {

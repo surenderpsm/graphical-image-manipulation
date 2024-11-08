@@ -5,9 +5,9 @@ import model.Cache;
 import model.Image;
 
 /**
- * Combines separate red, green, and blue channel images into a single RGB image.
- * This class takes three images representing the individual color channels
- * and combines them into a full-color RGB image.
+ * Combines separate red, green, and blue channel images into a single RGB image. This class takes
+ * three images representing the individual color channels and combines them into a full-color RGB
+ * image.
  */
 
 class RGBCombine extends AbstractCommand {
@@ -20,7 +20,7 @@ class RGBCombine extends AbstractCommand {
    * Constructs a new RGBCombine processor.
    *
    * @param rawArguments The command arguments in format: "destImage redImage greenImage blueImage"
-   * @param cache The cache storing the images
+   * @param cache        The cache storing the images
    * @throws IllegalArgumentException if image dimensions don't match or arguments are invalid
    */
 
@@ -43,8 +43,8 @@ class RGBCombine extends AbstractCommand {
   }
 
   /**
-   * Executes the RGB combination operation by combining the individual channel images
-   * into a single RGB image.
+   * Executes the RGB combination operation by combining the individual channel images into a single
+   * RGB image.
    */
 
   public void execute() {

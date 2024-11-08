@@ -7,11 +7,14 @@ import java.io.IOException;
 import model.Model;
 
 /**
- * represents our applications main method containing class.
+ * Represents our applications main method containing class.
  */
-
 public class App {
 
+  /**
+   * This is the main method.
+   * @param args cli args
+   */
   public static void main(String[] args) {
     String filePath = null;
     for (int i = 0; i < args.length; i++) {

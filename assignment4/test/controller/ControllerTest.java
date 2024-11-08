@@ -32,8 +32,8 @@ public class ControllerTest {
   }
 
   /**
-   * Tests if the 'run' command correctly executes a script.txt containing valid commands. Ensures that
-   * the output contains the expected execution of commands and their statuses.
+   * Tests if the 'run' command correctly executes a script.txt containing valid commands. Ensures
+   * that the output contains the expected execution of commands and their statuses.
    *
    * @throws Exception if an error occurs during execution
    */
@@ -94,8 +94,8 @@ public class ControllerTest {
   }
 
   /**
-   * Tests if the Controller correctly handles the case where a script.txt file does not exist. Verifies
-   * that the appropriate error message is displayed.
+   * Tests if the Controller correctly handles the case where a script.txt file does not exist.
+   * Verifies that the appropriate error message is displayed.
    */
   @Test
   public void testRunCommandWithException() {

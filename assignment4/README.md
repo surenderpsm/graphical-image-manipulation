@@ -79,6 +79,17 @@ public class Cache implements HistogramCacheable, ImageCacheable, NewTypeCacheab
     // Implement new methods...
 }
 ```
+
+## Implementation Details
+
+### Command Processing Flow
+
+1. User input is received by the Controller
+2. Commands are parsed by CommandExecutor
+3. IO operations are handled by IOHandler and ImageHandler
+4. Image processing is delegated to the Model
+5. Results are output to the specified stream
+
 # Overview - Model Package
 
 ## `command` package
@@ -155,6 +166,23 @@ Histograms are stored as 2D arrays with the following dimensions:
 
 The controller package manages user input and coordinates between the model and view:
 
+### `Controller`
+- **Role**: Manages command flow, processes input commands, and handles scripts.
+- **Core Methods**:
+    - `run(Model model)`: Initiates the command loop, processing commands until a quit command is encountered.
+
+- **Script Execution**: The `Controller` supports script-based commands by using the `ScriptHandler` class to read commands from a specified file.
+- **Input/Output**: Reads from an `InputStream` and outputs to a `PrintStream`, making it adaptable to different input sources.
+
+**Example**:
+```java
+InputStream in = System.in;
+PrintStream out = System.out;
+Model model = new Model();
+Controller controller = new Controller(in, out);
+controller.run(model);
+```
+
 #### Core Components
 
 1. **Controller**: Main controller class that:
@@ -181,6 +209,107 @@ The controller package manages user input and coordinates between the model and 
     - Generates visual representations of image color distributions
     - Creates color-coded histograms for RGB channels
     - Outputs histogram as an image
+
+## Classes in `controller` Package
+
+### 1. **IOHandler**
+
+Responsible for executing commands for image loading and saving. Works with the model and selects image handlers based on file extension.
+
+- **Constructor**:
+  ```java
+  IOHandler(Model model, String command, String args) throws IOException;
+  ```
+- **Methods**:
+    - `createParentDirectories()`: Creates directories for file paths if needed.
+    - `commandSelector()`: Selects and executes "load" or "save" commands.
+
+---
+
+### 2. **ScriptHandler**
+
+Reads script files containing multiple commands to be executed sequentially.
+
+- **Constructor**:
+  ```java
+  ScriptHandler(String path);
+  ```
+- **Methods**:
+    - `getCommands()`: Returns a list of commands, ignoring comments and blank lines.
+
+---
+
+### 3. **HistogramGenerator**
+
+Generates histogram images from pixel data, providing visual representation of image characteristics.
+
+- **Constructor**:
+  ```java
+  HistogramGenerator(int[][] histogram);
+  ```
+- **Methods**:
+    - `getImage()`: Returns the histogram image as a 3D array.
+    - `drawGrid(Graphics2D g)`, `drawAxes(Graphics2D g)`: Methods for drawing gridlines and axes on the histogram.
+    - `convertTo3DArray(BufferedImage)`: Converts BufferedImage into a 3D pixel array.
+
+---
+
+## `controller.imagehandler` Package
+
+The `imagehandler` package includes abstractions and implementations for handling various image formats. It provides interfaces and classes to load and save images, ensuring flexibility in supporting multiple formats.
+
+### Key Classes
+
+#### 1. **ImageHandler Interface**
+
+Defines methods for loading and saving images. Each format (e.g., PNG, JPG, PPM) implements this interface to handle its specific file structure.
+
+- **Methods**:
+    - `loadImage()`: Loads an image and returns it as a 3D array.
+    - `saveImage(int[][][] image)`: Saves the provided image data to a file.
+
+#### 2. **AbstractImageHandler**
+
+Serves as a base class, offering shared functionality (e.g., handling file paths) for specific format handlers like PNG, JPG, and PPM.
+
+#### 3. **CommonImageHandler**
+
+Handles common formats like PNG, JPG, and JPEG using `BufferedImage` for image reading and writing.
+
+- **Constructor**:
+  ```java
+  CommonImageHandler(String path, String extension);
+  ```
+- **Methods**:
+    - `loadImage()`: Reads image and returns RGB pixel data as a 3D array.
+    - `saveImage(int[][][] pixelData)`: Saves RGB pixel data to file.
+
+#### 4. **PPMHandler**
+
+Special handler for the PPM (Portable Pixel Map) format, reading and writing image data specific to the PPM structure.
+
+- **Constructor**:
+  ```java
+  PPMHandler(String path, String extension);
+  ```
+- **Methods**:
+    - `loadImage()`: Reads PPM image and returns RGB pixel data as a 3D array.
+    - `saveImage(int[][][] image)`: Writes RGB pixel data to a PPM file.
+
+#### 5. **ImageHandlerSelector**
+
+Maps file extensions (e.g., `.png`, `.jpg`, `.ppm`) to the correct handler and dynamically instantiates the appropriate handler based on the file extension.
+
+---
+
+### Extending `controller.imagehandler`
+
+To add support for a new image format:
+1. **Create a New Handler**: Implement the `ImageHandler` interface for the new format (e.g., BMPHandler).
+2. **Define Load and Save Logic**: Add the logic in `loadImage()` and `saveImage()` methods.
+3. **Register in ImageHandlerSelector**: Update the `ImageHandlerSelector` enum with the new file extension and class.
+
+---
 
 # Image Licenses
 
