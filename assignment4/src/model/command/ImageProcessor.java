@@ -108,11 +108,18 @@ abstract class ImageProcessor extends AbstractCommand {
     return Math.min(255, Math.max(0, value));
   }
 
+  /**
+   * Executes the image processing operation, handling split processing if specified.
+   */
+
   public void execute() {
     calculateWorkingWidth();
     processImage();
   }
 
+  /**
+   * method to handle if split was also provided as part of the input for the operation.
+   */
   private void checkForSplit() {
     try {
       // Check if the 2nd last argument is "split"
@@ -127,6 +134,9 @@ abstract class ImageProcessor extends AbstractCommand {
     }
   }
 
+  /**
+   * method to calculate working width.
+   */
   private void calculateWorkingWidth() {
     if (width == 0) {
       throw new IllegalStateException("Internal error: width not set.");

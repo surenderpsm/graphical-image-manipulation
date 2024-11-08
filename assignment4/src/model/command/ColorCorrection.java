@@ -2,6 +2,12 @@ package model.command;
 
 import model.Cache;
 import model.Histogram;
+/**
+ * Performs color correction on an image by analyzing and adjusting the color channels
+ * based on their peak frequencies and average values.
+ * This processor identifies the peak frequency position for each color channel (R,G,B)
+ * within the range of 10-245 and adjusts the channels to align with their average peak position.
+ */
 
 class ColorCorrection extends Abstract2ArgSimpleImageProcessor {
 
@@ -10,6 +16,14 @@ class ColorCorrection extends Abstract2ArgSimpleImageProcessor {
   // to find peakPositions frequencies of each channel
   int[] peakPositions = new int[3];
 
+
+  /**
+   * Constructs a new ColorCorrection processor.
+   *
+   * @param rawArguments The command arguments containing source and destination image names
+   * @param cache The cache storing the images
+   * @throws IllegalArgumentException if the arguments are invalid or images cannot be found
+   */
 
   public ColorCorrection(String rawArguments, Cache cache) {
     super(rawArguments, cache);
@@ -22,6 +36,11 @@ class ColorCorrection extends Abstract2ArgSimpleImageProcessor {
         clamp(b + getChannelOffset(2))
     });
   }
+
+  /**
+   * Identifies the peak frequency position for each color channel.
+   * Analyzes values between 10 and 245 to avoid extreme outliers.
+   */
 
   private void setChannelMax() {
     // get peak for each channel.
@@ -38,6 +57,10 @@ class ColorCorrection extends Abstract2ArgSimpleImageProcessor {
     }
   }
 
+  /**
+   * Calculates the average peak position across all color channels.
+   */
+
   private void setAverage() {
     int average = 0;
     for (int i : peakPositions) {
@@ -45,6 +68,13 @@ class ColorCorrection extends Abstract2ArgSimpleImageProcessor {
     }
     this.average = (int) ((double) average/ peakPositions.length);
   }
+
+  /**
+   * Calculates the offset needed to align a channel with the average peak position.
+   *
+   * @param channel The index of the color channel (0=R, 1=G, 2=B)
+   * @return The offset value to apply to the channel
+   */
 
   private int getChannelOffset(int channel) {
     return average - peakPositions[channel];

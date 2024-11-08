@@ -3,11 +3,25 @@ package model.command;
 import model.Cache;
 import model.Image;
 
+/**
+ * Abstract base class for implementing image filters using convolution matrices.
+ * This class provides the framework for applying various types of filters (blur, sharpen, etc.)
+ * using a convolution kernel.
+ */
 abstract class Filter extends ImageProcessor {
 
   private final double[][] filter;
   private final int filterRows;
   private final int filterColumns;
+
+  /**
+   * Constructs a new Filter with the specified filter kernel.
+   *
+   * @param rawArguments Space-separated string of command arguments
+   * @param filter The convolution kernel to apply
+   * @param cache The cache containing stored images
+   * @throws IllegalArgumentException if the number of arguments is not exactly 2
+   */
 
   protected Filter(String rawArguments, double[][] filter, Cache cache) {
     super(rawArguments, cache);
@@ -23,6 +37,10 @@ abstract class Filter extends ImageProcessor {
     this.filterColumns = filter[0].length;
   }
 
+  /**
+   * Processes the image by applying the convolution filter.
+   * Handles padding and maintains image boundaries.
+   */
   @Override
   protected void processImage() {
 
@@ -52,6 +70,11 @@ abstract class Filter extends ImageProcessor {
     cache.set(imageName, processedImage);
   }
 
+  /**
+   * method to pad channel if required.
+   * @param sourceChannel original 2d array of the channel.
+   * @return new padded channel.
+   */
   private int[][] createAndFillPaddedChannel(int[][] sourceChannel) {
     // padding size
     int padRowSize = filterRows / 2;
