@@ -2,6 +2,11 @@ package model;
 
 import java.util.NoSuchElementException;
 
+/**
+ * provider for image cache to model. it has all the methods required by.
+ * any cache that stores images.
+ */
+
 public interface ImageCacheProvider {
 
   /**
