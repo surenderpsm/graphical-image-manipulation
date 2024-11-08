@@ -82,7 +82,7 @@ public class Cache implements HistogramCacheable, ImageCacheable, NewTypeCacheab
 # Overview - Model Package
 
 ## `command` package
-the command package maintains all commands. The CommmandEnum uses Factory pattern to keep track of all commands and
+the command package maintains all commands. The CommmandEnum serves as the sole public entry point for the command package, representing a collection of commands for various operations in the image processing application. This class implements the factory pattern to facilitate the dynamic instantiation of command classes that implement the Command interface. 
 ### Add a new command:
 - Create the class inside `command` package and extend `AbstractCommand`. 
 - Add an entry into the `CommandEnum` enumeration.
@@ -96,6 +96,92 @@ NEW_COMMAND(NewCommandClass.class, "command_name");
 - For kernel-based operations (e.g., blur or sharpen), extend `Filter`.
 - If the operation processes the entire image at once (like a flip), extend `AbstractCommand`
  or `Abstract2ArgCommand` if it takes only 2 arguments namely: image and new image alias.
+### Model
+The `Model` class serves as the main entry point to the model package. It implements:
+- Command execution system
+- Image cache management
+- Image retrieval and storage operations
+
+#### Usage Example
+```java
+// Initialize the model
+Model model = new Model();
+
+// Execute a command
+model.execute("blur", "koala koala_blurred");
+
+// Retrieve an image
+int[][][] image = model.getImage("koala");
+
+// Store an image
+model.setImage(image, "rabbit");
+```
+
+### Cache
+The `Cache` class provides temporary storage for multiple data types using a HashMap-based implementation. It supports:
+- Type-safe storage and retrieval through interfaces
+- Support for images and histograms
+- Extensible design for future data types
+
+### Interfaces
+
+#### ModelRunner
+Defines the contract for executing commands within the model:
+- `execute(String command, String args)`: Processes commands with their arguments
+
+#### ImageCacheable
+Handles image-related operations:
+- `getImage(String name)`: Retrieves image data as a 3D array `[width][height][num_channels]`
+- `setImage(int[][][] image, String name)`: Stores image data in the cache
+
+#### HistogramCacheable
+Manages histogram-related operations:
+- `isHistogram(String name)`: Checks for histogram existence
+- `getHistogram(String name)`: Retrieves histogram data as a 2D array `[num_channels][bins]`
+
+## Data Formats
+
+### Image Data
+Images are stored as 3D arrays with the following dimensions:
+- Width: Image width in pixels
+- Height: Image height in pixels
+- Channels: Number of color channels (e.g., RGB, RGBA)
+
+### Histogram Data
+Histograms are stored as 2D arrays with the following dimensions:
+- Number of channels (default: 3)
+- Number of bins (default: 256)
+### Controller Package
+
+The controller package manages user input and coordinates between the model and view:
+
+#### Core Components
+
+1. **Controller**: Main controller class that:
+    - Manages input/output streams
+    - Processes user commands
+    - Handles script execution
+    - Coordinates with the model
+
+2. **CommandExecutor**:
+    - Parses and executes individual commands
+    - Routes commands to appropriate handlers
+
+3. **IOHandler**:
+    - Manages file input/output operations
+    - Selects appropriate image handlers
+    - Handles loading and saving of images
+
+4. **ScriptHandler**:
+    - Reads and processes script files
+    - Filters comments and empty lines
+    - Returns executable commands
+
+5. **HistogramGenerator**:
+    - Generates visual representations of image color distributions
+    - Creates color-coded histograms for RGB channels
+    - Outputs histogram as an image
+
 # Image Licenses
 
 Photo by mark broadhurst: https://www.pexels.com/photo/blue-orange-and-green-bird-on-yellow-flower-105808/
