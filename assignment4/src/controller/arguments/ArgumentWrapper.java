@@ -4,31 +4,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class is used as a wrapper class to pass arguments from a view to a controller. This class
- * uses an internal HashMap to map the argument (ordering) number to the {@link Argument}.
- * <h3>Usage:</h3>
- * <pre>
- *   ArgumentWrapper args = new ArgumentWrapper(new FileArgument("res/koala.png"),
- *                                              new IntArgument(1),
- *                                              new StringArgument("hello"));
- * </pre>
+ * A wrapper for a collection of arguments, allowing them to be accessed by order.
+ * Maintains an internal map that associates an argument's position with the {@link Argument} object.
  */
 public class ArgumentWrapper {
 
   private final Map<Integer, Argument> arguments;
 
   /**
-   * This constructor can be used create an empty {@code ArgumentWrapper}.
+   * Creates an empty ArgumentWrapper, to which arguments can be added later.
    */
   public ArgumentWrapper() {
     arguments = new HashMap<>();
   }
 
   /**
-   * This constructor takes in a variable length of {@code Argument} to set in the
-   * {@code ArgumentWrapper}.
+   * Creates an ArgumentWrapper and populates it with a series of arguments in order.
    *
-   * @param args variable length list of args of type {@link Argument}
+   * @param args a variable-length list of Argument objects.
    */
   public ArgumentWrapper(Argument... args) {
     arguments = new HashMap<>();
@@ -39,20 +32,20 @@ public class ArgumentWrapper {
   }
 
   /**
-   * Get the argument.
+   * Retrieves an argument based on its position in the argument list.
    *
-   * @param id of type {@code int}
-   * @return an object of type {@link Argument}.
+   * @param id the positional index of the argument.
+   * @return the Argument object at the specified position, or null if not present.
    */
   public Argument getArgument(int id) {
     return arguments.get(id);
   }
 
   /**
-   * Set an argument in the internal map.
+   * Adds or updates an argument at a specific position in the wrapper.
    *
-   * @param id  of type {@code int}
-   * @param arg of type {@link Argument}
+   * @param id  the positional index for the argument.
+   * @param arg the Argument to add or update in the wrapper.
    */
   public void setArgument(int id, Argument arg) {
     arguments.put(id, arg);
