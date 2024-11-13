@@ -1,6 +1,7 @@
 package model.command;
 
 import model.Cache;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * Flips an image vertically (top to bottom). This processor mirrors the image along its horizontal
@@ -16,7 +17,7 @@ class VerticalFlip extends AbstractFlip {
    * @param cache        The cache storing the images
    * @throws IllegalArgumentException if the arguments are invalid or images cannot be found
    */
-  public VerticalFlip(String rawArguments, Cache cache) {
+  public VerticalFlip(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache);
   }
 

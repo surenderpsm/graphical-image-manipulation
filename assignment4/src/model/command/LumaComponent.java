@@ -1,6 +1,7 @@
 package model.command;
 
 import model.Cache;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * Creates a grayscale image based on the luma (perceived brightness) of each pixel. Uses
@@ -22,7 +23,7 @@ class LumaComponent extends Abstract2ArgSimpleImageProcessor {
    * @throws IllegalArgumentException if the arguments are invalid or images cannot be found
    */
 
-  public LumaComponent(String rawArguments, Cache cache) {
+  public LumaComponent(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache, (r, g, b) -> {
       int luma = clamp((int) Math.round(RED_WEIGHT * r + GREEN_WEIGHT * g + BLUE_WEIGHT * b));
       return new int[]{

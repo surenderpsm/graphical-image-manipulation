@@ -2,6 +2,7 @@ package model.command;
 
 import model.Cache;
 import model.Image;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * Implementation of green channel extraction from an RGB(A) image. Creates a new image containing
@@ -17,7 +18,7 @@ class GreenComponent extends AbstractColorComponent {
    * @param cache        The cache containing stored images
    */
 
-  public GreenComponent(String rawArguments, Cache cache) {
+  public GreenComponent(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache);
   }
 

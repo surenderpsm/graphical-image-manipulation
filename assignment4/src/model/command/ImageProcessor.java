@@ -2,6 +2,7 @@ package model.command;
 
 import model.Cache;
 import model.Image;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * Abstract base class for image processing operations. This class provides a common framework for
@@ -63,7 +64,7 @@ abstract class ImageProcessor extends AbstractCommand {
    * @param rawArguments the space-separated string of command arguments
    * @throws IllegalArgumentException if the arguments are invalid or insufficient
    */
-  protected ImageProcessor(String rawArguments, Cache cache) {
+  protected ImageProcessor(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache);
     checkForSplit();
   }
@@ -123,7 +124,7 @@ abstract class ImageProcessor extends AbstractCommand {
   private void checkForSplit() {
     try {
       // Check if the 2nd last argument is "split"
-      if (getArg(numberOfArgs() - 2).equals("split")) {
+      if (parseString(numberOfArgs() - 2).equals("split")) {
         // can the last argument be parsed?
         split = parseInt(numberOfArgs() - 1, 0, 100);
         setNumberOfArgs(numberOfArgs() - 2);

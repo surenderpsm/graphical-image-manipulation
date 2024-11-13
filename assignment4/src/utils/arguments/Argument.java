@@ -1,4 +1,4 @@
-package controller.arguments;
+package utils.arguments;
 
 /**
  * Represents an argument that can be passed to commands in the controller.

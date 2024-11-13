@@ -2,6 +2,7 @@ package model.command;
 
 import model.Cache;
 import model.Image;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * an abstract class for any flip class. be it horizontal or vertical flip command classes. Abstract
@@ -18,7 +19,7 @@ abstract class AbstractFlip extends Abstract2ArgCommand {
    * @param cache        The cache containing stored images
    */
 
-  protected AbstractFlip(String rawArguments, Cache cache) {
+  protected AbstractFlip(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache);
   }
 

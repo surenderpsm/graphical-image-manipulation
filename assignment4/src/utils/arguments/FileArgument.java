@@ -1,4 +1,4 @@
-package controller.arguments;
+package utils.arguments;
 
 import java.io.File;
 

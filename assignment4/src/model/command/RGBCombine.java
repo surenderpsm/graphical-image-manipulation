@@ -3,6 +3,7 @@ package model.command;
 
 import model.Cache;
 import model.Image;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * Combines separate red, green, and blue channel images into a single RGB image. This class takes
@@ -24,14 +25,14 @@ class RGBCombine extends AbstractCommand {
    * @throws IllegalArgumentException if image dimensions don't match or arguments are invalid
    */
 
-  public RGBCombine(String rawArguments, Cache cache) {
+  public RGBCombine(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache);
     if (numberOfArgs() != 4) {
       throw new IllegalArgumentException("Expected 4 arguments.");
     }
-    redImage = cache.get(getArg(1));
-    greenImage = cache.get(getArg(2));
-    blueImage = cache.get(getArg(3));
+    redImage = cache.get(parseString(1));
+    greenImage = cache.get(parseString(2));
+    blueImage = cache.get(parseString(3));
     // need to validate if all three images have same height and width.
     if (redImage.getHeight() != greenImage.getHeight()
         || redImage.getHeight() != blueImage.getHeight()
@@ -39,7 +40,7 @@ class RGBCombine extends AbstractCommand {
         || redImage.getWidth() != blueImage.getWidth()) {
       throw new IllegalArgumentException("RGB image has incorrect dimensions.");
     }
-    imageName = getArg(0);
+    imageName = parseString(0);
   }
 
   /**

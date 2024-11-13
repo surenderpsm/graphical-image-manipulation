@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import model.Cache;
 import model.Image;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * Implements image compression using the Haar wavelet transform. This class compresses images by:
@@ -29,27 +30,26 @@ public class Compress extends AbstractCommand {
    * @throws IllegalArgumentException if compression ratio is invalid or arguments are incorrect
    */
 
-  public Compress(String rawArguments, Cache cache) {
+  public Compress(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache);
     if (numberOfArgs() != 3) {
       throw new IllegalArgumentException("Expected 3 arguments.");
     }
-    compressionRatio = parseCompressionRatio(getArg(0));
-    currentImage = cache.get(getArg(1));
-    imageName = getArg(2);
+    compressionRatio = parseCompressionRatio(parseInt(0));
+    currentImage = cache.get(parseString(1));
+    imageName = parseString(2);
   }
 
   /**
    * Parses and validates the compression ratio from the input argument.
    *
-   * @param ratio The compression ratio as a string
+   * @param value The compression ratio as a int
    * @return The parsed compression ratio as an integer
    * @throws IllegalArgumentException if the ratio is not between 0 and 100 or not a valid integer
    */
 
-  private int parseCompressionRatio(String ratio) {
+  private int parseCompressionRatio(int value) {
     try {
-      int value = Integer.parseInt(ratio);
       if (value <= 0 || value >= 100) {
         throw new IllegalArgumentException(
             "Invalid compression range. " + " Expected between 0 and 100.");

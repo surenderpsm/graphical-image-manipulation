@@ -21,8 +21,8 @@ class Brighten extends SimpleImageProcessor {
       throw new IllegalArgumentException("Expected 3 arguments.");
     }
     value = parseInt(0);
-    currentImage = cache.get(getArg(1));
-    imageName = getArg(2);
+    currentImage = cache.get(parseString(1));
+    imageName = parseString(2);
     height = currentImage.getHeight();
     width = currentImage.getWidth();
     setTransformer((r, g, b) -> new int[]{

@@ -2,6 +2,7 @@ package model.command;
 
 import model.Cache;
 import model.Image;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * Implementation of red channel extraction from an RGB(A) image. Creates a new image containing
@@ -15,7 +16,7 @@ class RedComponent extends AbstractColorComponent {
    * @param rawArguments Space-separated string of command arguments
    * @param cache        The cache containing stored images
    */
-  public RedComponent(String rawArguments, Cache cache) {
+  public RedComponent(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache);
   }
 

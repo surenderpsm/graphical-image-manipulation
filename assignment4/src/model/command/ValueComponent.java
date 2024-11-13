@@ -1,6 +1,7 @@
 package model.command;
 
 import model.Cache;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * Creates a grayscale image based on the maximum value of RGB components for each pixel. The value
@@ -17,7 +18,7 @@ class ValueComponent extends Abstract2ArgSimpleImageProcessor {
    * @param cache        The cache storing the images
    * @throws IllegalArgumentException if the arguments are invalid or images cannot be found
    */
-  public ValueComponent(String rawArguments, Cache cache) {
+  public ValueComponent(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache, (r, g, b) -> {
       int value = Math.max(Math.max(r, g), b);
       return new int[]{

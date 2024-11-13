@@ -2,6 +2,7 @@ package model.command;
 
 import model.Cache;
 import model.Image;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * A simple image processor that works with Image objects and works with the PixelTransformer
@@ -21,7 +22,7 @@ abstract class SimpleImageProcessor extends ImageProcessor {
    * @param transformer  The PixelTransformer to use for image processing
    */
 
-  protected SimpleImageProcessor(String rawArguments, Cache cache, PixelTransformer transformer) {
+  protected SimpleImageProcessor(ArgumentWrapper rawArguments, Cache cache, PixelTransformer transformer) {
     super(rawArguments, cache);
     this.transformer = transformer;
   }
@@ -33,7 +34,7 @@ abstract class SimpleImageProcessor extends ImageProcessor {
    * @param cache        The cache containing stored images
    */
 
-  protected SimpleImageProcessor(String rawArguments, Cache cache) {
+  protected SimpleImageProcessor(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache);
   }
 

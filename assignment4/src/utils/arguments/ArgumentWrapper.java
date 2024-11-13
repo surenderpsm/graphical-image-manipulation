@@ -1,5 +1,6 @@
-package controller.arguments;
+package utils.arguments;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +8,7 @@ import java.util.Map;
  * A wrapper for a collection of arguments, allowing them to be accessed by order.
  * Maintains an internal map that associates an argument's position with the {@link Argument} object.
  */
-public class ArgumentWrapper {
+public class ArgumentWrapper implements IntWrapper, FileWrapper, StringWrapper {
 
   private final Map<Integer, Argument> arguments;
 
@@ -37,8 +38,8 @@ public class ArgumentWrapper {
    * @param id the positional index of the argument.
    * @return the Argument object at the specified position, or null if not present.
    */
-  public Argument getArgument(int id) {
-    return arguments.get(id);
+  private Object getArgument(int id) {
+    return arguments.get(id).getArgumentValue();
   }
 
   /**
@@ -49,5 +50,33 @@ public class ArgumentWrapper {
    */
   public void setArgument(int id, Argument arg) {
     arguments.put(id, arg);
+  }
+
+  public int length(){
+    return arguments.size();
+  }
+
+  @Override
+  public File getFileArgument(int id) {
+    if (getArgument(id) instanceof File) {
+      return (File) getArgument(id);
+    };
+    throw new IllegalArgumentException("Argument " + id + " is not a file");
+  }
+
+  @Override
+  public int getIntArgument(int id) {
+    if (getArgument(id) instanceof Integer) {
+      return (Integer) getArgument(id);
+    }
+    throw new IllegalArgumentException("Argument " + id + " is not an integer");
+  }
+
+  @Override
+  public String getString(int id) {
+    if (getArgument(id) instanceof String) {
+      return (String) getArgument(id);
+    }
+    throw new IllegalArgumentException("Argument " + id + " is not a string");
   }
 }

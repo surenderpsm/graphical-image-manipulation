@@ -3,6 +3,7 @@ package model.command;
 
 import java.lang.reflect.InvocationTargetException;
 import model.Cache;
+import utils.arguments.ArgumentWrapper;
 
 
 /**
@@ -77,7 +78,7 @@ public enum CommandEnum {
    *
    * @param args the arguments to be passed to the command constructor.
    */
-  public void executeCommandWith(String args, Cache cache) {
+  public void executeCommandWith(ArgumentWrapper args, Cache cache) {
     if (this == CommandEnum.NONE) {
       throw new IllegalStateException("Illegal state: No command has been assigned to Model.");
     }
@@ -106,9 +107,9 @@ public enum CommandEnum {
    *
    * @return an instance of the {@link Command} associated with this enum constant
    */
-  private Command instantiateCommand(String args, Cache cache) {
+  private Command instantiateCommand(ArgumentWrapper args, Cache cache) {
     try {
-      return commandClass.getDeclaredConstructor(String.class, Cache.class)
+      return commandClass.getDeclaredConstructor(ArgumentWrapper.class, Cache.class)
           .newInstance(args, cache);
     } catch (NoSuchMethodException e) {
       throw new InternalError(

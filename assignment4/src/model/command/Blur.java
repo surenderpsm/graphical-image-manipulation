@@ -2,6 +2,7 @@ package model.command;
 
 
 import model.Cache;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * class for the blur command. it extends filter as it is a filter operation.
@@ -15,7 +16,7 @@ class Blur extends Filter {
    * @param rawArguments takes the required string arguments.
    * @param cache        cache object.
    */
-  public Blur(String rawArguments, Cache cache) {
+  public Blur(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, new double[][]{
         {
             1 / 16.0,

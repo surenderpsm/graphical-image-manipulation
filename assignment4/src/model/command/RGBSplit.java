@@ -2,6 +2,7 @@ package model.command;
 
 
 import model.Cache;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * Command implementation for splitting an RGB image into its individual color channels. Creates
@@ -23,15 +24,15 @@ class RGBSplit extends AbstractCommand {
    * @throws IllegalArgumentException if the number of arguments is not exactly 4
    */
 
-  public RGBSplit(String rawArguments, Cache cache) {
+  public RGBSplit(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache);
     if (numberOfArgs() != 4) {
       throw new IllegalArgumentException("Expected 4 arguments.");
     }
-    currentImage = cache.get(getArg(0));
-    redImageName = getArg(1);
-    greenImageName = getArg(2);
-    blueImageName = getArg(3);
+    currentImage = cache.get(parseString(0));
+    redImageName = parseString(1);
+    greenImageName = parseString(2);
+    blueImageName = parseString(3);
   }
 
   /**

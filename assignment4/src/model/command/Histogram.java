@@ -1,6 +1,7 @@
 package model.command;
 
 import model.Cache;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * Generates a histogram representation of an image's color distribution. This command creates a
@@ -19,7 +20,7 @@ class Histogram extends Abstract2ArgCommand {
    * @throws IllegalArgumentException if the arguments are invalid or images cannot be found
    */
 
-  public Histogram(String rawArguments, Cache cache) {
+  public Histogram(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache);
   }
 

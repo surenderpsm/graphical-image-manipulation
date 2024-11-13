@@ -2,6 +2,7 @@ package model.command;
 
 import model.Cache;
 import model.Image;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * An abstract base class for extracting color components from an image. This class provides the
@@ -18,13 +19,13 @@ abstract class AbstractColorComponent extends Abstract2ArgCommand {
    * @throws IllegalArgumentException if the number of arguments is not exactly 2
    */
 
-  protected AbstractColorComponent(String rawArguments, Cache cache) {
+  protected AbstractColorComponent(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache);
     if (numberOfArgs() != 2) {
       throw new IllegalArgumentException("Expected 2 arguments.");
     }
-    currentImage = cache.get(getArg(0));
-    imageName = getArg(1);
+    currentImage = cache.get(parseString(0));
+    imageName = parseString(1);
   }
 
   /**

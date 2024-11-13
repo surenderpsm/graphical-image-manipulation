@@ -2,6 +2,7 @@ package model.command;
 
 
 import model.Cache;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * Applies a sepia tone effect to an image using a predefined color transformation matrix. The sepia
@@ -18,7 +19,7 @@ class Sepia extends ColorTransform {
    * @throws IllegalArgumentException if the arguments are invalid or images cannot be found
    */
 
-  public Sepia(String rawArguments, Cache cache) {
+  public Sepia(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, new double[][]{
         {
             0.393,

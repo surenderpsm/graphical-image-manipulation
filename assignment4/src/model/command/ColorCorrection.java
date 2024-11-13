@@ -2,6 +2,7 @@ package model.command;
 
 import model.Cache;
 import model.Histogram;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * Performs color correction on an image by analyzing and adjusting the color channels based on
@@ -26,7 +27,7 @@ class ColorCorrection extends Abstract2ArgSimpleImageProcessor {
    * @throws IllegalArgumentException if the arguments are invalid or images cannot be found
    */
 
-  public ColorCorrection(String rawArguments, Cache cache) {
+  public ColorCorrection(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache);
     histogram = new Histogram(currentImage);
     setChannelMax();

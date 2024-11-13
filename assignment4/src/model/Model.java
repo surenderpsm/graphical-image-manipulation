@@ -2,12 +2,13 @@ package model;
 
 import java.util.NoSuchElementException;
 import model.command.CommandEnum;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * The {@code Model} class serves as the entry point to the entire model in the MVC architecture. It
  * manages command execution, image retrieval, and storage while interfacing with the
  * {@link CommandEnum} enum to determine which command to execute with. The {@code Model} interacts
- * with an internal image cache via {@link Image.Cache}, and maintains an internal status flag to
+ * with an internal image cache via {@link Cache}, and maintains an internal status flag to
  * track the success of operations.
  * <p>
  * All interactions between the controller and the underlying model must run through this class,
@@ -32,7 +33,7 @@ import model.command.CommandEnum;
  *
  * @see CommandEnum
  */
-public class Model implements ModelRunner, ImageCacheProvider, HistogramCacheProvider {
+public class Model implements IModel {
 
   private CommandEnum commandClass = CommandEnum.NONE;
   private final Cache cache = new Cache();
@@ -45,7 +46,7 @@ public class Model implements ModelRunner, ImageCacheProvider, HistogramCachePro
    * @throws UnsupportedOperationException if the command is not a valid command enum defined.
    */
   @Override
-  public void execute(String command, String args) throws UnsupportedOperationException {
+  public void execute(String command, ArgumentWrapper args) throws UnsupportedOperationException {
     for (CommandEnum c : CommandEnum.values()) {
       if (c.getCommandName().equals(command)) {
         commandClass = c;
@@ -88,7 +89,7 @@ public class Model implements ModelRunner, ImageCacheProvider, HistogramCachePro
    *
    * @param args String arguments to the command being executed.
    */
-  private void runCommand(String args) {
+  private void runCommand(ArgumentWrapper args) {
     commandClass.executeCommandWith(args, cache);
   }
 

@@ -1,6 +1,7 @@
 package model.command;
 
 import model.Cache;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * Processes an image to create an intensity component where each pixel's RGB values are set to the
@@ -18,7 +19,7 @@ class IntensityComponent extends Abstract2ArgSimpleImageProcessor {
    * @throws IllegalArgumentException if the arguments are invalid or images cannot be found
    */
 
-  public IntensityComponent(String rawArguments, Cache cache) {
+  public IntensityComponent(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache, (r, g, b) -> {
       int intensity = clamp((int) Math.round((r + g + b) / 3.0));
       return new int[]{

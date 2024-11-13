@@ -32,8 +32,8 @@ class LevelsAdjust extends SimpleImageProcessor {
     b = parseInt(0, 0, 255);
     m = parseInt(1, b, 255);
     w = parseInt(2, m, 255);
-    currentImage = cache.get(getArg(3));
-    imageName = getArg(4);
+    currentImage = cache.get(parseString(3));
+    imageName = parseString(4);
     height = currentImage.getHeight();
     width = currentImage.getWidth();
     setTransformer((r, g, b) -> new int[]{

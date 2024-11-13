@@ -2,6 +2,7 @@ package model.command;
 
 import model.Cache;
 import model.Image;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * Abstract base class for all command operations in the image processing system. Provides common
@@ -11,7 +12,7 @@ import model.Image;
 abstract class AbstractCommand implements Command {
 
 
-  protected final String[] args;
+  protected final ArgumentWrapper args;
   protected Image currentImage;
   protected String imageName;
   private int numberOfArgs;
@@ -25,9 +26,9 @@ abstract class AbstractCommand implements Command {
    * @param cache        cache object.
    */
 
-  protected AbstractCommand(String rawArguments, Cache cache) {
-    args = rawArguments.split(" ");
-    numberOfArgs = args.length;
+  protected AbstractCommand(ArgumentWrapper rawArguments, Cache cache) {
+    args = rawArguments;
+    numberOfArgs = args.length();
     this.cache = cache;
   }
 
@@ -52,9 +53,9 @@ abstract class AbstractCommand implements Command {
    * @param argumentNumber the index of the argument required.
    * @return the string argument.
    */
-  protected String getArg(int argumentNumber) {
+  protected String parseString(int argumentNumber) {
     try {
-      return args[argumentNumber];
+      return args.getString(argumentNumber);
     } catch (IndexOutOfBoundsException e) {
       throw new IndexOutOfBoundsException("Insufficient arguments.");
     }
@@ -88,7 +89,7 @@ abstract class AbstractCommand implements Command {
    */
   protected int parseInt(int argumentNumber, int min, int max) {
     try {
-      return intValidation(Integer.parseInt(getArg(argumentNumber)), min, max);
+      return intValidation(args.getIntArgument(argumentNumber), min, max);
     } catch (NumberFormatException e) {
       throw new IllegalArgumentException(
           "Expected integer argument at position " + argumentNumber + ".");
@@ -106,7 +107,7 @@ abstract class AbstractCommand implements Command {
    */
   protected int parseInt(int argumentNumber) {
     try {
-      return Integer.parseInt(getArg(argumentNumber));
+      return Integer.parseInt(parseString(argumentNumber));
     } catch (NumberFormatException e) {
       throw new IllegalArgumentException(
           "Expected integer argument at position " + argumentNumber + ".");

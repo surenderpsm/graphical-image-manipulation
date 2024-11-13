@@ -1,6 +1,7 @@
 package model.command;
 
 import model.Cache;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * An abstract base class for image processing operations that require exactly two arguments. This
@@ -24,13 +25,13 @@ abstract class Abstract2ArgSimpleImageProcessor extends SimpleImageProcessor {
    * @throws IllegalArgumentException if the number of arguments is not exactly 2
    */
 
-  protected Abstract2ArgSimpleImageProcessor(String rawArguments, Cache cache) {
+  protected Abstract2ArgSimpleImageProcessor(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache);
     if (numberOfArgs() != 2) {
       throw new IllegalArgumentException("Expected 2 arguments.");
     }
-    currentImage = cache.get(getArg(0));
-    imageName = getArg(1);
+    currentImage = cache.get(parseString(0));
+    imageName = parseString(1);
     height = currentImage.getHeight();
     width = currentImage.getWidth();
   }
@@ -45,15 +46,15 @@ abstract class Abstract2ArgSimpleImageProcessor extends SimpleImageProcessor {
    * @throws IllegalArgumentException if the number of arguments is not exactly 2
    */
 
-  protected Abstract2ArgSimpleImageProcessor(String rawArguments,
+  protected Abstract2ArgSimpleImageProcessor(ArgumentWrapper rawArguments,
                                              Cache cache,
                                              PixelTransformer transformer) {
     super(rawArguments, cache);
     if (numberOfArgs() != 2) {
       throw new IllegalArgumentException("Expected 2 arguments.");
     }
-    currentImage = cache.get(getArg(0));
-    imageName = getArg(1);
+    currentImage = cache.get(parseString(0));
+    imageName = parseString(1);
     height = currentImage.getHeight();
     width = currentImage.getWidth();
     setTransformer(transformer);

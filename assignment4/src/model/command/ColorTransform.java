@@ -2,6 +2,7 @@ package model.command;
 
 
 import model.Cache;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * Abstract base class for color transformation operations that apply a 3x3 matrix transformation to
@@ -20,7 +21,7 @@ abstract class ColorTransform extends Abstract2ArgSimpleImageProcessor {
    * @throws IllegalArgumentException if the arguments are invalid or images cannot be found
    */
 
-  public ColorTransform(String rawArguments, double[][] matrix, Cache cache) {
+  public ColorTransform(ArgumentWrapper rawArguments, double[][] matrix, Cache cache) {
     super(rawArguments, cache, (r, g, b) -> {
       int[] result = new int[3];
       for (int i = 0; i < 3; i++) {

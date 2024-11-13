@@ -2,6 +2,7 @@ package model.command;
 
 import model.Cache;
 import model.Image;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * Implementation of blue channel extraction from an RGB(A) image. Creates a new image containing
@@ -17,7 +18,7 @@ class BlueComponent extends AbstractColorComponent {
    * @param cache        The cache containing stored images
    */
 
-  public BlueComponent(String rawArguments, Cache cache) {
+  public BlueComponent(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache);
   }
 
