@@ -3,18 +3,14 @@ package utils.arguments;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
 /**
- * A wrapper for a collection of arguments, allowing them to be accessed by order.
- * Maintains an internal map that associates an argument's position with the {@link Argument} object.
+ * A wrapper for a collection of arguments, allowing them to be accessed by order. Maintains an
+ * internal map that associates an argument's position with the {@link Argument} object.
  */
 public class ArgumentWrapper implements IntWrapper, FileWrapper, StringWrapper {
 
   private final Map<Integer, Argument> arguments;
 
-  /**
-   * Creates an empty ArgumentWrapper, to which arguments can be added later.
-   */
   public ArgumentWrapper() {
     arguments = new HashMap<>();
   }
@@ -26,20 +22,14 @@ public class ArgumentWrapper implements IntWrapper, FileWrapper, StringWrapper {
    */
   public ArgumentWrapper(Argument... args) {
     arguments = new HashMap<>();
-    int i = 1;
+    int i = 0;
     for (Argument arg : args) {
       arguments.put(i++, arg);
     }
   }
 
-  /**
-   * Retrieves an argument based on its position in the argument list.
-   *
-   * @param id the positional index of the argument.
-   * @return the Argument object at the specified position, or null if not present.
-   */
-  private Object getArgument(int id) {
-    return arguments.get(id).getArgumentValue();
+  public int length() {
+    return arguments.size();
   }
 
   /**
@@ -52,15 +42,22 @@ public class ArgumentWrapper implements IntWrapper, FileWrapper, StringWrapper {
     arguments.put(id, arg);
   }
 
-  public int length(){
-    return arguments.size();
+  /**
+   * Add many arguments. Ensures that it matches a mandate if exists.
+   * @param args
+   */
+  public void setArguments(Argument... args) {
+    int i = 0;
+    for(Argument arg : args) {
+      setArgument(i++, arg);
+    }
   }
 
   @Override
   public File getFileArgument(int id) {
     if (getArgument(id) instanceof File) {
       return (File) getArgument(id);
-    };
+    }
     throw new IllegalArgumentException("Argument " + id + " is not a file");
   }
 
@@ -78,5 +75,19 @@ public class ArgumentWrapper implements IntWrapper, FileWrapper, StringWrapper {
       return (String) getArgument(id);
     }
     throw new IllegalArgumentException("Argument " + id + " is not a string");
+  }
+
+  /**
+   * Retrieves an argument based on its position in the argument list.
+   *
+   * @param id the positional index of the argument.
+   * @return the Argument object at the specified position, or null if not present.
+   */
+  private Object getArgument(int id) {
+    try {
+      return arguments.get(id).getArgumentValue();
+    } catch (NullPointerException e) {
+      throw new IndexOutOfBoundsException("Argument does not exist.");
+    }
   }
 }
