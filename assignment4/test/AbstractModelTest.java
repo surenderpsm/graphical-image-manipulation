@@ -3,6 +3,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,6 +12,9 @@ import java.util.Arrays;
 import model.Model;
 import org.junit.Before;
 import org.junit.Test;
+import utils.arguments.ArgumentWrapper;
+import utils.arguments.IntArgument;
+import utils.arguments.StringArgument;
 
 /**
  * this is a test class which abstracts out the common functionality. its is applicable for any NXN
@@ -52,7 +56,11 @@ public abstract class AbstractModelTest {
     model.setImage(red, "red");
     model.setImage(green, "green");
     model.setImage(blue, "blue");
-    model.execute("rgb-combine", "combined red green blue");
+    model.execute("rgb-combine",
+                  new ArgumentWrapper(new StringArgument("combined"),
+                                      new StringArgument("red"),
+                                      new StringArgument("green"),
+                                      new StringArgument("blue")));
     assertTrue(isEqual(originalImage, model.getImage("combined")));
   }
 
@@ -65,7 +73,11 @@ public abstract class AbstractModelTest {
     int[][][] red = get3DArrayFromFile(getRoot() + "redComponent.txt");
     int[][][] green = get3DArrayFromFile(getRoot() + "greenComponent.txt");
     int[][][] blue = get3DArrayFromFile(getRoot() + "blueComponent.txt");
-    model.execute("rgb-split", "image red green blue");
+    model.execute("rgb-split",
+                  new ArgumentWrapper(new StringArgument("image"),
+                                      new StringArgument("red"),
+                                      new StringArgument("green"),
+                                      new StringArgument("blue")));
     assertTrue(isEqual(red, model.getImage("red")));
     assertTrue(isEqual(green, model.getImage("green")));
     assertTrue(isEqual(blue, model.getImage("blue")));
@@ -78,7 +90,10 @@ public abstract class AbstractModelTest {
   @Test
   public void brightenBy10Test() {
     int[][][] brighten = get3DArrayFromFile(getRoot() + "brighten.txt");
-    model.execute("brighten", "10 image brighten");
+    model.execute("brighten",
+                  new ArgumentWrapper(new IntArgument(10),
+                                      new StringArgument("image"),
+                                      new StringArgument("brighten")));
     assertTrue(isEqual(brighten, model.getImage("brighten")));
   }
 
@@ -89,7 +104,10 @@ public abstract class AbstractModelTest {
   @Test
   public void darkenBy10Test() {
     int[][][] darken = get3DArrayFromFile(getRoot() + "darken.txt");
-    model.execute("brighten", "-10 image darkened");
+    model.execute("brighten",
+                  new ArgumentWrapper(new IntArgument(-10),
+                                      new StringArgument("image"),
+                                      new StringArgument("darkened")));
     assertTrue(isEqual(darken, model.getImage("darkened")));
   }
 
@@ -100,7 +118,10 @@ public abstract class AbstractModelTest {
   @Test
   public void brightenZeroTest() {
     int[][][] darken = get3DArrayFromFile(getRoot() + "original.txt");
-    model.execute("brighten", "0 image same");
+    model.execute("brighten",
+                  new ArgumentWrapper(new IntArgument(0),
+                                      new StringArgument("image"),
+                                      new StringArgument("same")));
     assertTrue(isEqual(darken, model.getImage("same")));
   }
 
@@ -112,7 +133,9 @@ public abstract class AbstractModelTest {
   public void RedComponentTest() {
     int[][][] redComponent = get3DArrayFromFile(getRoot() + "redComponent.txt");
 
-    model.execute("red-component", "image redComponent");
+    model.execute("red-component",
+                  new ArgumentWrapper(new StringArgument("image"),
+                                      new StringArgument("redComponent")));
     int[][][] expectedImage = model.getImage("redComponent");
     assertTrue(isEqual(redComponent, expectedImage));
   }
@@ -125,7 +148,9 @@ public abstract class AbstractModelTest {
   public void greenComponentTest() {
     int[][][] greenComponent = get3DArrayFromFile(getRoot() + "greenComponent.txt");
 
-    model.execute("green-component", "image " + "greenComponent");
+    model.execute("green-component",
+                  new ArgumentWrapper(new StringArgument("image"),
+                                      new StringArgument("greenComponent")));
     int[][][] expectedImage = model.getImage("greenComponent");
 
     assertTrue(isEqual(greenComponent, expectedImage));
@@ -139,7 +164,9 @@ public abstract class AbstractModelTest {
   public void blueComponentTest() {
     int[][][] blueComponent = get3DArrayFromFile(getRoot() + "blueComponent.txt");
 
-    model.execute("blue-component", "image " + "blueComponent");
+    model.execute("blue-component",
+                  new ArgumentWrapper(new StringArgument("image"),
+                                      new StringArgument("blueComponent")));
     int[][][] expectedImage = model.getImage("blueComponent");
     assertTrue(isEqual(blueComponent, expectedImage));
 
@@ -153,7 +180,9 @@ public abstract class AbstractModelTest {
   public void horizontalFlipTest() {
     int[][][] horizontalFlip = get3DArrayFromFile(getRoot() + "horizontalFlip.txt");
 
-    model.execute("horizontal-flip", "image " + "horizontalFlip");
+    model.execute("horizontal-flip",
+                  new ArgumentWrapper(new StringArgument("image"),
+                                      new StringArgument("horizontalFlip")));
     int[][][] expectedImage = model.getImage("horizontalFlip");
     assertTrue(isEqual(horizontalFlip, expectedImage));
   }
@@ -166,7 +195,9 @@ public abstract class AbstractModelTest {
   public void verticalFlipTest() {
     int[][][] verticalFlip = get3DArrayFromFile(getRoot() + "verticalFlip.txt");
 
-    model.execute("vertical-flip", "image " + "verticalFlip");
+    model.execute("vertical-flip",
+                  new ArgumentWrapper(new StringArgument("image"),
+                                      new StringArgument("verticalFlip")));
     int[][][] expectedImage = model.getImage("verticalFlip");
     assertTrue(isEqual(verticalFlip, expectedImage));
   }
@@ -178,7 +209,8 @@ public abstract class AbstractModelTest {
   @Test
   public void blurredTest() {
     int[][][] blurred = get3DArrayFromFile(getRoot() + "blurred.txt");
-    model.execute("blur", "image blurred");
+    model.execute("blur",
+                  new ArgumentWrapper(new StringArgument("image"), new StringArgument("blurred")));
     assertTrue(isEqual(blurred, model.getImage("blurred")));
   }
 
@@ -189,7 +221,8 @@ public abstract class AbstractModelTest {
   @Test
   public void sharpenTest() {
     int[][][] sharpen = get3DArrayFromFile(getRoot() + "sharpen.txt");
-    model.execute("sharpen", "image sharpen");
+    model.execute("sharpen",
+                  new ArgumentWrapper(new StringArgument("image"), new StringArgument("sharpen")));
     assertTrue(isEqual(sharpen, model.getImage("sharpen")));
   }
 
@@ -200,18 +233,19 @@ public abstract class AbstractModelTest {
   @Test
   public void lumaTest() {
     int[][][] luma = get3DArrayFromFile(getRoot() + "luma.txt");
-    model.execute("luma-component", "image luma");
+    model.execute("luma-component",
+                  new ArgumentWrapper(new StringArgument("image"), new StringArgument("luma")));
     assertTrue(isEqual(luma, model.getImage("luma")));
   }
 
   /**
    * value test.
    */
-
   @Test
   public void valueTest() {
     int[][][] value = get3DArrayFromFile(getRoot() + "value.txt");
-    model.execute("value-component", "image value");
+    model.execute("value-component",
+                  new ArgumentWrapper(new StringArgument("image"), new StringArgument("value")));
     assertTrue(isEqual(value, model.getImage("value")));
   }
 
@@ -222,9 +256,12 @@ public abstract class AbstractModelTest {
   @Test
   public void intensityTest() {
     int[][][] intensity = get3DArrayFromFile(getRoot() + "intensity.txt");
-    model.execute("intensity-component", "image intensity");
+    model.execute("intensity-component",
+                  new ArgumentWrapper(new StringArgument("image"),
+                                      new StringArgument("intensity")));
     assertTrue(isEqual(intensity, model.getImage("intensity")));
   }
+
 
   /**
    * sepia test.
@@ -233,7 +270,9 @@ public abstract class AbstractModelTest {
   @Test
   public void sepiaTest() {
     int[][][] sepia = get3DArrayFromFile(getRoot() + "sepia.txt");
-    model.execute("sepia", "image sepia");
+//    model.execute("sepia", "image sepia");
+    model.execute("sepia",
+                  new ArgumentWrapper(new StringArgument("image"), new StringArgument("sepia")));
     assertTrue(isEqual(sepia, model.getImage("sepia")));
   }
 
@@ -244,8 +283,13 @@ public abstract class AbstractModelTest {
   @Test
   public void brightenBlurTest() {
     int[][][] brightenBlur = get3DArrayFromFile(getRoot() + "brightenBlur.txt");
-    model.execute("brighten", "10 image brightened");
-    model.execute("blur", "brightened brightened-blurred");
+    model.execute("brighten",
+                  new ArgumentWrapper(new IntArgument(10),
+                                      new StringArgument("image"),
+                                      new StringArgument("brightened")));
+    model.execute("blur",
+                  new ArgumentWrapper(new StringArgument("brightened"),
+                                      new StringArgument("brightened-blurred")));
     assertTrue(isEqual(brightenBlur, model.getImage("brightened-blurred")));
   }
 
@@ -255,9 +299,20 @@ public abstract class AbstractModelTest {
   @Test
   public void addGreenTintTest() {
     int[][][] greenTint = get3DArrayFromFile(getRoot() + "greenTint.txt");
-    model.execute("rgb-split", "image red green blue");
-    model.execute("brighten", "100 green brightened-green");
-    model.execute("rgb-combine", "original-green-tint red brightened-green blue");
+    model.execute("rgb-split",
+                  new ArgumentWrapper(new StringArgument("image"),
+                                      new StringArgument("red"),
+                                      new StringArgument("green"),
+                                      new StringArgument("blue")));
+    model.execute("brighten",
+                  new ArgumentWrapper(new IntArgument(100),
+                                      new StringArgument("green"),
+                                      new StringArgument("brightened-green")));
+    model.execute("rgb-combine",
+                  new ArgumentWrapper(new StringArgument("original-green-tint"),
+                                      new StringArgument("red"),
+                                      new StringArgument("brightened-green"),
+                                      new StringArgument("blue")));
     assertTrue(isEqual(greenTint, model.getImage("original-green-tint")));
   }
 
@@ -267,9 +322,20 @@ public abstract class AbstractModelTest {
   @Test
   public void addRedTintTest() {
     int[][][] redTint = get3DArrayFromFile(getRoot() + "redTint.txt");
-    model.execute("rgb-split", "image red green blue");
-    model.execute("brighten", "100 red brightened-red");
-    model.execute("rgb-combine", "original-red-tint brightened-red green blue");
+    model.execute("rgb-split",
+                  new ArgumentWrapper(new StringArgument("image"),
+                                      new StringArgument("red"),
+                                      new StringArgument("green"),
+                                      new StringArgument("blue")));
+    model.execute("brighten",
+                  new ArgumentWrapper(new IntArgument(100),
+                                      new StringArgument("red"),
+                                      new StringArgument("brightened-red")));
+    model.execute("rgb-combine",
+                  new ArgumentWrapper(new StringArgument("original-red-tint"),
+                                      new StringArgument("brightened-red"),
+                                      new StringArgument("green"),
+                                      new StringArgument("blue")));
     assertTrue(isEqual(redTint, model.getImage("original-red-tint")));
   }
 
@@ -279,9 +345,20 @@ public abstract class AbstractModelTest {
   @Test
   public void addBlueTintTest() {
     int[][][] blueTint = get3DArrayFromFile(getRoot() + "blueTint.txt");
-    model.execute("rgb-split", "image red green blue");
-    model.execute("brighten", "100 blue brightened-blue");
-    model.execute("rgb-combine", "original-blue-tint red green brightened-blue");
+    model.execute("rgb-split",
+                  new ArgumentWrapper(new StringArgument("image"),
+                                      new StringArgument("red"),
+                                      new StringArgument("green"),
+                                      new StringArgument("blue")));
+    model.execute("brighten",
+                  new ArgumentWrapper(new IntArgument(100),
+                                      new StringArgument("blue"),
+                                      new StringArgument("brightened-blue")));
+    model.execute("rgb-combine",
+                  new ArgumentWrapper(new StringArgument("original-blue-tint"),
+                                      new StringArgument("red"),
+                                      new StringArgument("green"),
+                                      new StringArgument("brightened-blue")));
     assertTrue(isEqual(blueTint, model.getImage("original-blue-tint")));
   }
 
@@ -291,8 +368,11 @@ public abstract class AbstractModelTest {
   @Test
   public void verticalBlurTest() {
     int[][][] expected = get3DArrayFromFile(getRoot() + "verticalBlur.txt");
-    model.execute("vertical-flip", "image vertical");
-    model.execute("blur", "vertical vertical-blur");
+    model.execute("vertical-flip",
+                  new ArgumentWrapper(new StringArgument("image"), new StringArgument("vertical")));
+    model.execute("blur",
+                  new ArgumentWrapper(new StringArgument("vertical"),
+                                      new StringArgument("vertical-blur")));
     assertTrue(isEqual(expected, model.getImage("vertical-blur")));
   }
 
@@ -302,8 +382,12 @@ public abstract class AbstractModelTest {
   @Test
   public void horizontalBlurTest() {
     int[][][] expected = get3DArrayFromFile(getRoot() + "horizontalBlur.txt");
-    model.execute("horizontal-flip", "image horizontal");
-    model.execute("blur", "horizontal horizontal-blur");
+    model.execute("horizontal-flip",
+                  new ArgumentWrapper(new StringArgument("image"),
+                                      new StringArgument("horizontal")));
+    model.execute("blur",
+                  new ArgumentWrapper(new StringArgument("horizontal"),
+                                      new StringArgument("horizontal-blur")));
     assertTrue(isEqual(expected, model.getImage("horizontal-blur")));
   }
 
@@ -313,8 +397,11 @@ public abstract class AbstractModelTest {
   @Test
   public void verticalSharpenTest() {
     int[][][] expected = get3DArrayFromFile(getRoot() + "verticalSharpen.txt");
-    model.execute("vertical-flip", "image vertical");
-    model.execute("sharpen", "vertical vertical-Sharpen");
+    model.execute("vertical-flip",
+                  new ArgumentWrapper(new StringArgument("image"), new StringArgument("vertical")));
+    model.execute("sharpen",
+                  new ArgumentWrapper(new StringArgument("vertical"),
+                                      new StringArgument("vertical-Sharpen")));
     assertTrue(isEqual(expected, model.getImage("vertical-Sharpen")));
   }
 
@@ -324,8 +411,12 @@ public abstract class AbstractModelTest {
   @Test
   public void horizontalSharpenTest() {
     int[][][] expected = get3DArrayFromFile(getRoot() + "horizontalSharpen.txt");
-    model.execute("horizontal-flip", "image horizontal");
-    model.execute("sharpen", "horizontal horizontal-Sharpen");
+    model.execute("horizontal-flip",
+                  new ArgumentWrapper(new StringArgument("image"),
+                                      new StringArgument("horizontal")));
+    model.execute("sharpen",
+                  new ArgumentWrapper(new StringArgument("horizontal"),
+                                      new StringArgument("horizontal-Sharpen")));
     assertTrue(isEqual(expected, model.getImage("horizontal-Sharpen")));
   }
 
@@ -337,9 +428,15 @@ public abstract class AbstractModelTest {
   @Test
   public void verticalBlurBrightenTest() {
     int[][][] expected = get3DArrayFromFile(getRoot() + "verticalBlurBrighten.txt");
-    model.execute("vertical-flip", "image vertical");
-    model.execute("blur", "vertical vertical-blur");
-    model.execute("brighten", "100 vertical-blur vertical-blur-brighten");
+    model.execute("vertical-flip",
+                  new ArgumentWrapper(new StringArgument("image"), new StringArgument("vertical")));
+    model.execute("blur",
+                  new ArgumentWrapper(new StringArgument("vertical"),
+                                      new StringArgument("vertical-blur")));
+    model.execute("brighten",
+                  new ArgumentWrapper(new IntArgument(100),
+                                      new StringArgument("vertical-blur"),
+                                      new StringArgument("vertical-blur-brighten")));
     assertTrue(isEqual(expected, model.getImage("vertical-blur-brighten")));
   }
 
@@ -349,10 +446,44 @@ public abstract class AbstractModelTest {
   @Test
   public void horizontalBlurBrightenTest() {
     int[][][] expected = get3DArrayFromFile(getRoot() + "horizontalBlurBrighten.txt");
-    model.execute("horizontal-flip", "image horizontal");
-    model.execute("blur", "horizontal horizontal-blur");
-    model.execute("brighten", "100 horizontal-blur horizontal-blur-brighten");
+    model.execute("horizontal-flip",
+                  new ArgumentWrapper(new StringArgument("image"),
+                                      new StringArgument("horizontal")));
+    model.execute("blur",
+                  new ArgumentWrapper(new StringArgument("horizontal"),
+                                      new StringArgument("horizontal-blur")));
+    model.execute("brighten",
+                  new ArgumentWrapper(new IntArgument(100),
+                                      new StringArgument("horizontal-blur"),
+                                      new StringArgument("horizontal-blur-brighten")));
     assertTrue(isEqual(expected, model.getImage("horizontal-blur-brighten")));
+  }
+
+
+  protected int[][] get2DArrayFromFile(String path) {
+    ArrayList<int[]> rows = new ArrayList<>();
+
+    try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+      String line;
+      while ((line = br.readLine()) != null) {
+        String[] values = line.trim().split("\\s+");
+        int[] row = new int[values.length];
+        for (int i = 0; i < values.length; i++) {
+          row[i] = Integer.parseInt(values[i]);
+        }
+        rows.add(row);
+      }
+    }  catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    // Convert the List<int[]> to int[][] array
+    int[][] array = new int[rows.size()][];
+    for (int i = 0; i < rows.size(); i++) {
+      array[i] = rows.get(i);
+    }
+
+    return array;
   }
 
 
@@ -489,15 +620,14 @@ public abstract class AbstractModelTest {
     write3DArrayToFile(channels, path);
   }
 
+  protected static void writeHistogram(int[][] array, String path) {
+    write2DArrayToFile(array, path);
+  }
+
   private static void write3DArrayToFile(int[][][] array, String path) {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
       for (int i = 0; i < array.length; i++) {  // Loop through each 2D array layer
-        for (int[] row : array[i]) {  // Write each row in the current 2D array
-          for (int value : row) {
-            writer.write(value + " ");
-          }
-          writer.newLine(); // Move to the next line after each row
-        }
+        write2DArrayToFile(array[i], writer);
         if (i < array.length - 1) {  // Add a blank line between layers
           writer.newLine();
         }
@@ -507,4 +637,27 @@ public abstract class AbstractModelTest {
       throw new RuntimeException("Error writing 3x4x4 array to file", e);
     }
   }
+
+  private static void write2DArrayToFile(int[][] array, String path) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
+        write2DArrayToFile(array, writer);
+      System.out.println("3x4x4 array written to file at " + path);
+    } catch (IOException e) {
+      throw new RuntimeException("Error writing 3x4x4 array to file", e);
+    }
+  }
+
+  private static void write2DArrayToFile(int[][] array, BufferedWriter writer) {
+    try {
+      for (int[] row : array) {  // Write each row in the current 2D array
+        for (int value : row) {
+          writer.write(value + " ");
+        }
+        writer.newLine(); // Move to the next line after each row
+      }
+    } catch (IOException e) {
+      throw new RuntimeException("Error writing array to file", e);
+    }
+  }
+
 }
