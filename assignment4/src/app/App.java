@@ -4,14 +4,15 @@ import controller.Controller;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import javax.swing.SwingUtilities;
+import model.IModel;
 import model.Model;
-import view.DefaultFrame;
 
 /**
  * Represents our applications main method containing class.
  */
 public class App {
+
+  private static IModel model;
 
   /**
    * This is the main method.
@@ -19,26 +20,37 @@ public class App {
    * @param args cli args
    */
   public static void main(String[] args) {
+    model = new Model();
+    Controller controller = initializeController(args);
+    controller.run();
+  }
+
+  private static Controller initializeController(String[] args) {
     for (int i = 0; i < args.length; i++) {
       if (args[i].equals("-file") && i + 1 < args.length) {
         String filePath = args[i + 1];
         // If a file path is specified, use it as input
         System.out.println("Loading file: " + filePath);
-        try (FileInputStream fileInputStream = new FileInputStream(filePath)) {
-          new Controller(fileInputStream, System.out).run(new Model());
-        } catch (FileNotFoundException e) {
-          System.out.println("File not found: " + filePath);
-        } catch (IOException e) {
-          System.out.println("Error reading file: " + filePath);
-        }
-        return;
+        FileInputStream fileInputStream = createFileInputStream(filePath);
+          // initiating controller for script.
+          return new Controller(model, fileInputStream, System.out);
       }
       if (args[i].equals("-text")) {
-        new Controller(System.in, System.out).run(new Model());
-        return;
+        // initiating controller for interactive mode.
+        return new Controller(model, System.in, System.out);
       }
     }
-    SwingUtilities.invokeLater(DefaultFrame::new);
+    // initiating controller for GUI.
+    return new Controller(model);
   }
 
+  private static FileInputStream createFileInputStream(String filePath) {
+    try {
+      return new FileInputStream(filePath);
+    } catch (FileNotFoundException e) {
+      System.out.println("File not found: " + filePath);
+      return null;
+    }
+  }
 }
+
