@@ -1,85 +1,111 @@
 package controller;
 
+import controller.viewhandler.CLIHandler;
+import controller.viewhandler.GUIHandler;
+import controller.viewhandler.ViewHandler;
+import java.io.File;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.List;
-import java.util.Scanner;
-import model.Model;
+import java.util.Map;
+import java.util.Set;
+import model.IModel;
+import utils.arguments.ArgumentWrapper;
+import utils.arguments.MandatedArgWrapper;
+import utils.arguments.Signature;
 
 /**
  * The Controller class is responsible for managing the flow of input and output, handling commands
  * from the user, and interacting with the model. It processes input commands, including script
  * commands and regular commands, and calls the appropriate methods on the model.
  */
-public class Controller {
+public class Controller implements IControllerView {
 
-  private final InputStream in; // Input stream to read commands
-  private final PrintStream out; // Output stream to print results
+  private final Map<String, Signature> signatureMap;
+  private boolean exit = false;
+  private final IModel model;
+  private final ViewHandler vHandler;
+  private final IOHandler ioHandler;
+
 
   /**
-   * Constructor for the Controller class.
+   * Construct controller to handle a GUI.
    *
-   * @param in  the input stream from which commands will be read
-   * @param out the output stream to which results will be printed
+   * @param model the model to interact with while processing commands.
    */
-  public Controller(InputStream in, PrintStream out) {
-    this.in = in;
-    this.out = out;
+  public Controller(IModel model) {
+    this.model = model;
+    this.ioHandler = new IOHandler(model);
+    this.vHandler = new GUIHandler(this);
+    this.signatureMap = model.getCommandSignatures();
+  }
+
+  /**
+   * Construct controller to handle CLI.
+   *
+   * @param model the model to interact with while processing commands.
+   * @param in    input stream.
+   * @param out   print stream.
+   */
+  public Controller(IModel model, InputStream in, PrintStream out) {
+    this.model = model;
+    this.ioHandler = new IOHandler(model);
+    this.vHandler = new CLIHandler(in,
+                                   out,
+                                   this);
+    this.signatureMap = model.getCommandSignatures();
   }
 
   /**
    * Main method to run the controller. It processes commands in a loop until the user quits. It
    * handles both individual commands and script files.
-   *
-   * @param model the model to interact with while processing commands
    */
-  public void run(Model model) {
-    Scanner sc = new Scanner(in);
-
-    while (true) {
-      if (!sc.hasNextLine()) {
-        break;
-      }
-      String command = sc.nextLine(); // read the user's input.
-      String[] tokens = command.split(" ");
-      String commandHead = tokens[0].toLowerCase();
-      // Check if the command is to run a script.
-      if (commandHead.equals("run")) {
-        List<String> scriptCommands = new ScriptHandler(tokens[1]).getCommands();
-        for (String cmd : scriptCommands) {
-          commandRunner(model, cmd);
-        }
-      }
-      // Check if the command is to quit the program.
-      else if (commandHead.equals("quit")) {
-        break;
-      }
-      // Pass it to the model.
-      else {
-        commandRunner(model, command);
-      }
+  public void run() {
+    do {
+      vHandler.listenForInput();
     }
+    while (!exit);
   }
 
-  /**
-   * Executes the given command on the model and handles any exceptions.
-   *
-   * @param model   the model to interact with
-   * @param command the command to execute
-   */
-  private void commandRunner(Model model, String command) {
+  @Override
+  public Set<String> getCommandNames() {
+    return signatureMap.keySet();
+  }
+
+  @Override
+  public MandatedArgWrapper getMandatedArgs(String commandName) {
+    if (!signatureMap.containsKey(commandName)) {
+      throw new IllegalArgumentException("Invalid command name: " + commandName);
+    }
+    return new MandatedArgWrapper(signatureMap.get(commandName));
+  }
+
+  @Override
+  public void loadImage(File file, String alias) {
+    ioHandler.load(file,
+                   alias);
+    vHandler.notifyExecutionOnSuccess();
+  }
+
+  @Override
+  public void saveImage(File file, String alias) {
+    ioHandler.save(alias,
+                   file);
+    vHandler.notifyExecutionOnSuccess();
+  }
+
+  @Override
+  public void invokeCommand(String command, ArgumentWrapper args) {
     try {
-      // Only execute commands that aren't comments or empty
-      if (!command.startsWith("#") && !command.isEmpty()) {
-        out.println("EXC: " + command); // Print the command being executed
-        new CommandExecutor(model, command); // Execute the command on the model
-        out.println("\nSTATUS: DONE"); // Print status if the command was successfully executed
-        out.println("--------------------------\n");
-      }
+      model.execute(command,
+                    args);
+      vHandler.notifyExecutionOnSuccess();
     } catch (Exception e) {
-      out.println("\n" + e.getMessage()); // Print any exceptions that occur during execution
-      out.println("--------------------------\n");
+      vHandler.notifyExecutionOnFailure(e.getMessage());
     }
   }
 
+  @Override
+  public void exitApplication() {
+    exit = true;
+  }
 }
