@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/* @deprecated */
 /**
  * The {@code ScriptHandler} class is responsible for reading and parsing a script file. The script
  * contains a series of commands that are executed sequentially. It filters out comments (lines
