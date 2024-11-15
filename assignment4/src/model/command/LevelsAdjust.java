@@ -1,6 +1,7 @@
 package model.command;
 
 import model.Cache;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * Adjusts the levels of an image using a quadratic function defined by black, mid, and white
@@ -24,7 +25,7 @@ class LevelsAdjust extends SimpleImageProcessor {
    * @throws IllegalArgumentException if points are invalid or not in ascending order (b < m < w)
    */
 
-  public LevelsAdjust(String rawArguments, Cache cache) {
+  public LevelsAdjust(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache);
     if (numberOfArgs() != 5) {
       throw new IllegalArgumentException("Expected 5 arguments.");

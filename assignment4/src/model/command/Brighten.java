@@ -1,6 +1,7 @@
 package model.command;
 
 import model.Cache;
+import utils.arguments.ArgumentWrapper;
 
 /**
  * Adjusts the brightness of an image by adding a constant value to each color channel. Handles both
@@ -15,7 +16,7 @@ class Brighten extends SimpleImageProcessor {
    *
    * @param rawArguments Raw Arguments string.
    */
-  public Brighten(String rawArguments, Cache cache) {
+  public Brighten(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache);
     if (numberOfArgs() != 3) {
       throw new IllegalArgumentException("Expected 3 arguments.");

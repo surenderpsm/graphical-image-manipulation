@@ -1,13 +1,15 @@
 package model;
 
+import java.util.Map;
 import java.util.NoSuchElementException;
-import model.command.CommandEnum;
+import model.command.CommandFactory;
 import utils.arguments.ArgumentWrapper;
+import utils.arguments.Signature;
 
 /**
  * The {@code Model} class serves as the entry point to the entire model in the MVC architecture. It
  * manages command execution, image retrieval, and storage while interfacing with the
- * {@link CommandEnum} enum to determine which command to execute with. The {@code Model} interacts
+ * {@link CommandFactory} enum to determine which command to execute with. The {@code Model} interacts
  * with an internal image cache via {@link Cache}, and maintains an internal status flag to
  * track the success of operations.
  * <p>
@@ -31,11 +33,11 @@ import utils.arguments.ArgumentWrapper;
  *   model.setImage(image, 'rabbit');
  * </pre>
  *
- * @see CommandEnum
+ * @see CommandFactory
  */
 public class Model implements IModel {
 
-  private CommandEnum commandClass = CommandEnum.NONE;
+  private CommandFactory commandClass = CommandFactory.NONE;
   private final Cache cache = new Cache();
 
   /**
@@ -47,7 +49,7 @@ public class Model implements IModel {
    */
   @Override
   public void execute(String command, ArgumentWrapper args) throws UnsupportedOperationException {
-    for (CommandEnum c : CommandEnum.values()) {
+    for (CommandFactory c : CommandFactory.values()) {
       if (c.getCommandName().equals(command)) {
         commandClass = c;
         runCommand(args);
@@ -116,5 +118,10 @@ public class Model implements IModel {
   @Override
   public int[][] getHistogram(String name) throws NoSuchElementException {
     return cache.getHistogram(name).getHistogram();
+  }
+
+  @Override
+  public Map<String, Signature> getCommandSignatures() {
+    return CommandFactory.getSignatureMap();
   }
 }

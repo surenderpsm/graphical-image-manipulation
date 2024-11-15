@@ -38,7 +38,7 @@ import utils.arguments.Signature;
 public enum CommandFactory {
   NONE(null,
        "",
-       Signature.EMPTY()),
+       Signature.EMPTY),
   BRIGHTEN(Brighten.class,
            "brighten",
            Signature.define(ArgumentType.INT,
@@ -156,8 +156,10 @@ public enum CommandFactory {
     if (this == CommandFactory.NONE) {
       throw new IllegalStateException("Illegal state: No command has been assigned to Model.");
     }
-    Command c = instantiateCommand(args,
-                                   cache);
+    Command
+        c =
+        instantiateCommand(args,
+                           cache);
     c.execute();
   }
 
@@ -174,12 +176,15 @@ public enum CommandFactory {
     return commandName;
   }
 
-  public Signature getArgumentSignature(){return signature;}
+  public Signature getArgumentSignature() {
+    return signature;
+  }
 
-  public static Map<String, Signature> getSignatureMap(){
+  public static Map<String, Signature> getSignatureMap() {
     Map<String, Signature> map = new HashMap<>();
-    for(CommandFactory command : CommandFactory.values()){
-      map.put(command.getCommandName(), command.getArgumentSignature());
+    for (CommandFactory command : CommandFactory.values()) {
+      map.put(command.getCommandName(),
+              command.getArgumentSignature());
     }
     return map;
   }

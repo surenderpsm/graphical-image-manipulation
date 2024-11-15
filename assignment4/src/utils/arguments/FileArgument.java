@@ -28,6 +28,15 @@ public class FileArgument implements Argument {
     this.file = new File(path);
   }
 
+  public FileArgument(Object object) {
+    if (object instanceof File) {
+      this.file = (File) object;
+    }
+    else {
+      throw new IllegalArgumentException("Expected a File object.");
+    }
+  }
+
   /**
    * Retrieves the file associated with this argument.
    *

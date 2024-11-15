@@ -1,18 +1,25 @@
 package view.cli;
 
-import controller.CommandExecutor;
+
 import java.io.InputStream;
 import java.io.PrintStream;
-import view.View;
+import java.util.Scanner;
+import view.ViewListener;
 
-public class CLI  {
+public class CLI {
 
-  private final InputStream in; // Input stream to read commands
+  private final Scanner scanner; // Input stream to read commands
   private final PrintStream out; // Output stream to print results
-
-  public CLI(InputStream in, PrintStream out) {
-    this.in = in;
+  private final ViewListener controller;
+  private StringBuilder message = new StringBuilder();
+  public CLI(InputStream in, PrintStream out, ViewListener controller) {
     this.out = out;
+    scanner = new Scanner(in);
+    this.controller = controller;
+  }
+
+  public void appendMessage(String message) {
+    this.message.append('\n').append(message);
   }
 
   public void printMessage(String s) {
@@ -20,4 +27,19 @@ public class CLI  {
     out.println("--------------------------\n");
   }
 
+  public void printMessage() {
+    printMessage(message.toString());
+    message.setLength(0);
+  }
+
+
+
+  public boolean getInput() {
+
+    if (!scanner.hasNextLine()) {
+      return false;
+    }
+    controller.onUserInput(scanner.nextLine());
+    return true;
+  }
 }

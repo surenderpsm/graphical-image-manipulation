@@ -3,6 +3,7 @@ package model.command;
 import model.Cache;
 import model.Image;
 import utils.arguments.ArgumentWrapper;
+import utils.arguments.OptionalArgumentKeyword;
 
 /**
  * Abstract base class for all command operations in the image processing system. Provides common
@@ -58,6 +59,8 @@ abstract class AbstractCommand implements Command {
       return args.getString(argumentNumber);
     } catch (IndexOutOfBoundsException e) {
       throw new IndexOutOfBoundsException("Insufficient arguments.");
+    } catch (IllegalArgumentException e) {
+      throw new IllegalArgumentException(e.getMessage());
     }
   }
 
@@ -98,6 +101,9 @@ abstract class AbstractCommand implements Command {
           "Expected " + e.getMessage() + " at position " + argumentNumber + ".");
     }
   }
+  protected int parseInt(OptionalArgumentKeyword key, int min, int max) {
+      return intValidation(args.getIntArgument(key), min, max);
+  }
 
   /**
    * to parse integer arguments.
@@ -107,7 +113,7 @@ abstract class AbstractCommand implements Command {
    */
   protected int parseInt(int argumentNumber) {
     try {
-      return Integer.parseInt(parseString(argumentNumber));
+      return args.getIntArgument(argumentNumber);
     } catch (NumberFormatException e) {
       throw new IllegalArgumentException(
           "Expected integer argument at position " + argumentNumber + ".");

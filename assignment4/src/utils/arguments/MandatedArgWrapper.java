@@ -19,11 +19,30 @@ public class MandatedArgWrapper extends ArgumentWrapper {
   @Override
   public void setArgument(int id, Argument arg) {
     try {
-      if (mandate == null || mandate.getSignatureAt(id).isValidArgument(arg)) {
+      if (mandate == null || mandate.validateArgument(id,arg)) {
         super.setArgument(id, arg);
+      } else{
+        throw new IllegalArgumentException("Argument does not match mandate at index " + id);
       }
     } catch (IndexOutOfBoundsException e) {
-      throw new IllegalArgumentException("Argument does not match mandate at index " + id);
+      throw new IndexOutOfBoundsException("Signature length does not match arguments.");
     }
   }
+
+  public void setArgument(int index, Object arg) {
+    setArgument(index, expectedAt(index).prepareArgument(arg));
+  }
+
+  public ArgumentType expectedAt(int index){
+    try {
+      return mandate.getSignatureAt(index);
+    } catch (IndexOutOfBoundsException e) {
+      throw new IndexOutOfBoundsException("No argument at index " + index);
+    }
+  }
+
+  public int expectedLength(){
+    return mandate.getLength();
+  }
+
 }

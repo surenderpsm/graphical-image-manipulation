@@ -21,6 +21,15 @@ public class StringArgument implements Argument {
     this.value = value;
   }
 
+  public StringArgument(Object object) {
+    if (object instanceof String) {
+      this.value = (String) object;
+    }
+    else {
+      throw new IllegalArgumentException("Expected a String.");
+    }
+  }
+
   /**
    * Retrieves the string value of this argument.
    *

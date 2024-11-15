@@ -1,6 +1,6 @@
 package model;
 
-import model.command.CommandEnum;
+import model.command.CommandFactory;
 import utils.arguments.ArgumentWrapper;
 
 /**
@@ -16,7 +16,7 @@ public interface ModelRunner {
    * @param command the name of the command.
    * @param args    a string of arguments for the command.
    * @throws UnsupportedOperationException if the input command is not found in the
-   *                                       {@link CommandEnum} enum
+   *                                       {@link CommandFactory} enum
    */
   void execute(String command, ArgumentWrapper args) throws UnsupportedOperationException;
 

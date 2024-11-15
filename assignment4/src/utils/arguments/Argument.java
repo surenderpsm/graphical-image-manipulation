@@ -5,6 +5,7 @@ package utils.arguments;
  * Classes implementing this interface provide a specific type of argument value.
  */
 public interface Argument {
+  public static final Argument EMPTY = null;
 
   /**
    * Retrieves the value of this argument.

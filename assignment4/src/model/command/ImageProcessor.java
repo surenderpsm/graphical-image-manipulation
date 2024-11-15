@@ -3,6 +3,7 @@ package model.command;
 import model.Cache;
 import model.Image;
 import utils.arguments.ArgumentWrapper;
+import utils.arguments.OptionalArgumentKeyword;
 
 /**
  * Abstract base class for image processing operations. This class provides a common framework for
@@ -65,7 +66,8 @@ abstract class ImageProcessor extends AbstractCommand {
    * @throws IllegalArgumentException if the arguments are invalid or insufficient
    */
   protected ImageProcessor(ArgumentWrapper rawArguments, Cache cache) {
-    super(rawArguments, cache);
+    super(rawArguments,
+          cache);
     checkForSplit();
   }
 
@@ -76,7 +78,9 @@ abstract class ImageProcessor extends AbstractCommand {
    * @param imageName String
    */
   protected ImageProcessor(Image image, String imageName, Cache cache) {
-    super(image, imageName, cache);
+    super(image,
+          imageName,
+          cache);
     checkForSplit();
   }
 
@@ -106,7 +110,9 @@ abstract class ImageProcessor extends AbstractCommand {
    * @return the clamped value, guaranteed to be between 0 and 255 inclusive
    */
   protected static int clamp(int value) {
-    return Math.min(255, Math.max(0, value));
+    return Math.min(255,
+                    Math.max(0,
+                             value));
   }
 
   /**
@@ -122,13 +128,13 @@ abstract class ImageProcessor extends AbstractCommand {
    * method to handle if split was also provided as part of the input for the operation.
    */
   private void checkForSplit() {
+
     try {
-      // Check if the 2nd last argument is "split"
-      if (parseString(numberOfArgs() - 2).equals("split")) {
-        // can the last argument be parsed?
-        split = parseInt(numberOfArgs() - 1, 0, 100);
-        setNumberOfArgs(numberOfArgs() - 2);
-      }
+      // Is there a split arg? if not IndexOutOfBoundsException caught and ignored.
+      split =
+          parseInt(OptionalArgumentKeyword.SPLIT,
+                   0,
+                   100);
     } catch (IndexOutOfBoundsException ignored) {
     } catch (IllegalArgumentException e) {
       throw new IllegalArgumentException("Incorrect use of split command: " + e.getMessage());
