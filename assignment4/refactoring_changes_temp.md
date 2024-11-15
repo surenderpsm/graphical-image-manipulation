@@ -1,7 +1,29 @@
-# Major Refactoring operation
+# 1. ArgumentHandler
+## Premise
+Until now, argument handling has been delagated to each command. The controller simply relays user input to the model, and the model executes the called command and passes the arguments without any validation. This is a very simple and compartmentalized approach which was desired because of ease of extension. But, as more and more commands were added, there was a need for efficiency. Relaying the command arguments without any validation leads to unnecessary usage of the model package. Hence, we decided to delegate the argument handling to the controller.
+## Overview
+Following is a brief overview of the changes and additions made:
+1. The controller is now tasked with argument handling.
+2. The CommandFactory also houses information about the arguments that each command takes.
+3. An argument signature can be defined using the `Signature` class. This takes in a variable number of `ArgumentType` enum constants.
+4. Arguments are now packaged by using the `ArgumentWrapper` class.
+5. The `ArgumentWrapper` class be constructed to accept arguments that match a certain `Signature`.
+## `arguments` package
+The `arguments` package defines the various utility methods for setting up and handling arguments. It is composed of:
+- An `Argument` interface.
+- Concrete implementations of the argument interface are different type of supported
+arguments. We require `int`, `String` and `File` types for our arguments. Hence, we add
+the 3 concrete implementations of the `Argument` interface.
+- An `ArgumentWrapper` class consists of an internal `Map` to map the argument (ordering)
+number to the `Argument` value. An instance of this class can be constructed by passing multiple `Argument` types (variable length).
+- Additionally, the `ArgumentWrapper` can be constructed using an expected signature. Let's say we need 3 arguments where the order of the expected signatures are `File`, `String` and `Integer`. We can define this for an `ArgumentWrapper`. When we input the arguments into the `ArgumentWrapper`, an `IllegalArgumentException` is thrown if the types don't match the signature.
 
+```java
+
+```
+
+# Major Refactoring operations
 ## Reasons for consideration
-
 - The view (GUI) needs to be able to communicate with the controller about which command has been
   invoked by the user. Along with this, the view also needs to communicate the parameters.
 - This refactor was *considered unnecessary* until now because the command and the arguments were
@@ -33,6 +55,7 @@
 - When extending the model, the only changes that are required must involve a static registration of
   the new command, the command class itself, and its invoking UI component in the view. The
   controller must ideally remain unchanged.
+- We also want to ensure existing code remains minimally unchanged.
 
 ## Known Pitfalls
 
@@ -67,24 +90,20 @@ controller.run(new Model(), new View());
 ```
 - We are introducing the `arguments` package to handle the command arguments.
     - An argument interface.
-        - Concrete implementations of the argument interface are different type of supported
-          arguments. We require `int`, `String` and `File` types for our arguments. Hence, we add
-          the 3 concrete implementations of the `Argument` interface.
-        - An `ArgumentWrapper` class consists of an internal `Map` to map the argument (ordering)
-          number to the `Argument` value.
+
+
 ```java
-// in the view
-set(1,new IntArgument(2)); // set first argument as an integer
+import utils.arguments.ArgumentWrapper;
+import utils.arguments.FileArgument;
+import utils.arguments.StringArgument;
+// in the controller/view:
+ArgumentWrapper args = new ArgumentWrapper(new FileArgument("/res/app/newkoala.png"), new StringArgument("koala"));
 
-set(2,new StringArgument("koala")); // set second argument as a string.
-
-set(3,new FileArgument("res/image/koala.png")); // set third argument as a file.
-
-// in the controller:
-get(1) // to get the first argument
-
-get(2) // to get the second argument
-// and so on.
+// in the model (for example):
+args.getFileArgument(0) // returns a file.
+args.getStringArgument(1) // returns a string.
+// incorrect calling results in IllegalArgumentException
+args.getIntArgument(1) // throws IllegalArgumentException.
 ```
 
 - The view will maintain a list of commands that it is using. During runtime, the view will register
@@ -105,3 +124,8 @@ controller.verifyCommands(this);
 // in the view:
 controller.invokeCommand(Command c, ArgumentWrapper args);
 ```
+## Details of the refactor
+### IModel
+- This interface is the main interface that is implemented by the `Model` facade class.
+- It currently extends existing interfaces `ModelRunner`, `HistogramCacheProvider` and `ImageCacheProvider`.
+- This interface defines a method `getAllCommandRunnables()` which returns a `Map<String, Runnable>` to inform the calling object about its available commands and how to call them.
