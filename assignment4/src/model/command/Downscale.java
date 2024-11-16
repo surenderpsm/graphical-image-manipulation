@@ -25,7 +25,7 @@ public class Downscale extends AbstractCommand{
   protected Downscale(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache);
     if (numberOfArgs() != 4) {
-      throw new IllegalArgumentException("Expected 2 arguments.");
+      throw new IllegalArgumentException("Expected 4 arguments.");
     }
     tWidth = parseInt(0);
     tHeight = parseInt(1);
@@ -33,7 +33,7 @@ public class Downscale extends AbstractCommand{
     imageName = parseString(3);
     this.height = currentImage.getHeight();
     this.width = currentImage.getWidth();
-    imageArray = new int[height][width][currentImage.getNoOfChannels()];
+    imageArray = new int[tHeight][tWidth][currentImage.getNoOfChannels()];
   }
 
   /**
@@ -117,7 +117,6 @@ public class Downscale extends AbstractCommand{
 
       }
     }
-
     Image processedImage = new Image(imageArray);
     cache.set(imageName, processedImage);
   }
