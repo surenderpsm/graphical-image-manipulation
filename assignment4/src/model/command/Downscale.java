@@ -7,21 +7,22 @@ import utils.arguments.ArgumentWrapper;
 /**
  * class to downscale image into the required dimensions.
  */
-public class Downscale extends ImageProcessor{
+public class Downscale extends AbstractCommand{
   private int tHeight;
   private int tWidth;
+  private final int height;
+  private final int width;
+  int[][][] imageArray;
 
   /**
    * Constructs a new Filter with the specified filter kernel.
    *
    * @param rawArguments Space-separated string of command arguments
-   * @param tHeight      target image height
-   * @param tWidth       target image width
    * @param cache        The cache containing stored images
    * @throws IllegalArgumentException if the number of arguments is not exactly 2
    */
 
-  protected Downscale(ArgumentWrapper rawArguments, int tHeight, int tWidth, Cache cache) {
+  protected Downscale(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache);
     if (numberOfArgs() != 4) {
       throw new IllegalArgumentException("Expected 2 arguments.");
@@ -32,13 +33,14 @@ public class Downscale extends ImageProcessor{
     imageName = parseString(3);
     this.height = currentImage.getHeight();
     this.width = currentImage.getWidth();
+    imageArray = new int[height][width][currentImage.getNoOfChannels()];
   }
 
   /**
    * Processes the image by downscaling it to the new width and heights.
    */
   @Override
-  protected void processImage() {
+  public void execute() {
     double newRed = 0;
     double newGreen = 0;
     double newBlue = 0;
