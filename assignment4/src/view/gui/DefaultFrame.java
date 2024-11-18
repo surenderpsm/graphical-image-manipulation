@@ -79,9 +79,8 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
       item.setEnabled(true);
     }
   }
-
-  @Override
-  public void showExitConfirmation() {
+  
+  private void showExitConfirmation() {
     int
         result =
         JOptionPane.showConfirmDialog(DefaultFrame.this,
