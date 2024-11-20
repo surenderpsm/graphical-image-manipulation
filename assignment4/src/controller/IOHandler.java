@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
 import model.IModel;
+import utils.HistogramGenerator;
 
 /**
  * The {@code IOHandler} class is responsible for executing input and output (IO) related commands

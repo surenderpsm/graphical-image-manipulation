@@ -15,7 +15,7 @@ public class CLI {
 
   private final Scanner scanner; // Input stream to read commands
   private final PrintStream out; // Output stream to print results
-  private final ViewListener controller;
+  private final CLIViewListener controller;
   private final StringBuilder messageBuffer = new StringBuilder();
 
   /**
@@ -25,7 +25,7 @@ public class CLI {
    * @param out        usually a printstream.
    * @param controller the viewListener object to pass user inputs and view states.
    */
-  public CLI(InputStream in, PrintStream out, ViewListener controller) {
+  public CLI(InputStream in, PrintStream out, CLIViewListener controller) {
     this.out = out;
     scanner = new Scanner(in);
     this.controller = controller;

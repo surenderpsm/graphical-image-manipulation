@@ -63,7 +63,7 @@ public class ArgumentTests {
                                                                  ArgumentType.STRING));
     aw.setArguments(new IntArgument(10), new StringArgument("hello"));
     assertEquals(10, aw.getIntArgument(0));
-    assertEquals("hello", aw.getString(1));
+    assertEquals("hello", aw.getStringArgument(1));
   }
 
   /**
@@ -85,6 +85,6 @@ public class ArgumentTests {
                                                                     ArgumentType.STRING));
     aw.setArguments(new IntArgument(10), new IntArgument(9));
     assertEquals(10, aw.getIntArgument(0));
-    assertEquals("hello", aw.getString(1));
+    assertEquals("hello", aw.getStringArgument(1));
   }
 }

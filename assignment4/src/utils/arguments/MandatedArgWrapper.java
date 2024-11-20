@@ -45,4 +45,17 @@ public class MandatedArgWrapper extends ArgumentWrapper {
     return mandate.getLength();
   }
 
+  /**
+   *
+   * @param arg
+   * @return
+   */
+  public void mandate(ArgumentWrapper arg) {
+    if(expectedLength() != length() + arg.length()){
+      throw new IllegalArgumentException("Mandate length does not match expected length.");
+    }
+    for(int i = length(); i < expectedLength(); i++){
+      setArgument(i, arg.getArgumentAt(i));
+    }
+  }
 }

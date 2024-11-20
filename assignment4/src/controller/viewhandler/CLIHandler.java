@@ -11,17 +11,15 @@ import java.util.Scanner;
 import utils.arguments.MandatedArgWrapper;
 import view.ViewListener;
 import view.cli.CLI;
+import view.cli.CLIViewListener;
 
-public class CLIHandler implements ViewHandler, ViewListener {
+public class CLIHandler implements ViewHandler, CLIViewListener {
 
   CLI cli;
   IControllerView controller;
 
   public CLIHandler(InputStream in, PrintStream out, IControllerView controller) {
-    cli =
-        new CLI(in,
-                out,
-                this);
+    cli = new CLI(in, out, this);
     this.controller = controller;
   }
 
@@ -101,12 +99,10 @@ public class CLIHandler implements ViewHandler, ViewListener {
     try {
       switch (commandHead) {
         case "load":
-          controller.loadImage(new File(tokens[1]),
-                               tokens[2]);
+          controller.loadImage(new File(tokens[1]), tokens[2]);
           break;
         case "save":
-          controller.saveImage(new File(tokens[1]),
-                               tokens[2]);
+          controller.saveImage(new File(tokens[1]), tokens[2]);
           break;
         default:
           MandatedArgWrapper wrapper = controller.getMandatedArgs(commandHead);
@@ -114,18 +110,15 @@ public class CLIHandler implements ViewHandler, ViewListener {
           for (int i = 1; i < tokens.length; i++) {
             if (i > wrapper.expectedLength()) {
               // Mandatory arguments are collected. Now check for optional args.
-              wrapper.setArgument(tokens[i],
-                                  tokens[i + 1]);
+              wrapper.setArgument(tokens[i], tokens[i + 1]);
               i += 1;
             }
             else {
-              wrapper.setArgument(i - 1,
-                                  tokens[i]);
+              wrapper.setArgument(i - 1, tokens[i]);
             }
 
           }
-          controller.invokeCommand(commandHead,
-                                   wrapper);
+          controller.invokeCommand(commandHead, wrapper);
 
       }
     } catch (ArrayIndexOutOfBoundsException e) {

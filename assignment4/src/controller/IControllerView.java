@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 import java.util.Set;
+import model.ModelSharer;
 import utils.arguments.ArgumentWrapper;
 import utils.arguments.MandatedArgWrapper;
 
@@ -13,7 +14,7 @@ import utils.arguments.MandatedArgWrapper;
  * the image it is handling. It becomes the controller's responsibility to manage the alias for that
  * image.
  */
-public interface IControllerView {
+public interface IControllerView extends ModelSharer {
 
   /**
    * Pass to a view handler, the available command strings.

@@ -24,7 +24,7 @@ public class PartialProcessor extends AbstractCommand{
     // 2. name of mask image.
     // 3. dest-name to store.
     super(rawArguments, cache);
-    currentImage = cache.get(parseString(0))
+    currentImage = cache.get(parseString(0));
     filteredImage = cache.get(parseString(1));
     maskImage = cache.get(parseString(2));
     imageName = parseString(3);

@@ -2,7 +2,7 @@ package view.gui;
 
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
-
+//@todo REDO operation
 /**
  * This is used to add versions of image to a stack like structure. The previous {@code maxSize}
  * edits on the image can be restored. Stores the images as {@link BufferedImage}.

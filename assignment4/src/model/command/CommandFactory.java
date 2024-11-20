@@ -125,6 +125,9 @@ public enum CommandFactory {
                                      ArgumentType.INT,
                                      ArgumentType.IMAGE,
                                      ArgumentType.STRING)),
+  DOWNSCALE(Downscale.class,
+            "downscale",
+            Signature.define(ArgumentType.INT,ArgumentType.INT,ArgumentType.IMAGE,ArgumentType.STRING)),
   ;
 
 

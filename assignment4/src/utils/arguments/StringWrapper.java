@@ -1,5 +1,5 @@
 package utils.arguments;
 
 public interface StringWrapper {
-String getString(int id);
+String getStringArgument(int id);
 }

@@ -9,7 +9,7 @@ import java.util.Map;
  * A wrapper for a collection of arguments, allowing them to be accessed by order. Maintains an
  * internal map that associates an argument's position with the {@link Argument} object.
  */
-public class ArgumentWrapper implements IntWrapper, FileWrapper, StringWrapper {
+public class ArgumentWrapper implements Cloneable, IntWrapper, FileWrapper, StringWrapper {
 
   private final Map<Integer, Argument> arguments;
   private final EnumMap<OptionalArgumentKeyword, Argument> optionalArguments;
@@ -62,12 +62,12 @@ public class ArgumentWrapper implements IntWrapper, FileWrapper, StringWrapper {
 
 
   /**
-   * Add many arguments. Ensures that it matches a mandate if exists.
+   * Add many arguments.
    *
    * @param args
    */
   public void setArguments(Argument... args) {
-    int i = 0;
+    int i = length();
     for (Argument arg : args) {
       setArgument(i++,
                   arg);
@@ -101,7 +101,7 @@ public class ArgumentWrapper implements IntWrapper, FileWrapper, StringWrapper {
   }
 
   @Override
-  public String getString(int id) {
+  public String getStringArgument(int id) {
     if (getArgument(id) instanceof String) {
       return (String) getArgument(id);
     }
@@ -122,11 +122,25 @@ public class ArgumentWrapper implements IntWrapper, FileWrapper, StringWrapper {
     }
   }
 
+  public Argument getArgumentAt(int id){
+    return arguments.get(id);
+  }
+
   private Object getOptionalArgument(OptionalArgumentKeyword key) {
     try{
       return optionalArguments.get(key).getArgumentValue();
     } catch (NullPointerException e) {
       return Argument.EMPTY;
     }
+  }
+
+  @Override
+  public ArgumentWrapper clone() {
+    ArgumentWrapper clone = new ArgumentWrapper();
+    // TODO: copy mutable state here, so the clone can't change the internals of the original
+    for(int i = 0; i < length(); i++){
+      clone.setArgument(i, arguments.get(i));
+    }
+    return clone;
   }
 }

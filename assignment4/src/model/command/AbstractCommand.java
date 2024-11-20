@@ -56,7 +56,7 @@ abstract class AbstractCommand implements Command {
    */
   protected String parseString(int argumentNumber) {
     try {
-      return args.getString(argumentNumber);
+      return args.getStringArgument(argumentNumber);
     } catch (IndexOutOfBoundsException e) {
       throw new IndexOutOfBoundsException("Insufficient arguments.");
     } catch (IllegalArgumentException e) {
