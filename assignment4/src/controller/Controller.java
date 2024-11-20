@@ -99,9 +99,6 @@ public class Controller implements IControllerView {
     try {
       model.execute(command,
                     args);
-      for(int i = 0; i < args.length(); i++){
-        System.out.println(args.getArgumentAt(i).getArgumentValue());
-      }
       vHandler.notifyExecutionOnSuccess();
     } catch (Exception e) {
       vHandler.notifyExecutionOnFailure(e.getMessage());

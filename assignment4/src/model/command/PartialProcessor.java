@@ -3,6 +3,7 @@ package model.command;
 import model.Cache;
 import model.Image;
 import utils.arguments.ArgumentWrapper;
+import utils.arguments.OptionalArgumentKeyword;
 
 /**
  * partial processor class used to partially process images.
@@ -26,8 +27,8 @@ public class PartialProcessor extends AbstractCommand{
     super(rawArguments, cache);
     currentImage = cache.get(parseString(0));
     filteredImage = cache.get(parseString(1));
-    maskImage = cache.get(parseString(2));
-    imageName = parseString(3);
+    maskImage = cache.get(parseString(OptionalArgumentKeyword.MASKIMG));
+    imageName = parseString(2);
 
   }
 

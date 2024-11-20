@@ -132,7 +132,6 @@ public enum CommandFactory {
           "partial-process",
           Signature.define(ArgumentType.STRING,
                   ArgumentType.STRING,
-                  ArgumentType.STRING,
                   ArgumentType.STRING)),
   ;
 

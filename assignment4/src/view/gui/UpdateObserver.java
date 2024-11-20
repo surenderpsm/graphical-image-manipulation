@@ -26,4 +26,6 @@ public interface UpdateObserver {
   void enableAllFeatures();
 
   void setPreview(boolean enable);
+
+  void setChannelSettings(boolean enable);
 }

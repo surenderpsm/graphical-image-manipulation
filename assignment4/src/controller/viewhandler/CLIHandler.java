@@ -8,8 +8,9 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import utils.arguments.ArgumentWrapper;
 import utils.arguments.MandatedArgWrapper;
-import view.ViewListener;
+import utils.arguments.StringArgument;
 import view.cli.CLI;
 import view.cli.CLIViewListener;
 
@@ -97,6 +98,7 @@ public class CLIHandler implements ViewHandler, CLIViewListener {
     String[] tokens = command.split(" ");
     String commandHead = tokens[0].trim().toLowerCase();
     try {
+
       switch (commandHead) {
         case "load":
           controller.loadImage(new File(tokens[1]), tokens[2]);
@@ -104,21 +106,48 @@ public class CLIHandler implements ViewHandler, CLIViewListener {
         case "save":
           controller.saveImage(new File(tokens[1]), tokens[2]);
           break;
+
+        case "blur":
+        case "sharpen":
+        case "grayscale":
+        case "sepia":
+        case "red-component":
+        case "green-component":
+        case "blue-component":
+
+          if (tokens.length == 4) {
+            // we need to store mask image
+            controller.invokeCommand(commandHead,
+                                     new ArgumentWrapper(new StringArgument(tokens[1]),
+                                                         new StringArgument(tokens[3])));
+            ArgumentWrapper wrapper = new ArgumentWrapper(new StringArgument(tokens[1]),
+                                 new StringArgument(tokens[3]),
+                                 new StringArgument(tokens[3]));
+            wrapper.setArgument("maskimg", tokens[2]);
+            controller.invokeCommand("partial-process", wrapper);
+
+          }
+          else {
+            controller.invokeCommand(commandHead,
+                                     new ArgumentWrapper(new StringArgument(tokens[1]),
+                                                         new StringArgument(tokens[2])));
+          }
+          break;
         default:
-          MandatedArgWrapper wrapper = controller.getMandatedArgs(commandHead);
+          MandatedArgWrapper wrapper1 = controller.getMandatedArgs(commandHead);
 
           for (int i = 1; i < tokens.length; i++) {
-            if (i > wrapper.expectedLength()) {
+            if (i > wrapper1.expectedLength()) {
               // Mandatory arguments are collected. Now check for optional args.
-              wrapper.setArgument(tokens[i], tokens[i + 1]);
+              wrapper1.setArgument(tokens[i], tokens[i + 1]);
               i += 1;
             }
             else {
-              wrapper.setArgument(i - 1, tokens[i]);
+              wrapper1.setArgument(i - 1, tokens[i]);
             }
 
           }
-          controller.invokeCommand(commandHead, wrapper);
+          controller.invokeCommand(commandHead, wrapper1);
 
       }
     } catch (ArrayIndexOutOfBoundsException e) {

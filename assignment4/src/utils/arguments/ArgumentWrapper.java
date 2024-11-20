@@ -108,6 +108,17 @@ public class ArgumentWrapper implements Cloneable, IntWrapper, FileWrapper, Stri
     throw new IllegalArgumentException("Argument " + id + " is not a string");
   }
 
+  @Override
+  public String getStringArgument(OptionalArgumentKeyword keyword) {
+    Object obj = getOptionalArgument(keyword);
+    if (obj instanceof String) {
+      return (String) getOptionalArgument(keyword);
+    } else if (obj == Argument.EMPTY){
+      throw new IndexOutOfBoundsException("Argument " + keyword + " is empty");
+    }
+    throw new IllegalArgumentException("Argument " + keyword.getArgumentName() + " is not an string");
+  }
+
   /**
    * Retrieves an argument based on its position in the argument list.
    *

@@ -1,0 +1,6 @@
+load res/img/other/donuts.jpg donut
+load res/img/other/mask.jpg mask
+red-component donut mask md
+grayscale donut mask mdg
+save mdg.jpg mdg
+save md.jpg md

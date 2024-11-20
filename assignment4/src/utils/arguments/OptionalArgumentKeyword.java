@@ -7,13 +7,13 @@ package utils.arguments;
  * <br>
  * This enum supports a static method to check if a given command string is an optional argument
  * keyword.
- *<br>
+ * <br>
  * The syntax of an optional argument keyword is assumed that a keyword will be followed by one
  * argument.
  */
 public enum OptionalArgumentKeyword {
-  SPLIT(ArgumentType.INT,
-        "split");
+  SPLIT(ArgumentType.INT, "split"),
+  MASKIMG(ArgumentType.IMAGE, "maskimg");
 
   private ArgumentType argumentType;
   private String argumentName;

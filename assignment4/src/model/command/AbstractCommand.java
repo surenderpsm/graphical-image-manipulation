@@ -64,6 +64,14 @@ abstract class AbstractCommand implements Command {
     }
   }
 
+  protected String parseString(OptionalArgumentKeyword keyword) {
+    try{
+      return args.getStringArgument(keyword);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   /**
    * to set the number of arguments.
    *

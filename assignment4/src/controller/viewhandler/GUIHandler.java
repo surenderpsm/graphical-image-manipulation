@@ -41,7 +41,6 @@ public class GUIHandler implements ViewHandler, GUIViewListener, ViewUpdater {
       gui.enableAllFeatures();
       loaded = true;
     }
-    System.out.println("Preview going into modelview:   " + gui.isPreviewMode());
     modelView.updateView(gui.isPreviewMode());
   }
 
@@ -52,9 +51,7 @@ public class GUIHandler implements ViewHandler, GUIViewListener, ViewUpdater {
 
   @Override
   public void listenForInput() {
-    // register listeners.
-    gui.registerListeners();
-    throw new UnsupportedOperationException("Not supported yet.");
+
   }
 
 
