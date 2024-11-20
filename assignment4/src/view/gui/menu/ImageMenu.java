@@ -71,7 +71,9 @@ public class ImageMenu extends JMenu {
           dialog.dispose(); // Close the dialog
         } catch (NumberFormatException ex) {
           JOptionPane.showMessageDialog(binder.getDisplayFrame(),
-                                        "Please enter valid numbers!", "Input Error", JOptionPane.ERROR_MESSAGE);
+                                        "Please enter valid numbers!",
+                                        "Input Error",
+                                        JOptionPane.ERROR_MESSAGE);
         }
       });
       buttonPanel.add(okButton);
@@ -85,7 +87,6 @@ public class ImageMenu extends JMenu {
       dialog.setLocationRelativeTo(binder.getDisplayFrame()); // Center on the parent frame
       dialog.setVisible(true);
     });
-
 
     JMenuItem compress = new JMenuItem("Compress");
     binder.addToDisabledByDefault(compress);
@@ -110,7 +111,15 @@ public class ImageMenu extends JMenu {
       dialog.add(valueLabel);
 
       // Add ChangeListener to Slider to update label dynamically
-      slider.addChangeListener(p -> valueLabel.setText("Ratio: " + slider.getValue() + "%"));
+      int sliderValue = slider.getValue();
+      if(slider.getValue() == 100) {
+        sliderValue = 99;
+      }
+      else if (slider.getValue() == 0) {
+        sliderValue = 1;
+      }
+      int finalSliderValue = sliderValue;
+      slider.addChangeListener(p -> valueLabel.setText("Ratio: " + finalSliderValue + "%"));
 
       // OK Button to confirm
       JButton okButton = new JButton("OK");
@@ -119,8 +128,7 @@ public class ImageMenu extends JMenu {
 
       // Add ActionListener to OK button
       okButton.addActionListener(okEvent -> {
-        int finalValue = slider.getValue();
-        binder.getViewComponentListener().compress(finalValue);
+        binder.getViewComponentListener().compress(finalSliderValue);
         dialog.dispose(); // Close the dialog
       });
 

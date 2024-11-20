@@ -1,6 +1,7 @@
 package view.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -33,6 +34,7 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
   JButton confirmButton = new JButton("Confirm");
   JButton cancelButton = new JButton("Cancel");
   JSlider splitSlider = new JSlider(0, 100, 50);
+  JPanel channelsPanel;
 
   public DefaultFrame(ViewComponentListener listener) {
     this.listener = listener;
@@ -143,7 +145,7 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
     histogramPanel.add(new JScrollPane(histogramPreview), BorderLayout.CENTER);
 
     // Channels section
-    JPanel channelsPanel = new JPanel(new GridBagLayout());
+    channelsPanel = new JPanel(new GridBagLayout());
     channelsPanel.setBorder(new TitledBorder("Channels"));
 
     // Define GridBagLayout constraints
@@ -234,6 +236,13 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
     confirmButton.setEnabled(enable);
     cancelButton.setEnabled(enable);
     splitSlider.setEnabled(enable);
+  }
+
+  @Override
+  public void setChannelSettings(boolean enable) {
+    for(Component component: channelsPanel.getComponents()){
+      component.setEnabled(enable);
+    }
   }
 
   private void showExitConfirmation() {

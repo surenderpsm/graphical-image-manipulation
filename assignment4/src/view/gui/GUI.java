@@ -206,6 +206,7 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
   public void setPreviewMode(boolean preview) {
     this.preview = preview;
     view.setPreview(preview);
+    view.setChannelSettings(!preview);
   }
 
   @Override
