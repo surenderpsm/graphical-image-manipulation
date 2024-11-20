@@ -67,50 +67,65 @@ public class Downscale extends AbstractCommand{
         // rows => height => i => y
         // cols => width => j => x
         else {
+          int ceilIOrigin = (int) Math.ceil(iOrigin);
+          int ceilJOrigin = (int) Math.ceil(jOrigin);
+          if(Math.ceil(iOrigin) == iOrigin && Math.ceil(jOrigin) != jOrigin){
+            ceilIOrigin = (int) Math.ceil(iOrigin) +1;
+            ceilJOrigin = (int) Math.ceil(jOrigin);
+          }
+          else if(Math.ceil(jOrigin) == jOrigin && Math.ceil(iOrigin) != iOrigin){
+            ceilIOrigin = (int) Math.ceil(iOrigin);
+            ceilJOrigin = (int) Math.ceil(jOrigin) +1;
+          }
+          else if(Math.ceil(jOrigin) == jOrigin && Math.ceil(iOrigin) == iOrigin){
+            ceilIOrigin = (int) Math.ceil(iOrigin) +1;
+            ceilJOrigin = (int) Math.ceil(jOrigin) +1;
+          }
           int aRed = currentImage.getRedChannelData()[(int) Math.floor(iOrigin)]
                   [(int) Math.floor(jOrigin)];
           int bRed = currentImage.getRedChannelData()[(int) Math.floor(iOrigin)]
-                  [(int) Math.ceil(jOrigin)];
-          int cRed = currentImage.getRedChannelData()[(int) Math.ceil(iOrigin)]
+                  [ceilJOrigin];
+          int cRed = currentImage.getRedChannelData()[ceilIOrigin]
                   [(int) Math.floor(jOrigin)];
-          int dRed = currentImage.getRedChannelData()[(int) Math.ceil(iOrigin)]
-                  [(int) Math.ceil(jOrigin)];
+          int dRed = currentImage.getRedChannelData()[ceilIOrigin]
+                  [ceilJOrigin];
+
           double mRed = bRed * (jOrigin - Math.floor(jOrigin))
-                  + aRed * (Math.ceil(jOrigin) - jOrigin );
+                  + aRed * (ceilJOrigin - jOrigin );
           double nRed = dRed * (jOrigin - Math.floor(jOrigin))
-                  + cRed * (Math.ceil(jOrigin) - jOrigin );
+                  + cRed * (ceilJOrigin - jOrigin );
           int pRed = (int) (nRed * (iOrigin - Math.floor(iOrigin))
-                  + mRed * (Math.ceil(iOrigin) - iOrigin ));
+                  + mRed * (ceilIOrigin - iOrigin ));
 
           int aGreen = currentImage.getGreenChannelData()[(int) Math.floor(iOrigin)]
                   [(int) Math.floor(jOrigin)];
           int bGreen = currentImage.getGreenChannelData()[(int) Math.floor(iOrigin)]
-                  [(int) Math.ceil(jOrigin)];
-          int cGreen = currentImage.getGreenChannelData()[(int) Math.ceil(iOrigin)]
+                  [ceilJOrigin];
+          int cGreen = currentImage.getGreenChannelData()[ceilIOrigin]
                   [(int) Math.floor(jOrigin)];
-          int dGreen = currentImage.getGreenChannelData()[(int) Math.ceil(iOrigin)]
-                  [(int) Math.ceil(jOrigin)];
+          int dGreen = currentImage.getGreenChannelData()[ceilIOrigin]
+                  [ceilJOrigin];
           double mGreen = bGreen * (jOrigin - Math.floor(jOrigin))
-                  + aGreen * (Math.ceil(jOrigin) - jOrigin );
+                  + aGreen * (ceilJOrigin - jOrigin );
           double nGreen = dGreen * (jOrigin - Math.floor(jOrigin))
-                  + cGreen * (Math.ceil(jOrigin) - jOrigin );
+                  + cGreen * (ceilJOrigin - jOrigin );
           int pGreen = (int) (nGreen * (iOrigin - Math.floor(iOrigin))
-                  + mGreen * (Math.ceil(iOrigin) - iOrigin ));
+                  + mGreen * (ceilIOrigin - iOrigin ));
 
           int aBlue = currentImage.getBlueChannelData()[(int) Math.floor(iOrigin)]
                   [(int) Math.floor(jOrigin)];
           int bBlue = currentImage.getBlueChannelData()[(int) Math.floor(iOrigin)]
-                  [(int) Math.ceil(jOrigin)];
-          int cBlue = currentImage.getBlueChannelData()[(int) Math.ceil(iOrigin)]
+                  [ceilJOrigin];
+          int cBlue = currentImage.getBlueChannelData()[ceilIOrigin]
                   [(int) Math.floor(jOrigin)];
-          int dBlue = currentImage.getBlueChannelData()[(int) Math.ceil(iOrigin)]
-                  [(int) Math.ceil(jOrigin)];
+          int dBlue = currentImage.getBlueChannelData()[ceilIOrigin]
+                  [ceilJOrigin];
           double mBlue = bBlue * (jOrigin - Math.floor(jOrigin))
-                  + aBlue * (Math.ceil(jOrigin) - jOrigin );
+                  + aBlue * (ceilJOrigin - jOrigin );
           double nBlue = dBlue * (jOrigin - Math.floor(jOrigin))
-                  + cBlue * (Math.ceil(jOrigin) - jOrigin );
+                  + cBlue * (ceilJOrigin - jOrigin );
           int pBlue = (int) (nBlue * (iOrigin - Math.floor(iOrigin))
-                  + mBlue * (Math.ceil(iOrigin) - iOrigin ));
+                  + mBlue * (ceilIOrigin - iOrigin ));
 
           imageArray[i][j][0] = pRed;
           imageArray[i][j][1] = pGreen;
