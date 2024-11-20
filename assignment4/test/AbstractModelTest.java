@@ -31,6 +31,7 @@ public abstract class AbstractModelTest {
   protected abstract String getRoot();
 
   protected int[][][] originalImage;
+  protected int[][][] originalImageMask;
   protected Model model;
 
   /**
@@ -42,6 +43,9 @@ public abstract class AbstractModelTest {
     model = new Model();
     originalImage = get3DArrayFromFile(getRoot() + "original.txt");
     model.setImage(originalImage, "image");
+    originalImageMask = get3DArrayFromFile(getRoot() + "originalMask.txt");
+    model.setImage(originalImageMask, "imageMask");
+
   }
 
   /**

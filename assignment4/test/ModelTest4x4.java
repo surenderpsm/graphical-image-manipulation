@@ -1,8 +1,12 @@
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import java.util.Arrays;
+
 import utils.arguments.ArgumentWrapper;
 import utils.arguments.IntArgument;
+import utils.arguments.OptionalArgumentKeyword;
 import utils.arguments.StringArgument;
 
 /**
@@ -13,7 +17,7 @@ public class ModelTest4x4 extends AbstractModelTest {
 
   @Override
   protected String getRoot() {
-    return "res/img4x4/";
+    return "assignment4/res/img4x4/";
   }
 
 //  /**
@@ -77,7 +81,7 @@ public class ModelTest4x4 extends AbstractModelTest {
   /**
    * test for color correction.
    */
-  @Test
+  @org.junit.jupiter.api.Test
   public void ColorCorrectionTest() {
     int[][][] expected = get3DArrayFromFile(getRoot() + "colorCorrection.txt");
     model.execute("color-correct",
@@ -263,15 +267,179 @@ public class ModelTest4x4 extends AbstractModelTest {
   public void splitOnSepia() {
     int[][][] expected = get3DArrayFromFile(getRoot() + "SepiaSplit75.txt");
 //    model.execute("sepia", "image sepiaSplit split 75");
-    model.execute("sepia",
-                  new ArgumentWrapper(new StringArgument("image"),
-                                      new StringArgument("sepiaSplit"),
-                                      new StringArgument("split"),
-                                      new IntArgument(75)));
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new StringArgument("image"),
+            new StringArgument("sepiaSplit"));
+    argumentWrapper.setArgument(OptionalArgumentKeyword.SPLIT, 75);
+    model.execute("sepia", argumentWrapper);
 
     int[][][] arr = model.getImage("sepiaSplit");
     assertTrue(isEqual(expected, arr));
   }
+
+  /**
+   * Apply downscaling of the image.
+   */
+  @Test
+  public void TestDownscale() {
+    int[][][] expected = {{{199, 95, 90}, {212, 128, 121}}, {{166, 80, 97}, {180, 89, 101}}};
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(2),
+            new IntArgument(2),new StringArgument("image"),
+            new StringArgument("downscale2x2"));
+    model.execute("downscale", argumentWrapper);
+
+    int[][][] arr = model.getImage("downscale2x2");
+    //System.out.println(Arrays.deepToString(arr));
+    //System.out.println(Arrays.deepToString(expected));
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply downscaling of the image.
+   */
+  @Test (expected = IllegalArgumentException.class)
+  public void TestInvalidDownscale() {
+    int[][][] expected = {{{}}};
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(4),
+            new IntArgument(5),new StringArgument("image"),
+            new StringArgument("downscale2x2"));
+    model.execute("downscale", argumentWrapper);
+    int[][][] arr = model.getImage("downscale2x2");
+    System.out.println(Arrays.deepToString(arr));
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply downscaling of the image.
+   */
+  @Test (expected = IllegalArgumentException.class)
+  public void TestInvalidDownscale2() {
+    int[][][] expected = {{{}}};
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(0),
+            new IntArgument(0),new StringArgument("image"),
+            new StringArgument("downscale2x2"));
+    model.execute("downscale", argumentWrapper);
+    int[][][] arr = model.getImage("downscale2x2");
+    System.out.println(Arrays.deepToString(arr));
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply downscaling of the image.
+   */
+  @Test (expected = IllegalArgumentException.class)
+  public void TestInvalidDownscale3() {
+    int[][][] expected = {{{}}};
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(7),
+            new IntArgument(14),new StringArgument("image"),
+            new StringArgument("downscale2x2"));
+    model.execute("downscale", argumentWrapper);
+    int[][][] arr = model.getImage("downscale2x2");
+    System.out.println(Arrays.deepToString(arr));
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply downscaling of the image.
+   */
+  @Test (expected = IllegalArgumentException.class)
+  public void TestInvalidDownscale4() {
+    int[][][] expected = {{{}}};
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(0),
+            new IntArgument(14),new StringArgument("image"),
+            new StringArgument("downscale2x2"));
+    model.execute("downscale", argumentWrapper);
+    int[][][] arr = model.getImage("downscale2x2");
+    System.out.println(Arrays.deepToString(arr));
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply downscaling of the image.
+   */
+  @Test (expected = IllegalArgumentException.class)
+  public void TestInvalidDownscale5() {
+    int[][][] expected = {{{}}};
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(23),
+            new IntArgument(0),new StringArgument("image"),
+            new StringArgument("downscale2x2"));
+    model.execute("downscale", argumentWrapper);
+    int[][][] arr = model.getImage("downscale2x2");
+    System.out.println(Arrays.deepToString(arr));
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply downscaling of the image.
+   */
+  @Test
+  public void TestDownscale2() {
+    int[][][] expected = {{{199, 95, 90}}};
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(1),
+            new IntArgument(1),new StringArgument("image"),
+            new StringArgument("downscale2x2"));
+    model.execute("downscale", argumentWrapper);
+
+    int[][][] arr = model.getImage("downscale2x2");
+    System.out.println(Arrays.deepToString(arr));
+    //System.out.println(Arrays.deepToString(expected));
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply downscaling of the image.
+   */
+  @Test
+  public void TestDownscale3() {
+    int[][][] expected = {{{199, 95, 90}, {0, 0, 0}, {0, 0, 0}}};
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(3),
+            new IntArgument(1),new StringArgument("image"),
+            new StringArgument("downscale2x2"));
+    model.execute("downscale", argumentWrapper);
+
+    int[][][] arr = model.getImage("downscale2x2");
+    System.out.println(Arrays.deepToString(arr));
+    //System.out.println(Arrays.deepToString(expected));
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply downscaling of the image.
+   */
+  @Test
+  public void TestDownscale4() {
+    int[][][] expected = {{{199, 95, 90}}, {{166, 80, 97}}};
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(1),
+            new IntArgument(2),new StringArgument("image"),
+            new StringArgument("downscale2x2"));
+    model.execute("downscale", argumentWrapper);
+
+    int[][][] arr = model.getImage("downscale2x2");
+    System.out.println(Arrays.deepToString(arr));
+    //System.out.println(Arrays.deepToString(expected));
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * test for partial image processing.
+   */
+  @Test
+  public void TestPartialProcessingBlur() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "partialBlur.txt");;
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new StringArgument("image"),
+            new StringArgument("blurred"));
+    model.execute("blur", argumentWrapper);
+    ArgumentWrapper argumentWrapper2 = new ArgumentWrapper(new StringArgument("image"),
+            new StringArgument("blurred"),
+            new StringArgument("imageMask"),
+            new StringArgument("PartialBlurred"));
+    model.execute("partial-process",argumentWrapper2);
+    int[][][] arr = model.getImage("PartialBlurred");
+    System.out.println(Arrays.deepToString(arr));
+    //System.out.println(Arrays.deepToString(expected));
+    assertTrue(isEqual(expected, arr));
+  }
+
+
 
 
 }
