@@ -153,18 +153,23 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
     // Buttons: Red, Green, Blue
     JButton redButton = new JButton("Red");
     redButton.addActionListener(e -> {
+      listener.resetComponents();
       listener.redComponent();
     });
     JButton greenButton = new JButton("Green");
     greenButton.addActionListener(e -> {
+      listener.resetComponents();
       listener.greenComponent();
     });
     JButton blueButton = new JButton("Blue");
     blueButton.addActionListener(e -> {
+      listener.resetComponents();
       listener.blueComponent();
     });
     JButton resetButton = new JButton("Reset");
-
+    resetButton.addActionListener(e->{
+      listener.resetComponents();
+    });
     // Add buttons to the GridBagLayout
     gbc.gridx = 0; // First column
     gbc.gridy = 0; // Row 0

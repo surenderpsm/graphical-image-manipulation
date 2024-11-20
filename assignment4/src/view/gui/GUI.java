@@ -134,18 +134,21 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
   @Override
   public void redComponent() {
     currentCommand = "red-component";
+    preview = true;
     runEmptyArgCommand();
   }
 
   @Override
   public void blueComponent() {
     currentCommand = "blue-component";
+    preview = true;
     runEmptyArgCommand();
   }
 
   @Override
   public void greenComponent() {
     currentCommand = "green-component";
+    preview = true;
     runEmptyArgCommand();
   }
 
@@ -214,5 +217,12 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
   @Override
   public boolean quit() {
     return controller.requestApplicationExit();
+  }
+
+  @Override
+  public void resetComponents() {
+    this.confirmed = false;
+    this.preview = false;
+    runCommand();
   }
 }

@@ -48,4 +48,6 @@ public interface ViewComponentListener {
 
   boolean quit();
 
+  void resetComponents();
+
 }
