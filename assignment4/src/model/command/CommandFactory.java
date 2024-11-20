@@ -128,6 +128,12 @@ public enum CommandFactory {
   DOWNSCALE(Downscale.class,
             "downscale",
             Signature.define(ArgumentType.INT,ArgumentType.INT,ArgumentType.IMAGE,ArgumentType.STRING)),
+  PARTIAL_PROCESSOR(PartialProcessor.class,
+          "partial-process",
+          Signature.define(ArgumentType.STRING,
+                  ArgumentType.STRING,
+                  ArgumentType.STRING,
+                  ArgumentType.STRING)),
   ;
 
 

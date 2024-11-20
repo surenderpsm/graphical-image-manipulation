@@ -33,6 +33,9 @@ public class Downscale extends AbstractCommand{
     imageName = parseString(3);
     this.height = currentImage.getHeight();
     this.width = currentImage.getWidth();
+    if(tHeight > height || tHeight < 1 || tWidth > width || tWidth < 1){
+      throw new IllegalArgumentException("Invalid input dimensions!");
+    }
     imageArray = new int[tHeight][tWidth][currentImage.getNoOfChannels()];
   }
 
@@ -77,7 +80,7 @@ public class Downscale extends AbstractCommand{
           double nRed = dRed * (jOrigin - Math.floor(jOrigin))
                   + cRed * (Math.ceil(jOrigin) - jOrigin );
           int pRed = (int) (nRed * (iOrigin - Math.floor(iOrigin))
-                  + mRed * (Math.ceil(jOrigin) - jOrigin ));
+                  + mRed * (Math.ceil(iOrigin) - iOrigin ));
 
           int aGreen = currentImage.getGreenChannelData()[(int) Math.floor(iOrigin)]
                   [(int) Math.floor(jOrigin)];
@@ -92,7 +95,7 @@ public class Downscale extends AbstractCommand{
           double nGreen = dGreen * (jOrigin - Math.floor(jOrigin))
                   + cGreen * (Math.ceil(jOrigin) - jOrigin );
           int pGreen = (int) (nGreen * (iOrigin - Math.floor(iOrigin))
-                  + mGreen * (Math.ceil(jOrigin) - jOrigin ));
+                  + mGreen * (Math.ceil(iOrigin) - iOrigin ));
 
           int aBlue = currentImage.getBlueChannelData()[(int) Math.floor(iOrigin)]
                   [(int) Math.floor(jOrigin)];
@@ -107,7 +110,7 @@ public class Downscale extends AbstractCommand{
           double nBlue = dBlue * (jOrigin - Math.floor(jOrigin))
                   + cBlue * (Math.ceil(jOrigin) - jOrigin );
           int pBlue = (int) (nBlue * (iOrigin - Math.floor(iOrigin))
-                  + mBlue * (Math.ceil(jOrigin) - jOrigin ));
+                  + mBlue * (Math.ceil(iOrigin) - iOrigin ));
 
           imageArray[i][j][0] = pRed;
           imageArray[i][j][1] = pGreen;
