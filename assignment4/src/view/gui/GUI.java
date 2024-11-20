@@ -14,13 +14,16 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
   private int split = 0;
   private ArgumentWrapper currentArgs;
   private String currentCommand;
-  private boolean confirmed;
+  private boolean confirmed = true;
 
   public GUI(GUIViewListener controller) {
     this.controller = controller;
     SwingUtilities.invokeLater(() -> {
       this.view = new DefaultFrame(this);
+      setPreviewMode(false);
     });
+
+
   }
 
   @Override
@@ -68,7 +71,6 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
   public void loadImage(File file) {
     if (file != null) {
       controller.onLoadImage(file);
-      preview = true;
     }
   }
 
@@ -82,6 +84,7 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
   @Override
   public void brighten(int value) {
     currentCommand = "brighten";
+    setPreviewMode(true);
     currentArgs = new ArgumentWrapper(new IntArgument(value));
     runCommand();
   }
@@ -89,36 +92,42 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
   @Override
   public void blur() {
     currentCommand = "blur";
+    setPreviewMode(true);
     runEmptyArgCommand();
   }
 
   @Override
   public void sharpen() {
     currentCommand = "sharpen";
+    setPreviewMode(true);
     runEmptyArgCommand();
   }
 
   @Override
   public void hFlip() {
     currentCommand = "horizontal-flip";
+    setPreviewMode(false);
     runEmptyArgCommand();
   }
 
   @Override
   public void vFlip() {
     currentCommand = "vertical-flip";
+    setPreviewMode(false);
     runEmptyArgCommand();
   }
 
   @Override
   public void sepia() {
     currentCommand = "sepia";
+    setPreviewMode(true);
     runEmptyArgCommand();
   }
 
   @Override
   public void grayscale() {
     currentCommand = "grayscale";
+    setPreviewMode(true);
     runEmptyArgCommand();
   }
 
@@ -143,6 +152,7 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
   @Override
   public void compress(int ratio) {
     currentCommand = "compress";
+    setPreviewMode(false);
     currentArgs = new ArgumentWrapper(new IntArgument(ratio));
     runCommand();
   }
@@ -150,17 +160,22 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
   @Override
   public void colorCorrect() {
     currentCommand = "color-correct";
+    setPreviewMode(true);
     runEmptyArgCommand();
   }
 
   @Override
   public void downscale(int h, int w) {
-    throw new UnsupportedOperationException("Not supported yet.");
+    currentCommand = "downscale";
+    setPreviewMode(false);
+    currentArgs = new ArgumentWrapper(new IntArgument(h), new IntArgument(w));
+    runCommand();
   }
 
   @Override
   public void adjustLevels(int b, int m, int w) {
-    currentCommand = "adjust-levels";
+    currentCommand = "levels-adjust";
+    setPreviewMode(true);
     currentArgs = new ArgumentWrapper(new IntArgument(b), new IntArgument(m), new IntArgument(w));
     runCommand();
   }
@@ -175,6 +190,7 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
       System.out.println("being cloned...");
       controller.onCommandExecuted(currentCommand, currentArgs.clone());
     }
+    this.confirmed = true;
   }
 
   @Override
@@ -186,14 +202,13 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
   @Override
   public void setPreviewMode(boolean preview) {
     this.preview = preview;
-    runCommand();
+    view.setPreview(preview);
   }
 
   @Override
   public void setConfirmation(boolean confirm) {
     this.confirmed = confirm;
     runCommand();
-    confirm = true;
   }
 
   @Override

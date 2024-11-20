@@ -30,6 +30,9 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
   ImageViewer histogramPreview;
   ViewComponentListener listener;
   Set<JMenuItem> disabledByDefault = new HashSet<JMenuItem>();
+  JButton confirmButton = new JButton("Confirm");
+  JButton cancelButton = new JButton("Cancel");
+  JSlider splitSlider = new JSlider(0, 100, 50);
 
   public DefaultFrame(ViewComponentListener listener) {
     this.listener = listener;
@@ -76,7 +79,6 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
     leftPanel.setBorder(new TitledBorder("Split Preview")); // Add the title
 
     // Create the slider
-    JSlider splitSlider = new JSlider(0, 100, 50); // Slider range: 0 to 100, default at 50
     splitSlider.setMajorTickSpacing(20); // Major ticks every 20
     splitSlider.setPaintTicks(true); // Show tick marks
     splitSlider.setPaintLabels(true); // Show labels
@@ -91,14 +93,13 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
     imagePreview = new ImageViewer();
     JScrollPane imageScrollPane = new JScrollPane(imagePreview);
 
-    // Create the "Saving Confirm" button
-    JButton savingConfirmButton = new JButton("Confirm");
-    savingConfirmButton.setPreferredSize(new Dimension(0, 40)); // Set fixed height for the button
-    savingConfirmButton.addActionListener(e -> {
+    // Create the "Confirm" button
+    confirmButton.setPreferredSize(new Dimension(0, 40)); // Set fixed height for the button
+    confirmButton.addActionListener(e -> {
       listener.setPreviewMode(false);
+      listener.setConfirmation(true);
     });
 
-    JButton cancelButton = new JButton("Cancel");
 //    cancelButton.setEnabled(false);
     cancelButton.addActionListener(e -> {
       listener.setPreviewMode(true);
@@ -115,7 +116,7 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
     gbc.gridx = 0;
     gbc.gridy = 0;
     gbc.weightx = 1.0; // Full width
-    buttonPanel.add(savingConfirmButton, gbc);
+    buttonPanel.add(confirmButton, gbc);
 
     // Add the Cancel button
     gbc.gridy = 1; // Next row
@@ -221,6 +222,13 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
     for (JMenuItem item : disabledByDefault) {
       item.setEnabled(true);
     }
+  }
+
+  @Override
+  public void setPreview(boolean enable) {
+    confirmButton.setEnabled(enable);
+    cancelButton.setEnabled(enable);
+    splitSlider.setEnabled(enable);
   }
 
   private void showExitConfirmation() {

@@ -24,4 +24,6 @@ public interface UpdateObserver {
   void displayError(String error);
 
   void enableAllFeatures();
+
+  void setPreview(boolean enable);
 }

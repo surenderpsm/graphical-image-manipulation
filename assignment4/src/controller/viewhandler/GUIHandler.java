@@ -13,7 +13,6 @@ import utils.arguments.StringArgument;
 import view.gui.GUI;
 import view.gui.GUIHandlingObject;
 import view.gui.GUIViewListener;
-import view.gui.VersionManager;
 
 /**
  * The GUIHandler handles only one image at a time, hence we don't need any aliases when performing
@@ -29,7 +28,6 @@ public class GUIHandler implements ViewHandler, GUIViewListener, ViewUpdater {
   GUIHandlingObject gui;
   ISingleSessionModel modelView;
   IControllerView controller;
-  VersionManager versions = new VersionManager(MAX_VERSIONS);
 
   public GUIHandler(IControllerView controller) {
     gui = new GUI(this);
@@ -97,10 +95,10 @@ public class GUIHandler implements ViewHandler, GUIViewListener, ViewUpdater {
     try {
       // @todo the aliases are not added to the command.
       // save to preview alias if preview mode is enabled.
-//      if(!confirm && !preview) {
-//        modelView.updateView(false);
-//        return;
-//      }
+      if(!confirm) {
+        modelView.updateView(false);
+        return;
+      }
       String alias = (preview) ? PREVIEW_ALIAS : MAIN_ALIAS;
       // get split from the gui if preview mode is enabled.
       int split = (preview) ? gui.getSplit() : 100;

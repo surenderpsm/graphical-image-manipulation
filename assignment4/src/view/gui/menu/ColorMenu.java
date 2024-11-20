@@ -120,20 +120,25 @@ public class ColorMenu extends JMenu {
       dialog.setVisible(true);
     });
 
-
+    JMenuItem colorCorrection = new JMenuItem("Color Correction");
+    binder.addToDisabledByDefault(colorCorrection);
+    colorCorrection.addActionListener(e -> {
+      binder.getViewComponentListener().colorCorrect();
+    });
 
     // Add Effects submenu
     add(new EffectsSubMenu(binder));
 
     // Add other color options
     add(levels);
-    add(new JMenuItem("Color Correct"));
+    add(colorCorrection);
   }
 
   private static class EffectsSubMenu extends JMenu {
 
     public EffectsSubMenu(SubComponentBinder binder) {
       super("Effects");
+      binder.addToDisabledByDefault(this);
 
       JMenuItem grayscale = new JMenuItem("Grayscale");
       grayscale.addActionListener(e -> {
