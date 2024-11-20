@@ -17,7 +17,7 @@ public class ModelTest4x4 extends AbstractModelTest {
 
   @Override
   protected String getRoot() {
-    return "assignment4/res/img4x4/";
+    return "res/img4x4/";
   }
 
 //  /**
@@ -81,7 +81,7 @@ public class ModelTest4x4 extends AbstractModelTest {
   /**
    * test for color correction.
    */
-  @org.junit.jupiter.api.Test
+  @Test
   public void ColorCorrectionTest() {
     int[][][] expected = get3DArrayFromFile(getRoot() + "colorCorrection.txt");
     model.execute("color-correct",
@@ -430,12 +430,11 @@ public class ModelTest4x4 extends AbstractModelTest {
     model.execute("blur", argumentWrapper);
     ArgumentWrapper argumentWrapper2 = new ArgumentWrapper(new StringArgument("image"),
             new StringArgument("blurred"),
-            new StringArgument("imageMask"),
             new StringArgument("PartialBlurred"));
+    argumentWrapper2.setArgument(OptionalArgumentKeyword.MASKIMG, "imageMask");
     model.execute("partial-process",argumentWrapper2);
     int[][][] arr = model.getImage("PartialBlurred");
     System.out.println(Arrays.deepToString(arr));
-    //System.out.println(Arrays.deepToString(expected));
     assertTrue(isEqual(expected, arr));
   }
 

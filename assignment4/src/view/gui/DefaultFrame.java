@@ -206,7 +206,6 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
   @Override
   public void updateImage(BufferedImage image) {
     SwingUtilities.invokeLater(() -> {
-      System.out.println("DefaultFrame.updateImage - image is being updated.");
       imagePreview.updateImage(image); // Assuming setImage is a method in ImageViewer
     });
   }
@@ -214,7 +213,6 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
   @Override
   public void updateHistogram(BufferedImage histogram) {
     SwingUtilities.invokeLater(() -> {
-      System.out.println("DefaultFrame.updateHistogram - histogram is being updated.");
       histogramPreview.updateImage(histogram); // Assuming setImage is a method in ImageViewer
     });
   }

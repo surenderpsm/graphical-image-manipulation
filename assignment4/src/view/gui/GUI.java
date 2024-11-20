@@ -76,6 +76,7 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
 
   @Override
   public void saveImage(File file) {
+    resetComponents();
     if (file != null) {
       controller.onSaveImage(file);
     }
@@ -190,7 +191,6 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
 
   private void runCommand() {
     if (currentCommand != null) {
-      System.out.println("being cloned...");
       controller.onCommandExecuted(currentCommand, currentArgs.clone());
     }
     this.confirmed = true;

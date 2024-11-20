@@ -29,7 +29,6 @@ public class SingleSessionModel implements ISingleSessionModel {
     this.view = view;
     this.mainAlias = mainAlias;
     this.previewAlias = previewAlias;
-    System.out.println("SingleSessionModel.SingleSessionModel");
   }
 
   @Override
