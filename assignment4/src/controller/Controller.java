@@ -1,11 +1,7 @@
 package controller;
 
-import controller.viewhandler.CLIHandler;
-import controller.viewhandler.GUIHandler;
 import controller.viewhandler.ViewHandler;
 import java.io.File;
-import java.io.InputStream;
-import java.io.PrintStream;
 import java.util.Map;
 import java.util.Set;
 import model.IModel;
@@ -19,7 +15,7 @@ import utils.arguments.Signature;
  * from the user, and interacting with the model. It processes input commands, including script
  * commands and regular commands, and calls the appropriate methods on the model.
  */
-public class Controller implements IControllerView {
+public class Controller implements Features {
 
   private final Map<String, Signature> signatureMap;
   private boolean exit = false;
@@ -67,23 +63,20 @@ public class Controller implements IControllerView {
 
   @Override
   public void loadImage(File file, String alias) {
-    ioHandler.load(file,
-                   alias);
+    ioHandler.load(file, alias);
     vHandler.notifyExecutionOnSuccess();
   }
 
   @Override
   public void saveImage(File file, String alias) {
-    ioHandler.save(alias,
-                   file);
+    ioHandler.save(alias, file);
     vHandler.notifyExecutionOnSuccess();
   }
 
   @Override
   public void invokeCommand(String command, ArgumentWrapper args) {
     try {
-      model.execute(command,
-                    args);
+      model.execute(command, args);
       vHandler.notifyExecutionOnSuccess();
     } catch (Exception e) {
       vHandler.notifyExecutionOnFailure(e.getMessage());

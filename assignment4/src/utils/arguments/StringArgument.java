@@ -1,8 +1,8 @@
 package utils.arguments;
 
 /**
- * Represents a string argument to be passed to commands in the controller.
- * Throws an exception if the provided string contains whitespace.
+ * Represents a string argument to be passed to commands in the controller. Throws an exception if
+ * the provided string contains whitespace.
  */
 public class StringArgument implements Argument {
 

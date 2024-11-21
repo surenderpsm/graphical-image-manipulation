@@ -169,7 +169,7 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
       listener.blueComponent();
     });
     JButton resetButton = new JButton("Reset");
-    resetButton.addActionListener(e->{
+    resetButton.addActionListener(e -> {
       listener.resetComponents();
     });
     // Add buttons to the GridBagLayout
@@ -238,7 +238,7 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
 
   @Override
   public void setChannelSettings(boolean enable) {
-    for(Component component: channelsPanel.getComponents()){
+    for (Component component : channelsPanel.getComponents()) {
       component.setEnabled(enable);
     }
   }

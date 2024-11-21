@@ -1,6 +1,6 @@
 package controller.viewhandler;
 
-import controller.IControllerView;
+import controller.Features;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -17,7 +17,7 @@ import view.cli.CLIViewListener;
 public class CLIHandler implements ViewHandler, CLIViewListener {
 
   CLI cli;
-  IControllerView controller;
+  Features controller;
 
   public CLIHandler(InputStream in, PrintStream out) {
     cli = new CLI(in, out, this);
@@ -36,7 +36,7 @@ public class CLIHandler implements ViewHandler, CLIViewListener {
   }
 
   @Override
-  public void addController(IControllerView controller) {
+  public void addController(Features controller) {
     this.controller = controller;
   }
 
@@ -124,9 +124,11 @@ public class CLIHandler implements ViewHandler, CLIViewListener {
             controller.invokeCommand(commandHead,
                                      new ArgumentWrapper(new StringArgument(tokens[1]),
                                                          new StringArgument(tokens[3])));
-            ArgumentWrapper wrapper = new ArgumentWrapper(new StringArgument(tokens[1]),
-                                 new StringArgument(tokens[3]),
-                                 new StringArgument(tokens[3]));
+            ArgumentWrapper
+                wrapper =
+                new ArgumentWrapper(new StringArgument(tokens[1]),
+                                    new StringArgument(tokens[3]),
+                                    new StringArgument(tokens[3]));
             wrapper.setArgument("maskimg", tokens[2]);
             controller.invokeCommand("partial-process", wrapper);
 

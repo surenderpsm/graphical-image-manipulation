@@ -43,7 +43,8 @@ public class ImageViewer extends JPanel {
       if (image != null) {
         // Set the preferred size to match the new image dimensions
         setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
-      } else {
+      }
+      else {
         // Handle null image gracefully
         setPreferredSize(new Dimension(0, 0));
       }

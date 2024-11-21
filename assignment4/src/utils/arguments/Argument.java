@@ -1,10 +1,11 @@
 package utils.arguments;
 
 /**
- * Represents an argument that can be passed to commands in the controller.
- * Classes implementing this interface provide a specific type of argument value.
+ * Represents an argument that can be passed to commands in the controller. Classes implementing
+ * this interface provide a specific type of argument value.
  */
 public interface Argument {
+
   public static final Argument EMPTY = null;
 
   /**

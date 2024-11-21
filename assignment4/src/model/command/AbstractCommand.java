@@ -65,7 +65,7 @@ abstract class AbstractCommand implements Command {
   }
 
   protected String parseString(OptionalArgumentKeyword keyword) {
-    try{
+    try {
       return args.getStringArgument(keyword);
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -109,8 +109,9 @@ abstract class AbstractCommand implements Command {
           "Expected " + e.getMessage() + " at position " + argumentNumber + ".");
     }
   }
+
   protected int parseInt(OptionalArgumentKeyword key, int min, int max) {
-      return intValidation(args.getIntArgument(key), min, max);
+    return intValidation(args.getIntArgument(key), min, max);
   }
 
   /**

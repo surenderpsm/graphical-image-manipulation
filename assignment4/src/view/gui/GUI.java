@@ -6,6 +6,9 @@ import javax.swing.SwingUtilities;
 import utils.arguments.ArgumentWrapper;
 import utils.arguments.IntArgument;
 
+/**
+ *
+ */
 public class GUI implements GUIHandlingObject, ViewComponentListener {
 
   private final GUIViewListener controller;
@@ -24,6 +27,7 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
     });
   }
 
+  @Override
   public void updateImage(BufferedImage image) {
     view.updateImage(image);
   }
@@ -40,13 +44,7 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
 
   @Override
   public int getSplit() {
-    // @todo get split from the user. get the slider value.
     return split;
-  }
-
-  @Override
-  public void registerListeners() {
-    // @todo need to remove is not used.
   }
 
   @Override
@@ -56,10 +54,10 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
 
   @Override
   public boolean isPreviewMode() {
-    //@todo the confirm button listener can turn off preview mode.
     return preview;
   }
 
+  @Override
   public boolean isConfirmed() {
     return confirmed;
   }

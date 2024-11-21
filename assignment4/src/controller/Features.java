@@ -14,16 +14,18 @@ import utils.arguments.MandatedArgWrapper;
  * the image it is handling. It becomes the controller's responsibility to manage the alias for that
  * image.
  */
-public interface IControllerView extends ModelSharer {
+public interface Features extends ModelSharer {
 
   /**
    * Pass to a view handler, the available command strings.
+   *
    * @return a set of strings.
    */
   Set<String> getCommandNames();
 
   /**
    * Get a mandated argument wrapper to pass arguments.
+   *
    * @param commandName
    * @return
    */

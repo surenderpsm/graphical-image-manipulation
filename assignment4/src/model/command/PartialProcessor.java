@@ -8,17 +8,19 @@ import utils.arguments.OptionalArgumentKeyword;
 /**
  * partial processor class used to partially process images.
  */
-public class PartialProcessor extends AbstractCommand{
+public class PartialProcessor extends AbstractCommand {
+
   protected Image filteredImage;
   protected Image maskImage;
 
   /**
    * constructor of the partial processor.
-   * @param rawArguments arguments required which contain what images to work on.
-   *                     what to store the final image as.
-   * @param cache in which cache to retrieve and store from.
+   *
+   * @param rawArguments arguments required which contain what images to work on. what to store the
+   *                     final image as.
+   * @param cache        in which cache to retrieve and store from.
    */
-  public PartialProcessor(ArgumentWrapper rawArguments, Cache cache){
+  public PartialProcessor(ArgumentWrapper rawArguments, Cache cache) {
     // what this class needs.
     // 1. name of the current image we are working on (eg parrot, donut etc).
     // 2. name of processed image.
@@ -37,15 +39,13 @@ public class PartialProcessor extends AbstractCommand{
    */
   @Override
   public void execute() {
-    int[][][] imageArray =
-            new int[maskImage.getHeight()]
-            [maskImage.getWidth()]
-            [maskImage.getNoOfChannels()];
-    for(int i=0 ; i< maskImage.getHeight(); i++){
-      for(int j=0; j<maskImage.getWidth(); j++){
-        if(maskImage.getRedChannelData()[i][j] == 0
-                && maskImage.getGreenChannelData()[i][j] == 0
-                && maskImage.getBlueChannelData()[i][j] == 0){
+    int[][][] imageArray = new int[maskImage.getHeight()]
+        [maskImage.getWidth()]
+        [maskImage.getNoOfChannels()];
+    for (int i = 0; i < maskImage.getHeight(); i++) {
+      for (int j = 0; j < maskImage.getWidth(); j++) {
+        if (maskImage.getRedChannelData()[i][j] == 0 && maskImage.getGreenChannelData()[i][j] == 0
+            && maskImage.getBlueChannelData()[i][j] == 0) {
           imageArray[i][j][0] = filteredImage.getRedChannelData()[i][j];
           imageArray[i][j][1] = filteredImage.getGreenChannelData()[i][j];
           imageArray[i][j][2] = filteredImage.getBlueChannelData()[i][j];

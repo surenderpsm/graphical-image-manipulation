@@ -22,7 +22,9 @@ abstract class SimpleImageProcessor extends ImageProcessor {
    * @param transformer  The PixelTransformer to use for image processing
    */
 
-  protected SimpleImageProcessor(ArgumentWrapper rawArguments, Cache cache, PixelTransformer transformer) {
+  protected SimpleImageProcessor(ArgumentWrapper rawArguments,
+                                 Cache cache,
+                                 PixelTransformer transformer) {
     super(rawArguments, cache);
     this.transformer = transformer;
   }
@@ -69,9 +71,9 @@ abstract class SimpleImageProcessor extends ImageProcessor {
 
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < workingWidth; j++) {
-        int[] transformedPixel = transformer.transformPixel(redChannel[i][j],
-                                                            greenChannel[i][j],
-                                                            blueChannel[i][j]);
+        int[]
+            transformedPixel =
+            transformer.transformPixel(redChannel[i][j], greenChannel[i][j], blueChannel[i][j]);
         imageArray[i][j] = transformedPixel;
       }
     }

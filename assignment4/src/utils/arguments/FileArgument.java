@@ -3,8 +3,8 @@ package utils.arguments;
 import java.io.File;
 
 /**
- * Represents a file argument to be passed to commands in the controller.
- * Provides constructors for direct File objects or file paths.
+ * Represents a file argument to be passed to commands in the controller. Provides constructors for
+ * direct File objects or file paths.
  */
 public class FileArgument implements Argument {
 

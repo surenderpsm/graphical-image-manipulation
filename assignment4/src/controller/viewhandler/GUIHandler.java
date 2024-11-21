@@ -1,6 +1,6 @@
 package controller.viewhandler;
 
-import controller.IControllerView;
+import controller.Features;
 import java.io.File;
 import model.ISingleSessionModel;
 import model.SingleSessionModel;
@@ -20,20 +20,20 @@ import view.gui.GUIViewListener;
  */
 public class GUIHandler implements ViewHandler, GUIViewListener, ViewUpdater {
 
-  private static final int MAX_VERSIONS = 10;
   private static final String MAIN_ALIAS = "image";
   private static final String PREVIEW_ALIAS = "preview";
   private boolean unsavedChanges = false;
   private boolean loaded = false;
   GUIHandlingObject gui;
   ISingleSessionModel modelView;
-  private IControllerView controller;
+  private Features controller;
 
   public GUIHandler() {
     gui = new GUI(this);
   }
 
-  public void addController(IControllerView controller){
+  @Override
+  public void addController(Features controller) {
     this.controller = controller;
     modelView = new SingleSessionModel(controller, this, MAIN_ALIAS, PREVIEW_ALIAS);
   }
@@ -66,13 +66,11 @@ public class GUIHandler implements ViewHandler, GUIViewListener, ViewUpdater {
 
   @Override
   public void onLoadImage(File file) {
-    // @todo set up alias management
     try {
       controller.loadImage(file, MAIN_ALIAS);
     } catch (Exception e) {
       notifyExecutionOnFailure(e.getMessage());
     }
-    // @todo update display
   }
 
   @Override
@@ -83,7 +81,6 @@ public class GUIHandler implements ViewHandler, GUIViewListener, ViewUpdater {
     } catch (Exception e) {
       notifyExecutionOnFailure(e.getMessage());
     }
-    //@todo allow quit without confirmation.
   }
 
   @Override
@@ -93,9 +90,8 @@ public class GUIHandler implements ViewHandler, GUIViewListener, ViewUpdater {
     boolean preview = gui.isPreviewMode();
     boolean confirm = gui.isConfirmed();
     try {
-      // @todo the aliases are not added to the command.
       // save to preview alias if preview mode is enabled.
-      if(!confirm) {
+      if (!confirm) {
         modelView.updateView(false);
         return;
       }

@@ -5,7 +5,6 @@ import controller.viewhandler.CLIHandler;
 import controller.viewhandler.GUIHandler;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import model.IModel;
 import model.Model;
 
@@ -34,8 +33,8 @@ public class App {
         // If a file path is specified, use it as input
         System.out.println("Loading file: " + filePath);
         FileInputStream fileInputStream = createFileInputStream(filePath);
-          // initiating controller for script.
-          return new Controller(model, new CLIHandler(fileInputStream, System.out));
+        // initiating controller for script.
+        return new Controller(model, new CLIHandler(fileInputStream, System.out));
       }
       if (args[i].equals("-text")) {
         // initiating controller for interactive mode.
