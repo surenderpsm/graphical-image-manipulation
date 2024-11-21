@@ -14,6 +14,8 @@ public class ControllerTest {
 
   private static class MockModel implements IModel {
 
+    public StringBuilder log = new StringBuilder();
+
     @Override
     public Map<String, Signature> getCommandSignatures() {
       return Map.of();
@@ -43,6 +45,7 @@ public class ControllerTest {
     public void execute(String command, ArgumentWrapper args) throws UnsupportedOperationException {
 
     }
+    public String get
   }
 
   @Test
