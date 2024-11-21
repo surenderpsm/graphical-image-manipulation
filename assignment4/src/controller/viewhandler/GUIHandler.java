@@ -29,7 +29,8 @@ public class GUIHandler implements ViewHandler, GUIViewListener, ViewUpdater {
   private Features controller;
 
   public GUIHandler() {
-    gui = new GUI(this);
+    gui = new GUI();
+    gui.addObserver(this);
   }
 
   public GUIHandler(GUIHandlingObject gui) {

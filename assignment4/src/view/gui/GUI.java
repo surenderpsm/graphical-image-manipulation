@@ -11,7 +11,7 @@ import utils.arguments.IntArgument;
  */
 public class GUI implements GUIHandlingObject, ViewComponentListener {
 
-  private final GUIViewListener controller;
+  private GUIViewListener observer;
   private UpdateObserver view;
   private boolean preview = false;
   private int split = 0;
@@ -19,12 +19,16 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
   private String currentCommand;
   private boolean confirmed = true;
 
-  public GUI(GUIViewListener controller) {
-    this.controller = controller;
+  public GUI(){
     SwingUtilities.invokeLater(() -> {
       this.view = new DefaultFrame(this);
       setPreviewMode(false);
     });
+  }
+
+  @Override
+  public void addObserver(GUIViewListener observer) {
+    this.observer = observer;
   }
 
   @Override
@@ -65,7 +69,7 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
   @Override
   public void loadImage(File file) {
     if (file != null) {
-      controller.onLoadImage(file);
+      observer.onLoadImage(file);
     }
   }
 
@@ -73,7 +77,7 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
   public void saveImage(File file) {
     resetComponents();
     if (file != null) {
-      controller.onSaveImage(file);
+      observer.onSaveImage(file);
     }
   }
 
@@ -186,7 +190,7 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
 
   private void runCommand() {
     if (currentCommand != null) {
-      controller.onCommandExecuted(currentCommand, currentArgs.clone());
+      observer.onCommandExecuted(currentCommand, currentArgs.clone());
     }
     this.confirmed = true;
   }
@@ -212,7 +216,7 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
 
   @Override
   public boolean quit() {
-    return controller.requestApplicationExit();
+    return observer.requestApplicationExit();
   }
 
   @Override
