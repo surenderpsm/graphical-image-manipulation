@@ -9,10 +9,24 @@ import javax.swing.JMenuItem;
 import javax.swing.JSlider;
 import view.gui.frame.SubComponentBinder;
 
+/**
+ * The ColorMenu class represents the "Color" menu in the GUI frame.
+ * <p>
+ * This menu provides options for color-related adjustments, including Levels Adjustment and Color
+ * Correction, along with various color effects like Grayscale and Sepia. The menu integrates with a
+ * listener that interacts with the underlying image processing logic.
+ * </p>
+ */
 public class ColorMenu extends JMenu {
 
   SubComponentBinder binder;
 
+  /**
+   * Constructs the ColorMenu and adds menu items for color adjustments and effects.
+   *
+   * @param binder the {@link SubComponentBinder} that provides access to necessary components like
+   *               listeners for color adjustments.
+   */
   public ColorMenu(SubComponentBinder binder) {
     super("Color");
     this.binder = binder;
@@ -142,8 +156,17 @@ public class ColorMenu extends JMenu {
     add(colorCorrection);
   }
 
+  /**
+   * The EffectsSubMenu class provides additional color effects like Grayscale and Sepia. These
+   * options can be applied to the image.
+   */
   private static class EffectsSubMenu extends JMenu {
 
+    /**
+     * Constructs the Effects submenu and adds color effects options.
+     *
+     * @param binder the {@link SubComponentBinder} that provides access to necessary components.
+     */
     public EffectsSubMenu(SubComponentBinder binder) {
       super("Effects");
       binder.addToDisabledByDefault(this);

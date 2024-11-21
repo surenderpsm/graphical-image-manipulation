@@ -9,7 +9,10 @@ import view.gui.frame.DefaultFrame;
 import view.gui.frame.UpdateObserver;
 
 /**
- *
+ * The {@code GUIImpl} class is an implementation of the {@link GUI} interface and acts as a facade
+ * for the graphical user interface. It communicates with an observer to execute user actions and
+ * updates the view through the {@link UpdateObserver}. This class manages the GUI state, including
+ * preview and confirmation modes, and handles user-initiated commands.
  */
 public class GUIImpl implements GUI, ComponentObserver {
 
@@ -21,7 +24,11 @@ public class GUIImpl implements GUI, ComponentObserver {
   private String currentCommand;
   private boolean confirmed = true;
 
-  public GUIImpl(){
+  /**
+   * Constructs a {@code GUIImpl} instance and initializes the GUI components on the Swing event
+   * dispatch thread. The GUI starts in non-preview mode by default.
+   */
+  public GUIImpl() {
     SwingUtilities.invokeLater(() -> {
       this.view = new DefaultFrame(this);
       setPreviewMode(false);
@@ -185,11 +192,19 @@ public class GUIImpl implements GUI, ComponentObserver {
     runCommand();
   }
 
+
+  /**
+   * Runs a command with no arguments.
+   */
   private void runEmptyArgCommand() {
     currentArgs = new ArgumentWrapper();
     runCommand();
   }
 
+  /**
+   * Executes the current command with the associated arguments. Notifies the observer of the
+   * command execution.
+   */
   private void runCommand() {
     if (currentCommand != null) {
       observer.onCommandExecuted(currentCommand, currentArgs.clone());
