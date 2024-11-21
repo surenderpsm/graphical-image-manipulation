@@ -119,7 +119,7 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
     });
 
     cancelButton.addActionListener(e -> {
-      listener.setPreviewMode(true);
+      listener.setPreviewMode(false);
       listener.setConfirmation(false);
     });
 
