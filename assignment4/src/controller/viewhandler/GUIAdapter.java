@@ -35,6 +35,7 @@ public class GUIAdapter implements ViewAdapter, GUIObserver, ViewUpdater {
 
   public GUIAdapter(GUI gui) {
     this.gui = gui;
+    gui.addObserver(this);
   }
 
   @Override
