@@ -44,26 +44,44 @@ public class ModelTest4x4 extends AbstractModelTest {
 //    assertTrue(isEqual(expected, model.getImage("horizontal-Sharpen-brighten")));
 //  }
 //
-//  /**
-//   * test for compression.
-//   */
-//  @Test
-//  public void compressionTest() {
-//    int[][][] expected = get3DArrayFromFile(getRoot() + "compression.txt");
-//    model.execute("compress", "60 image compressed");
-//    int[][][] arr = model.getImage("compressed");
-//    assertTrue(isEqual(expected, arr));
-//  }
-//
-//  /**
-//   * test for invalid input compression.
-//   */
-//  @Test(expected = IllegalArgumentException.class)
-//  public void compressionTest2() {
-//    int[][][] expected = get3DArrayFromFile(getRoot() + "compression.txt");
-//    model.execute("compress", "0.60 image compressed");
-//  }
-//
+  /**
+   * test for compression.
+   */
+  @Test
+  public void compressionTest() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "compression.txt");
+    model.execute("compress",
+            new ArgumentWrapper(new IntArgument(60),
+                    new StringArgument("image"),
+                    new StringArgument("compressed")));
+    int[][][] arr = model.getImage("compressed");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * test for invalid input compression.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void compressionTest2() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "compression.txt");
+    model.execute("compress",
+            new ArgumentWrapper(new IntArgument(-30),
+                    new StringArgument("image"),
+                    new StringArgument("compressed")));
+  }
+
+  /**
+   * test for invalid input compression.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void compressionTest3() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "compression.txt");
+    model.execute("compress",
+            new ArgumentWrapper(new IntArgument(175),
+                    new StringArgument("image"),
+                    new StringArgument("compressed")));
+  }
+
 
   /**
    * test for histogram.
@@ -107,83 +125,179 @@ public class ModelTest4x4 extends AbstractModelTest {
     int[][][] arr = model.getImage("levelAdjusted");
     assertTrue(isEqual(expected, arr));
   }
-//
-//  /**
-//   * Apply "brighten 50" on only first 50% of the image.
-//   */
-//  @Test
-//  public void splitOnBrightenTest() {
-//    int[][][] expected = get3DArrayFromFile(getRoot() + "brighten50split50.txt");
-//    model.execute("brighten", "50 image brighten-by-50-split split 50");
-//    int[][][] arr = model.getImage("brighten-by-50-split");
-//    assertTrue(isEqual(expected, arr));
-//  }
-//
-//  /**
-//   * Apply "luma" on 25% of image.
-//   */
-//  @Test
-//  public void splitOnLumaComponent() {
-//    int[][][] expected = get3DArrayFromFile(getRoot() + "lumaSplit25.txt");
-//    model.execute("luma-component", "image luma-split-25 split 25");
-//    int[][][] arr = model.getImage("luma-split-25");
-//    assertTrue(isEqual(expected, arr));
-//  }
-//
-//  /**
-//   * Apply "brighten -10" on 100% of image.
-//   */
-//  @Test
-//  public void splitOnDarkenTest() {
-//    int[][][] expected = get3DArrayFromFile(getRoot() + "darken.txt");
-//    model.execute("brighten", "-10 image darkened split 100");
-//    int[][][] arr = model.getImage("darkened");
-//    assertTrue(isEqual(expected, arr));
-//  }
-//
-//  /**
-//   * Apply "color-correct" on 75% of image.
-//   */
-//  @Test
-//  public void splitOnColorCorrect() {
-//    int[][][] expected = get3DArrayFromFile(getRoot() + "colorCorrectSplit75.txt");
-//    model.execute("color-correct", "image colorCorrected split 75");
-//    int[][][] arr = model.getImage("colorCorrected");
-//    assertTrue(isEqual(expected, arr));
-//  }
-//
-//  /**
-//   * Apply "levels-adjust" on 20% of the image.
-//   */
-//  @Test
-//  public void splitOnLevelAdjust() {
-//    int[][][] expected = get3DArrayFromFile(getRoot() + "levelsAdjustSplit25.txt");
-//    model.execute("levels-adjust", "0 128 255 image levelAdjusted split 20");
-//    int[][][] arr = model.getImage("levelAdjusted");
-//    assertTrue(isEqual(expected, arr));
-//  }
-//
-//  /**
-//   * Apply "value-component" on 0% of the image.
-//   */
-//  @Test
-//  public void splitOnValueComponent() {
-//    int[][][] expected = get3DArrayFromFile(getRoot() + "original.txt");
-//    model.execute("value-component", "image valueComponent split 0");
-//    int[][][] arr = model.getImage("valueComponent");
-//    assertTrue(isEqual(expected, arr));
-//  }
-//
-//  /**
-//   * Apply intensity-component on 90% of the image.
-//   */
-//  @Test
-//  public void splitOnIntensityComponent() {
-//    int[][][] expected = get3DArrayFromFile(getRoot() + "IntensityComponentSplit75.txt");
-//    model.execute("intensity-component", "image intensityComponent split 90");
-//    int[][][] arr = model.getImage("intensityComponent");
-//    assertTrue(isEqual(expected, arr));
-//  }
+
+  /**
+   * Apply "brighten 50" on only first 50% of the image.
+   */
+  @Test
+  public void splitOnBrightenTest() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "brighten50split50.txt");
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(50),
+            new StringArgument("image"),
+            new StringArgument("brighten-by-50-split"));
+    argumentWrapper.setArgument(OptionalArgumentKeyword.SPLIT, 50);
+    model.execute("brighten", argumentWrapper);
+    int[][][] arr = model.getImage("brighten-by-50-split");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply "luma" on 25% of image.
+   */
+  @Test
+  public void splitOnLumaComponent() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "lumaSplit25.txt");
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(
+            new StringArgument("image"),
+            new StringArgument("luma-split-25"));
+    argumentWrapper.setArgument(OptionalArgumentKeyword.SPLIT, 25);
+    model.execute("luma-component", argumentWrapper);
+    int[][][] arr = model.getImage("luma-split-25");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply "brighten -10" on 100% of image.
+   */
+  @Test
+  public void splitOnDarkenTest() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "darken.txt");
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(-10),
+            new StringArgument("image"),
+            new StringArgument("darkened"));
+    argumentWrapper.setArgument(OptionalArgumentKeyword.SPLIT, 100);
+    model.execute("brighten", argumentWrapper);
+    int[][][] arr = model.getImage("darkened");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply "color-correct" on 75% of image.
+   */
+  @Test
+  public void splitOnColorCorrect() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "colorCorrectSplit75.txt");
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(
+            new StringArgument("image"),
+            new StringArgument("colorCorrected"));
+    argumentWrapper.setArgument(OptionalArgumentKeyword.SPLIT, 75);
+    model.execute("color-correct", argumentWrapper);
+    int[][][] arr = model.getImage("colorCorrected");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply "levels-adjust" on 20% of the image.
+   */
+  @Test
+  public void splitOnLevelAdjust() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "levelsAdjustSplit25.txt");
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(0),
+            new IntArgument(128),
+            new IntArgument(255),
+            new StringArgument("image"),
+            new StringArgument("levelAdjusted"));
+    argumentWrapper.setArgument(OptionalArgumentKeyword.SPLIT, 20);
+    model.execute("levels-adjust", argumentWrapper);
+    int[][][] arr = model.getImage("levelAdjusted");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply "levels-adjust" invalid case.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void splitOnLevelAdjustInvalid() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "levelsAdjustSplit25.txt");
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(128),
+            new IntArgument(255),
+            new IntArgument(0),
+            new StringArgument("image"),
+            new StringArgument("levelAdjusted"));
+    argumentWrapper.setArgument(OptionalArgumentKeyword.SPLIT, 20);
+    model.execute("levels-adjust", argumentWrapper);
+    int[][][] arr = model.getImage("levelAdjusted");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply "levels-adjust" invalid case.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void splitOnLevelAdjustInvalid2() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "levelsAdjustSplit25.txt");
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(258),
+            new IntArgument(258),
+            new IntArgument(-300),
+            new StringArgument("image"),
+            new StringArgument("levelAdjusted"));
+    argumentWrapper.setArgument(OptionalArgumentKeyword.SPLIT, 20);
+    model.execute("levels-adjust", argumentWrapper);
+    int[][][] arr = model.getImage("levelAdjusted");
+    assertTrue(isEqual(expected, arr));
+  }
+
+
+
+  /**
+   * Apply "value-component" on 0% of the image.
+   */
+  @Test
+  public void splitOnValueComponent() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "original.txt");
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(
+            new StringArgument("image"),
+            new StringArgument("valueComponent"));
+    argumentWrapper.setArgument(OptionalArgumentKeyword.SPLIT, 0);
+    model.execute("value-component", argumentWrapper);
+    int[][][] arr = model.getImage("valueComponent");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply intensity-component on 90% of the image.
+   */
+  @Test
+  public void splitOnIntensityComponent() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "IntensityComponentSplit75.txt");
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(
+            new StringArgument("image"),
+            new StringArgument("intensityComponent"));
+    argumentWrapper.setArgument(OptionalArgumentKeyword.SPLIT, 90);
+    model.execute("intensity-component", argumentWrapper);
+    int[][][] arr = model.getImage("intensityComponent");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * test invalid split < 0% of the image.
+   */
+  @Test (expected = IllegalArgumentException.class)
+  public void TestInvalidSplit() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "IntensityComponentSplit75.txt");
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(
+            new StringArgument("image"),
+            new StringArgument("intensityComponent"));
+    argumentWrapper.setArgument(OptionalArgumentKeyword.SPLIT, -5);
+    model.execute("intensity-component", argumentWrapper);
+    int[][][] arr = model.getImage("intensityComponent");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * test invalid split > 100% of the image.
+   */
+  @Test (expected = IllegalArgumentException.class)
+  public void TestInvalidSplit2() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "IntensityComponentSplit75.txt");
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(
+            new StringArgument("image"),
+            new StringArgument("intensityComponent"));
+    argumentWrapper.setArgument(OptionalArgumentKeyword.SPLIT, 125);
+    model.execute("intensity-component", argumentWrapper);
+    int[][][] arr = model.getImage("intensityComponent");
+    assertTrue(isEqual(expected, arr));
+  }
 //
 //  /**
 //   * Apply split operation on horizontal flip.
@@ -233,32 +347,39 @@ public class ModelTest4x4 extends AbstractModelTest {
 //   */
 //  @Test(expected = IllegalArgumentException.class)
 //  public void splitOnHistogram() {
-//
-//    model.execute("histogram", "image histogram split 10");
+//    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new StringArgument("image"),
+//            new StringArgument("histogram"));
+//    argumentWrapper.setArgument(OptionalArgumentKeyword.SPLIT, 10);
+//    model.execute("histogram", argumentWrapper);
 //  }
-//
-//  /**
-//   * Apply blur on 25% of the image.
-//   */
-//  @Test
-//  public void splitOnBlur() {
-//    int[][][] expected = get3DArrayFromFile(getRoot() + "BlurSplit25.txt");
-//    model.execute("blur", "image blurSplit split 25");
-//    int[][][] arr = model.getImage("blurSplit");
-//    assertTrue(isEqual(expected, arr));
-//  }
-//
-//  /**
-//   * Apply blur on 50% of the image.
-//   */
-//  @Test
-//  public void splitOnSharpen() {
-//    int[][][] expected = get3DArrayFromFile(getRoot() + "SharpenSplit50.txt");
-//    model.execute("sharpen", "image sharpenSplit split 50");
-//    int[][][] arr = model.getImage("sharpenSplit");
-//    assertTrue(isEqual(expected, arr));
-//  }
-//
+
+  /**
+   * Apply blur on 25% of the image.
+   */
+  @Test
+  public void splitOnBlur() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "BlurSplit25.txt");
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new StringArgument("image"),
+            new StringArgument("blurSplit"));
+    argumentWrapper.setArgument(OptionalArgumentKeyword.SPLIT, 25);
+    model.execute("blur", argumentWrapper);
+    int[][][] arr = model.getImage("blurSplit");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply blur on 50% of the image.
+   */
+  @Test
+  public void splitOnSharpen() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "SharpenSplit50.txt");
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new StringArgument("image"),
+            new StringArgument("sharpenSplit"));
+    argumentWrapper.setArgument(OptionalArgumentKeyword.SPLIT, 50);
+    model.execute("sharpen", argumentWrapper);
+    int[][][] arr = model.getImage("sharpenSplit");
+    assertTrue(isEqual(expected, arr));
+  }
 
   /**
    * Apply Sepia tone on 75% of the image.
@@ -288,8 +409,6 @@ public class ModelTest4x4 extends AbstractModelTest {
     model.execute("downscale", argumentWrapper);
 
     int[][][] arr = model.getImage("downscale2x2");
-    //System.out.println(Arrays.deepToString(arr));
-    //System.out.println(Arrays.deepToString(expected));
     assertTrue(isEqual(expected, arr));
   }
 
@@ -304,7 +423,6 @@ public class ModelTest4x4 extends AbstractModelTest {
             new StringArgument("downscale2x2"));
     model.execute("downscale", argumentWrapper);
     int[][][] arr = model.getImage("downscale2x2");
-    System.out.println(Arrays.deepToString(arr));
     assertTrue(isEqual(expected, arr));
   }
 
@@ -319,7 +437,6 @@ public class ModelTest4x4 extends AbstractModelTest {
             new StringArgument("downscale2x2"));
     model.execute("downscale", argumentWrapper);
     int[][][] arr = model.getImage("downscale2x2");
-    System.out.println(Arrays.deepToString(arr));
     assertTrue(isEqual(expected, arr));
   }
 
@@ -334,7 +451,6 @@ public class ModelTest4x4 extends AbstractModelTest {
             new StringArgument("downscale2x2"));
     model.execute("downscale", argumentWrapper);
     int[][][] arr = model.getImage("downscale2x2");
-    System.out.println(Arrays.deepToString(arr));
     assertTrue(isEqual(expected, arr));
   }
 
@@ -349,7 +465,6 @@ public class ModelTest4x4 extends AbstractModelTest {
             new StringArgument("downscale2x2"));
     model.execute("downscale", argumentWrapper);
     int[][][] arr = model.getImage("downscale2x2");
-    System.out.println(Arrays.deepToString(arr));
     assertTrue(isEqual(expected, arr));
   }
 
@@ -364,7 +479,6 @@ public class ModelTest4x4 extends AbstractModelTest {
             new StringArgument("downscale2x2"));
     model.execute("downscale", argumentWrapper);
     int[][][] arr = model.getImage("downscale2x2");
-    System.out.println(Arrays.deepToString(arr));
     assertTrue(isEqual(expected, arr));
   }
 
@@ -379,7 +493,6 @@ public class ModelTest4x4 extends AbstractModelTest {
             new StringArgument("downscale2x2"));
     model.execute("downscale", argumentWrapper);
     int[][][] arr = model.getImage("downscale2x2");
-    System.out.println(Arrays.deepToString(arr));
     assertTrue(isEqual(expected, arr));
   }
 
@@ -394,7 +507,6 @@ public class ModelTest4x4 extends AbstractModelTest {
             new StringArgument("downscale2x2"));
     model.execute("downscale", argumentWrapper);
     int[][][] arr = model.getImage("downscale2x2");
-    System.out.println(Arrays.deepToString(arr));
     assertTrue(isEqual(expected, arr));
   }
 
@@ -409,7 +521,6 @@ public class ModelTest4x4 extends AbstractModelTest {
             new StringArgument("downscale2x2"));
     model.execute("downscale", argumentWrapper);
     int[][][] arr = model.getImage("downscale2x2");
-    System.out.println(Arrays.deepToString(arr));
     assertTrue(isEqual(expected, arr));
   }
 
@@ -425,8 +536,6 @@ public class ModelTest4x4 extends AbstractModelTest {
     model.execute("downscale", argumentWrapper);
 
     int[][][] arr = model.getImage("downscale2x2");
-    System.out.println(Arrays.deepToString(arr));
-    //System.out.println(Arrays.deepToString(expected));
     assertTrue(isEqual(expected, arr));
   }
 
@@ -457,8 +566,6 @@ public class ModelTest4x4 extends AbstractModelTest {
     model.execute("downscale", argumentWrapper);
 
     int[][][] arr = model.getImage("downscale2x2");
-    System.out.println(Arrays.deepToString(arr));
-    //System.out.println(Arrays.deepToString(expected));
     assertTrue(isEqual(expected, arr));
   }
 
