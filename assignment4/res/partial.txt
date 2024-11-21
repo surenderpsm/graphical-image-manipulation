@@ -1,0 +1,14 @@
+# load donut
+load donuts.jpg donut
+# load mask
+load mask.jpg mask
+# red component
+
+red-component donut mask md
+save out/red-component-nomask.jpg mdg
+green-component donut mask md
+blue-component donut mask md
+
+grayscale donut mask mdg
+save mdg.jpg mdg
+save md.jpg md
