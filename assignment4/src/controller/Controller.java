@@ -33,7 +33,7 @@ public class Controller implements Features {
     this.model = model;
     this.ioHandler = new IOHandler(model);
     this.vHandler = vHandler;
-    vHandler.addController(this);
+    this.vHandler.addController(this);
     this.signatureMap = model.getCommandSignatures();
   }
 
