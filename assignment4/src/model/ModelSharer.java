@@ -14,5 +14,9 @@ import controller.viewhandler.GUIAdapter;
  */
 public interface ModelSharer {
 
+  /**
+   * Shares the model with receiver.
+   * @param receiver a ModelReceiver.
+   */
   void shareWith(ModelReceiver receiver);
 }
