@@ -19,9 +19,8 @@ public class CLIHandler implements ViewHandler, CLIViewListener {
   CLI cli;
   IControllerView controller;
 
-  public CLIHandler(InputStream in, PrintStream out, IControllerView controller) {
+  public CLIHandler(InputStream in, PrintStream out) {
     cli = new CLI(in, out, this);
-    this.controller = controller;
   }
 
   @Override
@@ -34,6 +33,11 @@ public class CLIHandler implements ViewHandler, CLIViewListener {
     if (!cli.getInput()) {
       controller.exitApplication();
     }
+  }
+
+  @Override
+  public void addController(IControllerView controller) {
+    this.controller = controller;
   }
 
   @Override

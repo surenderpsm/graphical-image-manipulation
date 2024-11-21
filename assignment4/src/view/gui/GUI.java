@@ -22,11 +22,8 @@ public class GUI implements GUIHandlingObject, ViewComponentListener {
       this.view = new DefaultFrame(this);
       setPreviewMode(false);
     });
-
-
   }
 
-  @Override
   public void updateImage(BufferedImage image) {
     view.updateImage(image);
   }

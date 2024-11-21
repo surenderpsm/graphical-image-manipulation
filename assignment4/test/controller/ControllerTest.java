@@ -3,6 +3,7 @@ package controller;
 
 import static org.junit.Assert.assertEquals;
 
+import controller.viewhandler.GUIHandler;
 import controller.viewhandler.ViewHandler;
 import java.io.File;
 import java.util.Map;
@@ -11,6 +12,7 @@ import model.IModel;
 import org.junit.Test;
 import utils.arguments.ArgumentWrapper;
 import utils.arguments.Signature;
+import view.gui.GUI;
 
 public class ControllerTest {
 
@@ -53,7 +55,7 @@ public class ControllerTest {
   @Test
   public void test() {
     MockModel model = new MockModel();
-    Controller controller = new Controller(model);
+    Controller controller = new Controller(model, new GUIHandler());
     controller.invokeCommand("mockCommand", new ArgumentWrapper());
     controller.loadImage(new File(""), "mock");
     assertEquals("mockCommandmock", model.log);

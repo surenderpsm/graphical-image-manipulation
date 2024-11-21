@@ -1,5 +1,8 @@
 package controller.viewhandler;
 
+import controller.Controller;
+import controller.IControllerView;
+
 public interface ViewHandler {
   void notifyExecutionOnSuccess();
   void notifyExecutionOnFailure(String reason);
@@ -10,4 +13,6 @@ public interface ViewHandler {
    */
   void listenForInput();
 
+
+  void addController(IControllerView controller);
 }

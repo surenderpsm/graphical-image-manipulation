@@ -27,10 +27,13 @@ public class GUIHandler implements ViewHandler, GUIViewListener, ViewUpdater {
   private boolean loaded = false;
   GUIHandlingObject gui;
   ISingleSessionModel modelView;
-  IControllerView controller;
+  private IControllerView controller;
 
-  public GUIHandler(IControllerView controller) {
+  public GUIHandler() {
     gui = new GUI(this);
+  }
+
+  public void addController(IControllerView controller){
     this.controller = controller;
     modelView = new SingleSessionModel(controller, this, MAIN_ALIAS, PREVIEW_ALIAS);
   }

@@ -2,13 +2,34 @@
 load donuts.jpg donut
 # load mask
 load mask.jpg mask
-# red component
 
-red-component donut mask md
-save out/red-component-nomask.jpg mdg
-green-component donut mask md
-blue-component donut mask md
+red-component donut mask res
+save out/red-component-nomask.jpg res
 
-grayscale donut mask mdg
-save mdg.jpg mdg
-save md.jpg md
+red-component donut res
+save out/red-component-mask.jpg res
+
+green-component donut mask res
+save out/green-component-mask.jpg res
+
+green-component donut res
+save out/green-component-nomask.jpg res
+
+blue-component donut mask res
+save out/blue-component-mask.jpg res
+
+blue-component donut res
+save out/red-component-nomask.jpg res
+
+grayscale donut mask res
+save out/grayscale-mask.jpg res
+
+grayscale donut res
+save out/grayscale-nomask.jpg res
+
+sepia donut mask res
+save out/sepia-mask.jpg res
+
+sepia donut res
+save out/sepia-nomask.jpg res
+

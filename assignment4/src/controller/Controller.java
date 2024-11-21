@@ -33,26 +33,11 @@ public class Controller implements IControllerView {
    *
    * @param model the model to interact with while processing commands.
    */
-  public Controller(IModel model) {
+  public Controller(IModel model, ViewHandler vHandler) {
     this.model = model;
     this.ioHandler = new IOHandler(model);
-    this.vHandler = new GUIHandler(this);
-    this.signatureMap = model.getCommandSignatures();
-  }
-
-  /**
-   * Construct controller to handle CLI.
-   *
-   * @param model the model to interact with while processing commands.
-   * @param in    input stream.
-   * @param out   print stream.
-   */
-  public Controller(IModel model, InputStream in, PrintStream out) {
-    this.model = model;
-    this.ioHandler = new IOHandler(model);
-    this.vHandler = new CLIHandler(in,
-                                   out,
-                                   this);
+    this.vHandler = vHandler;
+    vHandler.addController(this);
     this.signatureMap = model.getCommandSignatures();
   }
 
