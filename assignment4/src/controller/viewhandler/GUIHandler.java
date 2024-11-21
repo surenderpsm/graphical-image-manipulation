@@ -32,6 +32,10 @@ public class GUIHandler implements ViewHandler, GUIViewListener, ViewUpdater {
     gui = new GUI(this);
   }
 
+  public GUIHandler(GUIHandlingObject gui) {
+    this.gui = gui;
+  }
+
   @Override
   public void addController(Features controller) {
     this.controller = controller;
