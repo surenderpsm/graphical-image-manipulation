@@ -1,7 +1,10 @@
 package controller;
 
 
+import static org.junit.Assert.assertEquals;
+
 import controller.viewhandler.ViewHandler;
+import java.io.File;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import model.IModel;
@@ -38,19 +41,22 @@ public class ControllerTest {
 
     @Override
     public void setImage(int[][][] image, String name) {
-
+      log.append(name);
     }
 
     @Override
     public void execute(String command, ArgumentWrapper args) throws UnsupportedOperationException {
-
+      log.append(command);
     }
-    public String get
   }
 
   @Test
   public void test() {
-
+    MockModel model = new MockModel();
+    Controller controller = new Controller(model);
+    controller.invokeCommand("mockCommand", new ArgumentWrapper());
+    controller.loadImage(new File(""), "mock");
+    assertEquals("mockCommandmock", model.log);
   }
 
 
