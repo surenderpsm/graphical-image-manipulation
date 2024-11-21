@@ -1,5 +1,3 @@
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -9,6 +7,8 @@ import utils.arguments.IntArgument;
 import utils.arguments.OptionalArgumentKeyword;
 import utils.arguments.StringArgument;
 
+import static org.junit.Assert.assertTrue;
+
 /**
  * Tests for the model on a 4x4 matrix image stored as an array in res/img4x4/original.txt. Expected
  * outputs are also stored as arrays in text files.
@@ -17,7 +17,7 @@ public class ModelTest4x4 extends AbstractModelTest {
 
   @Override
   protected String getRoot() {
-    return "res/img4x4/";
+    return "assignment4/res/img4x4/";
   }
 
 //  /**
@@ -72,8 +72,8 @@ public class ModelTest4x4 extends AbstractModelTest {
   public void histogramTest() {
     int[][] expected = get2DArrayFromFile(getRoot() + "histogram.txt");
     model.execute("histogram",
-                  new ArgumentWrapper(new StringArgument("image"),
-                                      new StringArgument("histogram")));
+            new ArgumentWrapper(new StringArgument("image"),
+                    new StringArgument("histogram")));
     int[][] arr = model.getHistogram("histogram");
     assertTrue(isEqual2D(expected, arr));
   }
@@ -85,8 +85,8 @@ public class ModelTest4x4 extends AbstractModelTest {
   public void ColorCorrectionTest() {
     int[][][] expected = get3DArrayFromFile(getRoot() + "colorCorrection.txt");
     model.execute("color-correct",
-                  new ArgumentWrapper(new StringArgument("image"),
-                                      new StringArgument("colorCorrected")));
+            new ArgumentWrapper(new StringArgument("image"),
+                    new StringArgument("colorCorrected")));
     int[][][] arr = model.getImage("colorCorrected");
     assertTrue(isEqual(expected, arr));
   }
@@ -99,11 +99,11 @@ public class ModelTest4x4 extends AbstractModelTest {
     int[][][] expected = get3DArrayFromFile(getRoot() + "levelsAdjust.txt");
     // levels-adjust b m w image-name dest-image-name
     model.execute("levels-adjust",
-                  new ArgumentWrapper(new IntArgument(0),
-                                      new IntArgument(128),
-                                      new IntArgument(255),
-                                      new StringArgument("image"),
-                                      new StringArgument("levelAdjusted")));
+            new ArgumentWrapper(new IntArgument(0),
+                    new IntArgument(128),
+                    new IntArgument(255),
+                    new StringArgument("image"),
+                    new StringArgument("levelAdjusted")));
     int[][][] arr = model.getImage("levelAdjusted");
     assertTrue(isEqual(expected, arr));
   }
@@ -283,7 +283,7 @@ public class ModelTest4x4 extends AbstractModelTest {
   public void TestDownscale() {
     int[][][] expected = {{{199, 95, 90}, {212, 128, 121}}, {{166, 80, 97}, {180, 89, 101}}};
     ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(2),
-            new IntArgument(2),new StringArgument("image"),
+            new IntArgument(2), new StringArgument("image"),
             new StringArgument("downscale2x2"));
     model.execute("downscale", argumentWrapper);
 
@@ -296,11 +296,11 @@ public class ModelTest4x4 extends AbstractModelTest {
   /**
    * Apply downscaling of the image.
    */
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void TestInvalidDownscale() {
     int[][][] expected = {{{}}};
     ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(4),
-            new IntArgument(5),new StringArgument("image"),
+            new IntArgument(5), new StringArgument("image"),
             new StringArgument("downscale2x2"));
     model.execute("downscale", argumentWrapper);
     int[][][] arr = model.getImage("downscale2x2");
@@ -311,11 +311,11 @@ public class ModelTest4x4 extends AbstractModelTest {
   /**
    * Apply downscaling of the image.
    */
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void TestInvalidDownscale2() {
     int[][][] expected = {{{}}};
     ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(0),
-            new IntArgument(0),new StringArgument("image"),
+            new IntArgument(0), new StringArgument("image"),
             new StringArgument("downscale2x2"));
     model.execute("downscale", argumentWrapper);
     int[][][] arr = model.getImage("downscale2x2");
@@ -326,11 +326,11 @@ public class ModelTest4x4 extends AbstractModelTest {
   /**
    * Apply downscaling of the image.
    */
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void TestInvalidDownscale3() {
     int[][][] expected = {{{}}};
     ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(7),
-            new IntArgument(14),new StringArgument("image"),
+            new IntArgument(14), new StringArgument("image"),
             new StringArgument("downscale2x2"));
     model.execute("downscale", argumentWrapper);
     int[][][] arr = model.getImage("downscale2x2");
@@ -341,11 +341,11 @@ public class ModelTest4x4 extends AbstractModelTest {
   /**
    * Apply downscaling of the image.
    */
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void TestInvalidDownscale4() {
     int[][][] expected = {{{}}};
     ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(0),
-            new IntArgument(14),new StringArgument("image"),
+            new IntArgument(14), new StringArgument("image"),
             new StringArgument("downscale2x2"));
     model.execute("downscale", argumentWrapper);
     int[][][] arr = model.getImage("downscale2x2");
@@ -356,11 +356,56 @@ public class ModelTest4x4 extends AbstractModelTest {
   /**
    * Apply downscaling of the image.
    */
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void TestInvalidDownscale5() {
     int[][][] expected = {{{}}};
     ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(23),
-            new IntArgument(0),new StringArgument("image"),
+            new IntArgument(0), new StringArgument("image"),
+            new StringArgument("downscale2x2"));
+    model.execute("downscale", argumentWrapper);
+    int[][][] arr = model.getImage("downscale2x2");
+    System.out.println(Arrays.deepToString(arr));
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply downscaling of the image.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void TestInvalidDownscale6() {
+    int[][][] expected = {{{}}};
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(-23),
+            new IntArgument(3), new StringArgument("image"),
+            new StringArgument("downscale2x2"));
+    model.execute("downscale", argumentWrapper);
+    int[][][] arr = model.getImage("downscale2x2");
+    System.out.println(Arrays.deepToString(arr));
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply downscaling of the image.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void TestInvalidDownscale7() {
+    int[][][] expected = {{{}}};
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(3),
+            new IntArgument(-42), new StringArgument("image"),
+            new StringArgument("downscale2x2"));
+    model.execute("downscale", argumentWrapper);
+    int[][][] arr = model.getImage("downscale2x2");
+    System.out.println(Arrays.deepToString(arr));
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * Apply downscaling of the image.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void TestInvalidDownscale8() {
+    int[][][] expected = {{{}}};
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(-37),
+            new IntArgument(-42), new StringArgument("image"),
             new StringArgument("downscale2x2"));
     model.execute("downscale", argumentWrapper);
     int[][][] arr = model.getImage("downscale2x2");
@@ -375,7 +420,7 @@ public class ModelTest4x4 extends AbstractModelTest {
   public void TestDownscale2() {
     int[][][] expected = {{{199, 95, 90}}};
     ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(1),
-            new IntArgument(1),new StringArgument("image"),
+            new IntArgument(1), new StringArgument("image"),
             new StringArgument("downscale2x2"));
     model.execute("downscale", argumentWrapper);
 
@@ -390,15 +435,13 @@ public class ModelTest4x4 extends AbstractModelTest {
    */
   @Test
   public void TestDownscale3() {
-    int[][][] expected = {{{199, 95, 90}, {0, 0, 0}, {0, 0, 0}}};
+    int[][][] expected = {{{199, 95, 90}, {206, 115, 112}, {183, 101, 102}}};
     ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(3),
-            new IntArgument(1),new StringArgument("image"),
+            new IntArgument(1), new StringArgument("image"),
             new StringArgument("downscale2x2"));
     model.execute("downscale", argumentWrapper);
 
     int[][][] arr = model.getImage("downscale2x2");
-    System.out.println(Arrays.deepToString(arr));
-    //System.out.println(Arrays.deepToString(expected));
     assertTrue(isEqual(expected, arr));
   }
 
@@ -409,7 +452,7 @@ public class ModelTest4x4 extends AbstractModelTest {
   public void TestDownscale4() {
     int[][][] expected = {{{199, 95, 90}}, {{166, 80, 97}}};
     ArgumentWrapper argumentWrapper = new ArgumentWrapper(new IntArgument(1),
-            new IntArgument(2),new StringArgument("image"),
+            new IntArgument(2), new StringArgument("image"),
             new StringArgument("downscale2x2"));
     model.execute("downscale", argumentWrapper);
 
@@ -424,7 +467,8 @@ public class ModelTest4x4 extends AbstractModelTest {
    */
   @Test
   public void TestPartialProcessingBlur() {
-    int[][][] expected = get3DArrayFromFile(getRoot() + "partialBlur.txt");;
+    int[][][] expected = get3DArrayFromFile(getRoot() + "partialBlur.txt");
+    ;
     ArgumentWrapper argumentWrapper = new ArgumentWrapper(new StringArgument("image"),
             new StringArgument("blurred"));
     model.execute("blur", argumentWrapper);
@@ -432,13 +476,125 @@ public class ModelTest4x4 extends AbstractModelTest {
             new StringArgument("blurred"),
             new StringArgument("PartialBlurred"));
     argumentWrapper2.setArgument(OptionalArgumentKeyword.MASKIMG, "imageMask");
-    model.execute("partial-process",argumentWrapper2);
+    model.execute("partial-process", argumentWrapper2);
     int[][][] arr = model.getImage("PartialBlurred");
     System.out.println(Arrays.deepToString(arr));
     assertTrue(isEqual(expected, arr));
   }
 
+  /**
+   * test for partial image processing.
+   */
+  @Test
+  public void TestPartialProcessingSharpen() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "partialSharpen.txt");
+    ;
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new StringArgument("image"),
+            new StringArgument("Sharpened"));
+    model.execute("sharpen", argumentWrapper);
+    ArgumentWrapper argumentWrapper2 = new ArgumentWrapper(new StringArgument("image"),
+            new StringArgument("Sharpened"),
+            new StringArgument("PartialSharpen"));
+    argumentWrapper2.setArgument(OptionalArgumentKeyword.MASKIMG, "imageMask");
+    model.execute("partial-process", argumentWrapper2);
+    int[][][] arr = model.getImage("PartialSharpen");
+    assertTrue(isEqual(expected, arr));
+  }
 
+  /**
+   * test for partial image processing.
+   */
+  @Test
+  public void TestPartialProcessingSepia() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "partialSepia.txt");
+    ;
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new StringArgument("image"),
+            new StringArgument("Sepiafied"));
+    model.execute("sepia", argumentWrapper);
+    ArgumentWrapper argumentWrapper2 = new ArgumentWrapper(new StringArgument("image"),
+            new StringArgument("Sepiafied"),
+            new StringArgument("PartialSepia"));
+    argumentWrapper2.setArgument(OptionalArgumentKeyword.MASKIMG, "imageMask");
+    model.execute("partial-process", argumentWrapper2);
+    int[][][] arr = model.getImage("PartialSepia");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * test for partial image processing.
+   */
+  @Test
+  public void TestPartialProcessingGrayscale() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "partialGreyscale.txt");
+    ;
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new StringArgument("image"),
+            new StringArgument("grayscalefied"));
+    model.execute("grayscale", argumentWrapper);
+    ArgumentWrapper argumentWrapper2 = new ArgumentWrapper(new StringArgument("image"),
+            new StringArgument("grayscalefied"),
+            new StringArgument("PartialGrayscale"));
+    argumentWrapper2.setArgument(OptionalArgumentKeyword.MASKIMG, "imageMask");
+    model.execute("partial-process", argumentWrapper2);
+    int[][][] arr = model.getImage("PartialGrayscale");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * test for partial image processing.
+   */
+  @Test
+  public void TestPartialProcessingRed() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "partialRed.txt");
+    ;
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new StringArgument("image"),
+            new StringArgument("Red"));
+    model.execute("red-component", argumentWrapper);
+    ArgumentWrapper argumentWrapper2 = new ArgumentWrapper(new StringArgument("image"),
+            new StringArgument("Red"),
+            new StringArgument("PartialRed"));
+    argumentWrapper2.setArgument(OptionalArgumentKeyword.MASKIMG, "imageMask");
+    model.execute("partial-process", argumentWrapper2);
+    int[][][] arr = model.getImage("PartialRed");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * test for partial image processing.
+   */
+  @Test
+  public void TestPartialProcessingGreen() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "partialGreen.txt");
+    ;
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new StringArgument("image"),
+            new StringArgument("Green"));
+    model.execute("green-component", argumentWrapper);
+    ArgumentWrapper argumentWrapper2 = new ArgumentWrapper(new StringArgument("image"),
+            new StringArgument("Green"),
+            new StringArgument("PartialGreen"));
+    argumentWrapper2.setArgument(OptionalArgumentKeyword.MASKIMG, "imageMask");
+    model.execute("partial-process", argumentWrapper2);
+    int[][][] arr = model.getImage("PartialGreen");
+    assertTrue(isEqual(expected, arr));
+  }
+
+  /**
+   * test for partial image processing.
+   */
+  @Test
+  public void TestPartialProcessingBlue() {
+    int[][][] expected = get3DArrayFromFile(getRoot() + "partialBlue.txt");
+    ;
+    ArgumentWrapper argumentWrapper = new ArgumentWrapper(new StringArgument("image"),
+            new StringArgument("Blue"));
+    model.execute("blue-component", argumentWrapper);
+    ArgumentWrapper argumentWrapper2 = new ArgumentWrapper(new StringArgument("image"),
+            new StringArgument("Blue"),
+            new StringArgument("PartialBlue"));
+    argumentWrapper2.setArgument(OptionalArgumentKeyword.MASKIMG, "imageMask");
+    model.execute("partial-process", argumentWrapper2);
+    int[][][] arr = model.getImage("PartialBlue");
+    assertTrue(isEqual(expected, arr));
+  }
 
 
 }
