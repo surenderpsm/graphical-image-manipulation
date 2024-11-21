@@ -2,6 +2,9 @@ package utils;
 
 import java.awt.image.BufferedImage;
 
+/**
+ * Class to create a buffered Image from a given 3D image array.
+ */
 public class BufferedImageGenerator {
 
   /**
