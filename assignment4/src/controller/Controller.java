@@ -1,6 +1,6 @@
 package controller;
 
-import controller.viewhandler.ViewHandler;
+import controller.viewhandler.ViewAdapter;
 import java.io.File;
 import java.util.Map;
 import java.util.Set;
@@ -20,16 +20,16 @@ public class Controller implements Features {
   private final Map<String, Signature> signatureMap;
   private boolean exit = false;
   private final IModel model;
-  private final ViewHandler vHandler;
+  private final ViewAdapter vHandler;
   private final IOHandler ioHandler;
 
 
   /**
-   * Construct controller to handle a GUI.
+   * Construct controller to handle a GUIImpl.
    *
    * @param model the model to interact with while processing commands.
    */
-  public Controller(IModel model, ViewHandler vHandler) {
+  public Controller(IModel model, ViewAdapter vHandler) {
     this.model = model;
     this.ioHandler = new IOHandler(model);
     this.vHandler = vHandler;

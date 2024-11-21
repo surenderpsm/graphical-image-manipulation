@@ -5,7 +5,7 @@ import utils.arguments.ArgumentWrapper;
 import utils.arguments.StringArgument;
 
 /**
- * This class manages the GUI's state. A main alias is used to represent the image in the display
+ * This class manages the GUIImpl's state. A main alias is used to represent the image in the display
  * area.
  */
 public class SingleSessionModel implements ISingleSessionModel {

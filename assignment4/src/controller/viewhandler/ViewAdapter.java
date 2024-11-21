@@ -2,7 +2,7 @@ package controller.viewhandler;
 
 import controller.Features;
 
-public interface ViewHandler {
+public interface ViewAdapter {
 
   void notifyExecutionOnSuccess();
 

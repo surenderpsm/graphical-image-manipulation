@@ -1,7 +1,9 @@
 package model;
 
+import controller.viewhandler.GUIAdapter;
+
 /**
- * The {@link controller.viewhandler.GUIHandler} has an instance of this implementation. Any changes
+ * The {@link GUIAdapter} has an instance of this implementation. Any changes
  * in the state, are updated directly to the view.
  * <p>
  * Implementations of this interface keep track of the.

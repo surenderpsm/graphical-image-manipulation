@@ -12,14 +12,14 @@ import utils.arguments.ArgumentWrapper;
 import utils.arguments.MandatedArgWrapper;
 import utils.arguments.StringArgument;
 import view.cli.CLI;
-import view.cli.CLIViewListener;
+import view.cli.CLIObserver;
 
-public class CLIHandler implements ViewHandler, CLIViewListener {
+public class CLIAdapter implements ViewAdapter, CLIObserver {
 
   CLI cli;
   Features controller;
 
-  public CLIHandler(InputStream in, PrintStream out) {
+  public CLIAdapter(InputStream in, PrintStream out) {
     cli = new CLI(in, out, this);
   }
 

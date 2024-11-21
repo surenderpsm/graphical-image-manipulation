@@ -2,9 +2,12 @@ package view.gui;
 
 import java.io.File;
 import utils.arguments.ArgumentWrapper;
-import view.ViewListener;
+import view.ViewObserver;
 
-public interface GUIViewListener extends ViewListener {
+/**
+ * Observes changes from the GUIImpl Facade class.
+ */
+public interface GUIObserver extends ViewObserver {
 
   void onLoadImage(File file);
 

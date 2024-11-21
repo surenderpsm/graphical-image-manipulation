@@ -1,5 +1,6 @@
 package controller;
 
+import controller.viewhandler.ViewAdapter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,7 +9,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import controller.viewhandler.ViewHandler;
 import model.Cache;
 import model.IModel;
 import model.Image;
@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 
 public class ControllerTest {
 
-  private static class MockViewHandler implements ViewHandler {
+  private static class MockViewAdapter implements ViewAdapter {
     public boolean successNotified = false;
     public boolean failureNotified = false;
     public String failureReason = null;
@@ -98,7 +98,7 @@ public class ControllerTest {
 
   private Controller controller;
   private Controller controllerTwo;
-  private MockViewHandler mockViewHandler;
+  private MockViewAdapter mockViewHandler;
   private MockModel mockModel;
   private File testFile;
   private Model model;
@@ -107,7 +107,7 @@ public class ControllerTest {
   public void setUp() {
     mockModel = new MockModel();
     model = new Model();
-    mockViewHandler = new MockViewHandler();
+    mockViewHandler = new MockViewAdapter();
     controller = new Controller(mockModel, mockViewHandler);
     controllerTwo = new Controller(model, mockViewHandler);
     testFile = new File("assignment4/res/img/other/donuts.jpg");

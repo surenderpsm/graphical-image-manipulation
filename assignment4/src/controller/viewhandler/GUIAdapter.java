@@ -10,30 +10,30 @@ import utils.arguments.ArgumentWrapper;
 import utils.arguments.MandatedArgWrapper;
 import utils.arguments.OptionalArgumentKeyword;
 import utils.arguments.StringArgument;
+import view.gui.GUIImpl;
 import view.gui.GUI;
-import view.gui.GUIHandlingObject;
-import view.gui.GUIViewListener;
+import view.gui.GUIObserver;
 
 /**
- * The GUIHandler handles only one image at a time, hence we don't need any aliases when performing
- * commands. Aliasing is managed by this ViewHandler instead of the user.
+ * The GUIAdapter handles only one image at a time, hence we don't need any aliases when performing
+ * commands. Aliasing is managed by this ViewAdapter instead of the user.
  */
-public class GUIHandler implements ViewHandler, GUIViewListener, ViewUpdater {
+public class GUIAdapter implements ViewAdapter, GUIObserver, ViewUpdater {
 
   private static final String MAIN_ALIAS = "image";
   private static final String PREVIEW_ALIAS = "preview";
   private boolean unsavedChanges = false;
   private boolean loaded = false;
-  GUIHandlingObject gui;
-  ISingleSessionModel modelView;
+  private final GUI gui;
+  private ISingleSessionModel modelView;
   private Features controller;
 
-  public GUIHandler() {
-    gui = new GUI();
+  public GUIAdapter() {
+    gui = new GUIImpl();
     gui.addObserver(this);
   }
 
-  public GUIHandler(GUIHandlingObject gui) {
+  public GUIAdapter(GUI gui) {
     this.gui = gui;
   }
 

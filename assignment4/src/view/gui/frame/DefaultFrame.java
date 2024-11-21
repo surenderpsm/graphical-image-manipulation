@@ -1,4 +1,4 @@
-package view.gui;
+package view.gui.frame;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -22,21 +22,22 @@ import javax.swing.JSlider;
 import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
-import view.gui.menu.MenuBar;
-import view.gui.utlis.FileChooser;
+import view.gui.ComponentObserver;
+import view.gui.frame.menu.MenuBar;
+import view.gui.frame.utlis.FileChooser;
 
 public class DefaultFrame extends JFrame implements UpdateObserver, SubComponentBinder {
 
   ImageViewer imagePreview;
   ImageViewer histogramPreview;
-  ViewComponentListener listener;
+  ComponentObserver listener;
   Set<JMenuItem> disabledByDefault = new HashSet<JMenuItem>();
   JButton confirmButton = new JButton("Confirm");
   JButton cancelButton = new JButton("Cancel");
   JSlider splitSlider = new JSlider(0, 100, 50);
   JPanel channelsPanel;
 
-  public DefaultFrame(ViewComponentListener listener) {
+  public DefaultFrame(ComponentObserver listener) {
     this.listener = listener;
     setTitle("GIME - Graphical Image Manipulation Enhancement");
     setSize(800, 600);
@@ -276,7 +277,7 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
   }
 
   @Override
-  public ViewComponentListener getViewComponentListener() {
+  public ComponentObserver getViewComponentListener() {
     return listener;
   }
 

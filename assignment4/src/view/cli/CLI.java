@@ -1,20 +1,21 @@
 package view.cli;
 
 
+import controller.viewhandler.CLIAdapter;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
 /**
  * This class manages the command line interface (CLI). Methods of this class are used by a
- * {@code ViewHandler}, specifically the {@link controller.viewhandler.CLIHandler} to control the
+ * {@code ViewAdapter}, specifically the {@link CLIAdapter} to control the
  * CLI.
  */
 public class CLI {
 
   private final Scanner scanner; // Input stream to read commands
   private final PrintStream out; // Output stream to print results
-  private final CLIViewListener controller;
+  private final CLIObserver controller;
   private final StringBuilder messageBuffer = new StringBuilder();
 
   /**
@@ -24,7 +25,7 @@ public class CLI {
    * @param out        usually a printstream.
    * @param controller the viewListener object to pass user inputs and view states.
    */
-  public CLI(InputStream in, PrintStream out, CLIViewListener controller) {
+  public CLI(InputStream in, PrintStream out, CLIObserver controller) {
     this.out = out;
     scanner = new Scanner(in);
     this.controller = controller;
@@ -32,7 +33,7 @@ public class CLI {
 
   /**
    * Append a string to the messageBuffer. There are situations when we don't want to print the
-   * message immediately. The ViewHandler might want to collect a message and then print it all.
+   * message immediately. The ViewAdapter might want to collect a message and then print it all.
    * <br>
    * Use in tandem with {@link CLI#printMessage()} to print the message when the buffer contains the
    * desired message.
@@ -62,7 +63,7 @@ public class CLI {
   }
 
   /**
-   * Used by the ViewHandler to initiate and pass on user input to the viewListener.
+   * Used by the ViewAdapter to initiate and pass on user input to the viewListener.
    *
    * @return true if input was passed, false if the scanner buffer is empty (no more input).
    */

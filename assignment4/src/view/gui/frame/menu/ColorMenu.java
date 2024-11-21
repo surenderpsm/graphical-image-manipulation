@@ -1,4 +1,4 @@
-package view.gui.menu;
+package view.gui.frame.menu;
 
 
 import javax.swing.JButton;
@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JSlider;
-import view.gui.SubComponentBinder;
+import view.gui.frame.SubComponentBinder;
 
 public class ColorMenu extends JMenu {
 

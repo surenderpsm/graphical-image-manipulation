@@ -1,9 +1,10 @@
-package view.gui;
+package view.gui.frame;
 
 import java.awt.image.BufferedImage;
+import view.gui.GUIImpl;
 
 /**
- * This interface is used to observe for updates from the GUI Facade class {@link GUI}.
+ * This interface is used to observe for updates from the GUIImpl Facade class {@link GUIImpl}.
  */
 public interface UpdateObserver {
 

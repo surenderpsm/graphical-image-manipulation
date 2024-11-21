@@ -1,9 +1,9 @@
-package view.gui.menu;
+package view.gui.frame.menu;
 
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import view.gui.SubComponentBinder;
+import view.gui.frame.SubComponentBinder;
 
 public class FilterMenu extends JMenu {
 

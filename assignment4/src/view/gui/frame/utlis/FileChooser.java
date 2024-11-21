@@ -1,4 +1,4 @@
-package view.gui.utlis;
+package view.gui.frame.utlis;
 
 import java.io.File;
 import javax.swing.JFileChooser;

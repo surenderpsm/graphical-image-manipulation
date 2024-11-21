@@ -1,4 +1,4 @@
-package view.gui;
+package view.gui.frame;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

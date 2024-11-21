@@ -1,17 +1,17 @@
-package view.gui.menu;
+package view.gui.frame.menu;
 
 import java.awt.event.KeyEvent;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
-import view.gui.SubComponentBinder;
-import view.gui.ViewComponentListener;
-import view.gui.utlis.FileChooser;
+import view.gui.frame.SubComponentBinder;
+import view.gui.ComponentObserver;
+import view.gui.frame.utlis.FileChooser;
 
 public class FileMenu extends JMenu {
 
-  ViewComponentListener listener;
+  ComponentObserver listener;
 
   public FileMenu(SubComponentBinder binder) {
     super("File");

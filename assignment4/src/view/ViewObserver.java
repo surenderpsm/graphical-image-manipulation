@@ -1,9 +1,9 @@
 package view;
 
 /**
- * This is a view observer that can be implemented by the ViewHandler,
+ * This is a view observer that can be implemented by the ViewAdapter,
  */
-public interface ViewListener {
+public interface ViewObserver {
 
   /**
    * The calling object of this method needs confirmation from the controller if the application is

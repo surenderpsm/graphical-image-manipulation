@@ -6,7 +6,7 @@ import java.io.File;
  * Instances of this interface are observers of View components. Each JComponent in the UI is passed
  * this listener. The components notify this instance on any triggered actions.
  */
-public interface ViewComponentListener {
+public interface ComponentObserver {
 
   /**
    * Load image from a file.

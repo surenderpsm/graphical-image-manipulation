@@ -1,4 +1,4 @@
-package view.gui.menu;
+package view.gui.frame.menu;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
-import view.gui.SubComponentBinder;
+import view.gui.frame.SubComponentBinder;
 
 public class ImageMenu extends JMenu {
 

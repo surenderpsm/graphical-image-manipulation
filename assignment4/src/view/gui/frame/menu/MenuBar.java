@@ -1,7 +1,7 @@
-package view.gui.menu;
+package view.gui.frame.menu;
 
 import javax.swing.JMenuBar;
-import view.gui.SubComponentBinder;
+import view.gui.frame.SubComponentBinder;
 
 public class MenuBar extends JMenuBar {
 
