@@ -1,7 +1,6 @@
 package view.gui.menu;
 
 
-import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -11,7 +10,9 @@ import javax.swing.JSlider;
 import view.gui.SubComponentBinder;
 
 public class ColorMenu extends JMenu {
+
   SubComponentBinder binder;
+
   public ColorMenu(SubComponentBinder binder) {
     super("Color");
     this.binder = binder;
@@ -66,7 +67,9 @@ public class ColorMenu extends JMenu {
 
       // Add listeners to enforce constraints
       blackPointSlider.addChangeListener(e1 -> {
-        if (isAdjusting[0]) return;
+        if (isAdjusting[0]) {
+          return;
+        }
         isAdjusting[0] = true;
         int black = blackPointSlider.getValue();
         if (black > midpointSlider.getValue()) {
@@ -77,12 +80,15 @@ public class ColorMenu extends JMenu {
       });
 
       midpointSlider.addChangeListener(e1 -> {
-        if (isAdjusting[0]) return;
+        if (isAdjusting[0]) {
+          return;
+        }
         isAdjusting[0] = true;
         int mid = midpointSlider.getValue();
         if (mid < blackPointSlider.getValue()) {
           midpointSlider.setValue(blackPointSlider.getValue()); // Adjust midpoint if below black point
-        } else if (mid > whitePointSlider.getValue()) {
+        }
+        else if (mid > whitePointSlider.getValue()) {
           midpointSlider.setValue(whitePointSlider.getValue()); // Adjust midpoint if above white point
         }
         midpointLabel.setText("Midpoint: " + mid);
@@ -90,7 +96,9 @@ public class ColorMenu extends JMenu {
       });
 
       whitePointSlider.addChangeListener(e1 -> {
-        if (isAdjusting[0]) return;
+        if (isAdjusting[0]) {
+          return;
+        }
         isAdjusting[0] = true;
         int white = whitePointSlider.getValue();
         if (white < midpointSlider.getValue()) {
@@ -111,7 +119,7 @@ public class ColorMenu extends JMenu {
         int midpoint = midpointSlider.getValue();
         int whitePoint = whitePointSlider.getValue();
 
-        binder.getViewComponentListener().adjustLevels(blackPoint,midpoint,whitePoint);
+        binder.getViewComponentListener().adjustLevels(blackPoint, midpoint, whitePoint);
 
         dialog.dispose(); // Close the dialog
       });

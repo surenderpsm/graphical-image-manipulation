@@ -34,7 +34,7 @@ public class Signature {
     return getSignatureAt(index).isValidArgument(argument);
   }
 
-  public int getLength(){
+  public int getLength() {
     return signature.size();
   }
 }

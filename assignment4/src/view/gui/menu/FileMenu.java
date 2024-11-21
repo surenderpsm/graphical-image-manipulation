@@ -1,7 +1,6 @@
 package view.gui.menu;
 
 import java.awt.event.KeyEvent;
-import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -24,8 +23,7 @@ public class FileMenu extends JMenu {
     openItem.addActionListener(e -> {
       FileChooser fc = new FileChooser();
       int result = fc.showOpenDialog(this);
-      listener.loadImage(
-          (result == JFileChooser.APPROVE_OPTION) ? fc.getSelectedFile() : null);
+      listener.loadImage((result == JFileChooser.APPROVE_OPTION) ? fc.getSelectedFile() : null);
     });
 
     JMenuItem saveItem = new JMenuItem("Save");
@@ -36,8 +34,7 @@ public class FileMenu extends JMenu {
       FileChooser fc = new FileChooser();
       int result = fc.showSaveDialog(this);
 
-      listener.saveImage(
-          (result == JFileChooser.APPROVE_OPTION) ? fc.getSelectedFile() : null);
+      listener.saveImage((result == JFileChooser.APPROVE_OPTION) ? fc.getSelectedFile() : null);
     });
 
     JMenuItem exitItem = new JMenuItem("Exit");

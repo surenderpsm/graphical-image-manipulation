@@ -65,9 +65,11 @@ public class Compress extends AbstractCommand {
    */
   @Override
   public void execute() {
-    int[][][] imageArray = combineChannels(processColorChannel(currentImage.getRedChannelData()),
-                                           processColorChannel(currentImage.getGreenChannelData()),
-                                           processColorChannel(currentImage.getBlueChannelData()));
+    int[][][]
+        imageArray =
+        combineChannels(processColorChannel(currentImage.getRedChannelData()),
+                        processColorChannel(currentImage.getGreenChannelData()),
+                        processColorChannel(currentImage.getBlueChannelData()));
     cache.set(imageName, new Image(imageArray));
   }
 

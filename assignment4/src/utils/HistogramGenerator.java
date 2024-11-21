@@ -83,9 +83,9 @@ public class HistogramGenerator {
 
       if (maxValue > 0) { // Avoid division by zero
         // Choose color based on channel (Red, Green, Blue)
-        Color lineColor = new Color(channel == 0 ? 255 : 0,
-                                    channel == 1 ? 255 : 0,
-                                    channel == 2 ? 255 : 0);
+        Color
+            lineColor =
+            new Color(channel == 0 ? 255 : 0, channel == 1 ? 255 : 0, channel == 2 ? 255 : 0);
 
         // Draw histogram line
         int prevX = PADDING;
@@ -93,8 +93,9 @@ public class HistogramGenerator {
 
         for (int i = 0; i < histogram[channel].length; i++) {
           int x = PADDING + (i * (SIZE - 2 * PADDING) / 255);
-          int barHeight = (int) ((histogram[channel][i] * (SIZE - 2 * PADDING))
-              / (double) maxValue);
+          int
+              barHeight =
+              (int) ((histogram[channel][i] * (SIZE - 2 * PADDING)) / (double) maxValue);
           int y = SIZE - PADDING - barHeight;
 
           // Ensure y is within bounds

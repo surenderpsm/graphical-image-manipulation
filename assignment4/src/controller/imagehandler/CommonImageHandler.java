@@ -1,9 +1,9 @@
 package controller.imagehandler;
 
-import utils.BufferedImageGenerator;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import utils.BufferedImageGenerator;
 
 /**
  * The {@code CommonImageHandler} class provides a standard implementation for loading and saving

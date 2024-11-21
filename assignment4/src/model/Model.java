@@ -9,9 +9,9 @@ import utils.arguments.Signature;
 /**
  * The {@code Model} class serves as the entry point to the entire model in the MVC architecture. It
  * manages command execution, image retrieval, and storage while interfacing with the
- * {@link CommandFactory} enum to determine which command to execute with. The {@code Model} interacts
- * with an internal image cache via {@link Cache}, and maintains an internal status flag to
- * track the success of operations.
+ * {@link CommandFactory} enum to determine which command to execute with. The {@code Model}
+ * interacts with an internal image cache via {@link Cache}, and maintains an internal status flag
+ * to track the success of operations.
  * <p>
  * All interactions between the controller and the underlying model must run through this class,
  * ensuring that the controller only accesses the model through this entry point.

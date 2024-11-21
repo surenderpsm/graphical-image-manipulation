@@ -19,9 +19,10 @@ public class MandatedArgWrapper extends ArgumentWrapper {
   @Override
   public void setArgument(int id, Argument arg) {
     try {
-      if (mandate == null || mandate.validateArgument(id,arg)) {
+      if (mandate == null || mandate.validateArgument(id, arg)) {
         super.setArgument(id, arg);
-      } else{
+      }
+      else {
         throw new IllegalArgumentException("Argument does not match mandate at index " + id);
       }
     } catch (IndexOutOfBoundsException e) {
@@ -33,7 +34,7 @@ public class MandatedArgWrapper extends ArgumentWrapper {
     setArgument(index, expectedAt(index).prepareArgument(arg));
   }
 
-  public ArgumentType expectedAt(int index){
+  public ArgumentType expectedAt(int index) {
     try {
       return mandate.getSignatureAt(index);
     } catch (IndexOutOfBoundsException e) {
@@ -41,20 +42,19 @@ public class MandatedArgWrapper extends ArgumentWrapper {
     }
   }
 
-  public int expectedLength(){
+  public int expectedLength() {
     return mandate.getLength();
   }
 
   /**
-   *
    * @param arg
    * @return
    */
   public void mandate(ArgumentWrapper arg) {
-    if(expectedLength() != length() + arg.length()){
+    if (expectedLength() != length() + arg.length()) {
       throw new IllegalArgumentException("Mandate length does not match expected length.");
     }
-    for(int i = length(); i < expectedLength(); i++){
+    for (int i = length(); i < expectedLength(); i++) {
       setArgument(i, arg.getArgumentAt(i));
     }
   }

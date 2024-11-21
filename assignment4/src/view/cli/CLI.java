@@ -4,7 +4,6 @@ package view.cli;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
-import view.ViewListener;
 
 /**
  * This class manages the command line interface (CLI). Methods of this class are used by a

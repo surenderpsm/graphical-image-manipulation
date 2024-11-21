@@ -112,7 +112,7 @@ public class ImageMenu extends JMenu {
 
       // Add ChangeListener to Slider to update label dynamically
       int sliderValue = slider.getValue();
-      if(slider.getValue() == 100) {
+      if (slider.getValue() == 100) {
         sliderValue = 99;
       }
       else if (slider.getValue() == 0) {

@@ -35,10 +35,10 @@ public class IOHandler {
   public void load(File file, String alias) {
     try {
       ImageHandler ih = Objects.requireNonNull(findMatchingImageHandler(file.getPath()));
-      model.setImage(ih.loadImage(),
-                     alias);
+      model.setImage(ih.loadImage(), alias);
     } catch (NullPointerException e) {
-      throw new UnsupportedOperationException("No matching ImageHandler found for the provided file extension.");
+      throw new UnsupportedOperationException(
+          "No matching ImageHandler found for the provided file extension.");
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -48,12 +48,14 @@ public class IOHandler {
     try {
       createParentDirectories(file);
       ImageHandler ih = Objects.requireNonNull(findMatchingImageHandler(file.getPath()));
-      int[][][] ig =
+      int[][][]
+          ig =
           (model.isHistogram(alias)) ? new HistogramGenerator(model.getHistogram(alias)).getImage()
-              : model.getImage(alias);
+                                     : model.getImage(alias);
       ih.saveImage(ig);
     } catch (NullPointerException e) {
-      throw new UnsupportedOperationException("No matching ImageHandler found for the provided file extension.");
+      throw new UnsupportedOperationException(
+          "No matching ImageHandler found for the provided file extension.");
     } catch (FileNotFoundException e) {
       throw new IllegalArgumentException(e.getMessage());
     } catch (IOException e) {

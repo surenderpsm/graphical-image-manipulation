@@ -28,8 +28,7 @@ public class ArgumentWrapper implements Cloneable, IntWrapper, FileWrapper, Stri
     arguments = new HashMap<>();
     int i = 0;
     for (Argument arg : args) {
-      arguments.put(i++,
-                    arg);
+      arguments.put(i++, arg);
     }
     optionalArguments = new EnumMap<>(OptionalArgumentKeyword.class);
   }
@@ -46,18 +45,15 @@ public class ArgumentWrapper implements Cloneable, IntWrapper, FileWrapper, Stri
    * @param arg the Argument to add or update in the wrapper.
    */
   public void setArgument(int id, Argument arg) {
-    arguments.put(id,
-                  arg);
+    arguments.put(id, arg);
   }
 
   public void setArgument(String key, Object value) {
-      setArgument(OptionalArgumentKeyword.getArgumentType(key),
-                  value);
+    setArgument(OptionalArgumentKeyword.getArgumentType(key), value);
   }
 
   public void setArgument(OptionalArgumentKeyword key, Object value) {
-    optionalArguments.put(key,
-                          key.getType().prepareArgument(value));
+    optionalArguments.put(key, key.getType().prepareArgument(value));
   }
 
 
@@ -69,8 +65,7 @@ public class ArgumentWrapper implements Cloneable, IntWrapper, FileWrapper, Stri
   public void setArguments(Argument... args) {
     int i = length();
     for (Argument arg : args) {
-      setArgument(i++,
-                  arg);
+      setArgument(i++, arg);
     }
   }
 
@@ -94,7 +89,8 @@ public class ArgumentWrapper implements Cloneable, IntWrapper, FileWrapper, Stri
     Object obj = getOptionalArgument(key);
     if (obj instanceof Integer) {
       return (Integer) getOptionalArgument(key);
-    } else if (obj == Argument.EMPTY){
+    }
+    else if (obj == Argument.EMPTY) {
       throw new IndexOutOfBoundsException("Argument " + key + " is empty");
     }
     throw new IllegalArgumentException("Argument " + key.getArgumentName() + " is not an integer");
@@ -113,10 +109,12 @@ public class ArgumentWrapper implements Cloneable, IntWrapper, FileWrapper, Stri
     Object obj = getOptionalArgument(keyword);
     if (obj instanceof String) {
       return (String) getOptionalArgument(keyword);
-    } else if (obj == Argument.EMPTY){
+    }
+    else if (obj == Argument.EMPTY) {
       throw new IndexOutOfBoundsException("Argument " + keyword + " is empty");
     }
-    throw new IllegalArgumentException("Argument " + keyword.getArgumentName() + " is not an string");
+    throw new IllegalArgumentException(
+        "Argument " + keyword.getArgumentName() + " is not an string");
   }
 
   /**
@@ -133,12 +131,12 @@ public class ArgumentWrapper implements Cloneable, IntWrapper, FileWrapper, Stri
     }
   }
 
-  public Argument getArgumentAt(int id){
+  public Argument getArgumentAt(int id) {
     return arguments.get(id);
   }
 
   private Object getOptionalArgument(OptionalArgumentKeyword key) {
-    try{
+    try {
       return optionalArguments.get(key).getArgumentValue();
     } catch (NullPointerException e) {
       return Argument.EMPTY;
@@ -149,7 +147,7 @@ public class ArgumentWrapper implements Cloneable, IntWrapper, FileWrapper, Stri
   public ArgumentWrapper clone() {
     ArgumentWrapper clone = new ArgumentWrapper();
     // TODO: copy mutable state here, so the clone can't change the internals of the original
-    for(int i = 0; i < length(); i++){
+    for (int i = 0; i < length(); i++) {
       clone.setArgument(i, arguments.get(i));
     }
     return clone;

@@ -66,8 +66,7 @@ abstract class ImageProcessor extends AbstractCommand {
    * @throws IllegalArgumentException if the arguments are invalid or insufficient
    */
   protected ImageProcessor(ArgumentWrapper rawArguments, Cache cache) {
-    super(rawArguments,
-          cache);
+    super(rawArguments, cache);
     checkForSplit();
   }
 
@@ -78,9 +77,7 @@ abstract class ImageProcessor extends AbstractCommand {
    * @param imageName String
    */
   protected ImageProcessor(Image image, String imageName, Cache cache) {
-    super(image,
-          imageName,
-          cache);
+    super(image, imageName, cache);
     checkForSplit();
   }
 
@@ -110,9 +107,7 @@ abstract class ImageProcessor extends AbstractCommand {
    * @return the clamped value, guaranteed to be between 0 and 255 inclusive
    */
   protected static int clamp(int value) {
-    return Math.min(255,
-                    Math.max(0,
-                             value));
+    return Math.min(255, Math.max(0, value));
   }
 
   /**
@@ -131,10 +126,7 @@ abstract class ImageProcessor extends AbstractCommand {
 
     try {
       // Is there a split arg? if not IndexOutOfBoundsException caught and ignored.
-      split =
-          parseInt(OptionalArgumentKeyword.SPLIT,
-                   0,
-                   100);
+      split = parseInt(OptionalArgumentKeyword.SPLIT, 0, 100);
     } catch (IndexOutOfBoundsException ignored) {
     } catch (IllegalArgumentException e) {
       throw new IllegalArgumentException("Incorrect use of split command: " + e.getMessage());
