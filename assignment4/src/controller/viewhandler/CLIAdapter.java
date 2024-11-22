@@ -14,11 +14,23 @@ import utils.arguments.StringArgument;
 import view.cli.CLI;
 import view.cli.CLIObserver;
 
+/**
+ * CLIAdapter is an adapter class that implements the ViewAdapter and CLIObserver interfaces. It
+ * manages the interaction between the Command-Line Interface (CLI) and the application's
+ * controller. It handles user input, command execution, error reporting, and message output for CLI
+ * operations.
+ */
 public class CLIAdapter implements ViewAdapter, CLIObserver {
 
   CLI cli;
   Features controller;
 
+  /**
+   * Constructs a new CLIAdapter with the given InputStream and PrintStream.
+   *
+   * @param in  the InputStream for reading user input
+   * @param out the PrintStream for printing output to the user
+   */
   public CLIAdapter(InputStream in, PrintStream out) {
     cli = new CLI(in, out, this);
   }

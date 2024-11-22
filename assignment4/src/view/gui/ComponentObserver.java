@@ -3,142 +3,144 @@ package view.gui;
 import java.io.File;
 
 /**
- * Instances of this interface are observers of View components. Each JComponent in the UI is passed
- * this listener. The components notify this instance on any triggered actions.
+ * The {@code ComponentObserver} interface is implemented by classes that observe user interactions
+ * with GUI components. Each JComponent in the UI is passed an instance of this observer, allowing
+ * triggered actions to be captured and processed.
  */
 public interface ComponentObserver {
 
   /**
-   * Load image from a file.
+   * Loads an image from the specified file.
    *
-   * @param file A file to be loaded.
+   * @param file the file containing the image to be loaded
    */
   void loadImage(File file);
 
   /**
-   * Save image using the file.
+   * Saves the current image to the specified file.
    *
-   * @param file A file to be saved.
+   * @param file the file where the image should be saved
    */
   void saveImage(File file);
 
   /**
-   * Brighten the loaded image.
+   * Adjusts the brightness of the loaded image.
    *
-   * @param value integer to brighten or darken.
+   * @param value the value by which to brighten or darken the image; positive for brightening,
+   *              negative for darkening
    */
   void brighten(int value);
 
   /**
-   * Blur the loaded image.
+   * Applies a blur effect to the loaded image.
    */
   void blur();
 
   /**
-   * Sharpen the loaded image.
+   * Applies a sharpening effect to the loaded image.
    */
   void sharpen();
 
   /**
-   * Horizontal flip the image.
+   * Flips the loaded image horizontally.
    */
   void hFlip();
 
   /**
-   * Vertical flip the image.
+   * Flips the loaded image vertically.
    */
   void vFlip();
 
   /**
-   * Sepia on the loaded image.
+   * Applies a sepia tone effect to the loaded image.
    */
   void sepia();
 
   /**
-   * Grayscale on the loaded image.
+   * Converts the loaded image to grayscale.
    */
   void grayscale();
 
   /**
-   * Visualize the red component.
+   * Visualizes the red component of the loaded image.
    */
   void redComponent();
 
   /**
-   * Visualize the blue component.
+   * Visualizes the blue component of the loaded image.
    */
   void blueComponent();
 
   /**
-   * Visualize the green component.
+   * Visualizes the green component of the loaded image.
    */
   void greenComponent();
 
   /**
-   * Compress the image with the provided ratio.
+   * Compresses the loaded image using the specified ratio.
    *
-   * @param ratio the compression factor.
+   * @param ratio the compression ratio to apply
    */
   void compress(int ratio);
 
   /**
-   * Color correct the loaded image.
+   * Applies color correction to the loaded image.
    */
   void colorCorrect();
 
   /**
-   * Downscale an image based on the input height and width.
+   * Downscales the loaded image to the specified height and width.
    *
-   * @param h input height
-   * @param w input width
+   * @param h the target height for the downscaled image
+   * @param w the target width for the downscaled image
    */
   void downscale(int h, int w);
 
   /**
-   * Adjust levels using black, mid and white values.
+   * Adjusts the levels of the loaded image using specified black, mid, and white values.
    *
-   * @param b black level
-   * @param m mid level
-   * @param w white level
+   * @param b the black level adjustment value
+   * @param m the mid level adjustment value
+   * @param w the white level adjustment value
    */
   void adjustLevels(int b, int m, int w);
 
   /**
-   * Adjust the split level during preview mode.
+   * Adjusts the split-level for preview mode.
    *
    * @param split the split-level between 1 and 100.
    */
   void splitLevel(int split);
 
   /**
-   * Turn on or off previewMode. It is deactivated by use of the "confirm" and the "cancel" buttons.
-   * Running a command activates preview mode. Preview mode allows the use of the split slider.
-   * Preview mode need not be activated for commands that don't support the split operation.
+   * Enables or disables preview mode.
+   * In preview mode, users can view the effect of an operation before confirming or canceling it.
+   * Certain commands may not support preview mode.
    *
-   * @param preview true if preview mode is on, false otherwise.
+   * @param preview {@code true} to enable preview mode; {@code false} to disable it.
    */
   void setPreviewMode(boolean preview);
 
   /**
-   * Confirmation status is set with this method. Confirmation is true when the "confirm" button is
-   * clicked. A true confirm status applies the operation directly on the loaded image instead of
-   * the preview version. A false confirmation status is applied when the "cancel" button is
-   * clicked. The operation is aborted when the confirmation status is false.
+   * Sets the confirmation status for an operation.
+   * When confirmation is {@code true}, the operation is applied directly to the loaded image.
+   * When {@code false}, the operation is aborted.
    *
-   * @param confirm true or false.
+   * @param confirm {@code true} if the operation is confirmed; {@code false} to cancel it.
    */
   void setConfirmation(boolean confirm);
 
   /**
-   * Checks with the controller if the application is allowed to quit.
+   * Checks with the controller whether the application can quit.
+   * The application may deny the quit request if there are unsaved changes.
    *
-   * @return true if allowed to quit, otherwise false
+   * @return {@code true} if the application is allowed to quit; {@code false} otherwise.
    */
   boolean quit();
 
   /**
-   * Resets the image to the loaded image after a color-component visualization is applied.
+   * Resets the image display to the original loaded image.
+   * This is used to undo temporary changes from color component visualizations.
    */
   void resetComponents();
-
 }

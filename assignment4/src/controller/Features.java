@@ -17,56 +17,50 @@ import utils.arguments.MandatedArgWrapper;
 public interface Features extends ModelSharer {
 
   /**
-   * Pass to a view handler, the available command strings.
+   * Retrieves the set of available command strings that the view can use to invoke actions in
+   * the controller.
    *
-   * @return a set of strings.
+   * @return a set of strings representing the names of the available commands.
    */
   Set<String> getCommandNames();
 
   /**
-   * Get a mandated argument wrapper to pass arguments.
+   * Retrieves a mandated argument wrapper for a specified command. This wrapper contains the
+   * necessary arguments that must be passed along with the command.
    *
-   * @param commandName
-   * @return
+   * @param commandName the name of the command for which arguments are to be fetched.
+   * @return a {@link MandatedArgWrapper} containing the required arguments for the command.
    */
   MandatedArgWrapper getMandatedArgs(String commandName);
 
-
   /**
-   * Loads the given image from the provided file path and passes it to the model for further
-   * processing. An additional alias is also passed to the model for referring to the image in the
-   * cache.
+   * Loads the given image from the specified file path and passes it to the model for further
+   * processing. An alias is also provided to reference the image in the cache.
    *
-   * @param file
-   * @param alias
+   * @param file the file from which the image will be loaded.
+   * @param alias a string alias used to refer to the loaded image.
    */
   void loadImage(File file, String alias);
 
-//  /**
-//   * Loads the image from the given file path and passes it to the model for further processing.
-//   * This method generates its own alias to pass into model for reference in the cache. The
-//   * controller will keep track of the aliases, and it does not concern the calling object.
-//   *
-//   * @param file
-//   */
-//  void loadImage(File file);
-
   /**
-   * Saves the image with the given alias into the given file path.
+   * Saves the image associated with the given alias to the specified file path.
    *
-   * @param file
+   * @param file the file path where the image will be saved.
+   * @param alias the alias of the image to be saved.
    */
   void saveImage(File file, String alias);
 
-
   /**
-   * The calling object of this method can invoke a command by passing in a string identifier of the
-   * command and an {@link ArgumentWrapper} of arguments.
+   * Invokes a command using a string identifier and an {@link ArgumentWrapper} containing the
+   * arguments for the command.
    *
-   * @param command
-   * @param args
+   * @param command the name of the command to invoke.
+   * @param args an {@link ArgumentWrapper} containing the arguments for the command.
    */
   void invokeCommand(String command, ArgumentWrapper args);
 
+  /**
+   * Exits the application, performing any necessary cleanup before shutdown.
+   */
   void exitApplication();
 }

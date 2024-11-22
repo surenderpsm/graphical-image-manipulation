@@ -6,11 +6,21 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+/**
+ * A JPanel that displays an image with scrolling capability.
+ * <p>
+ * This class provides a wrapper for displaying an image inside a scrollable area. It updates the
+ * displayed image when requested and handles the rendering of the image.
+ */
 public class ImageViewer extends JPanel {
 
   private final ImagePanel imagePanel; // Keep a reference to the inner ImagePanel
   private final JScrollPane scrollPane;
 
+  /**
+   * Constructs a new ImageViewer with no initial image. Initializes the internal components and
+   * sets the layout.
+   */
   public ImageViewer() {
     imagePanel = new ImagePanel(null); // Start with no image
     scrollPane = new JScrollPane(imagePanel);
@@ -21,7 +31,7 @@ public class ImageViewer extends JPanel {
   /**
    * Updates the displayed image.
    *
-   * @param newImage the new BufferedImage to display
+   * @param newImage the new {@link BufferedImage} to display.
    */
   public void updateImage(BufferedImage newImage) {
     imagePanel.setImage(newImage); // Update the image
@@ -29,15 +39,28 @@ public class ImageViewer extends JPanel {
     imagePanel.repaint();         // Trigger a repaint
   }
 
-  // Custom panel to draw the image
+  /**
+   * Inner class representing a panel to draw and display the image. This class is used within the
+   * ImageViewer to actually render the image.
+   */
   static class ImagePanel extends JPanel {
 
     private BufferedImage image;
 
+    /**
+     * Constructs an ImagePanel with the specified image.
+     *
+     * @param image the initial image to display.
+     */
     public ImagePanel(BufferedImage image) {
       setImage(image);
     }
 
+    /**
+     * Sets the image to be displayed by this panel.
+     *
+     * @param image the image to display.
+     */
     public void setImage(BufferedImage image) {
       this.image = image;
       if (image != null) {
@@ -50,6 +73,11 @@ public class ImageViewer extends JPanel {
       }
     }
 
+    /**
+     * Paints the image on the panel.
+     *
+     * @param g the {@link Graphics} object to paint the image.
+     */
     @Override
     protected void paintComponent(Graphics g) {
       super.paintComponent(g);

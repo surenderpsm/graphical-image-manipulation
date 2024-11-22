@@ -24,19 +24,32 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
 import view.gui.ComponentObserver;
 import view.gui.frame.menu.MenuBar;
-import view.gui.frame.utlis.FileChooser;
 
+/**
+ * Represents the main GUI frame of the application for image manipulation. This frame includes
+ * features like image preview, histogram display, split preview functionality, and adjustable
+ * channel settings.
+ * <br>
+ * The frame observes updates from the {@link ComponentObserver} and allows the user to interact
+ * with image manipulation commands.
+ */
 public class DefaultFrame extends JFrame implements UpdateObserver, SubComponentBinder {
 
-  ImageViewer imagePreview;
-  ImageViewer histogramPreview;
-  ComponentObserver listener;
-  Set<JMenuItem> disabledByDefault = new HashSet<JMenuItem>();
-  JButton confirmButton = new JButton("Confirm");
-  JButton cancelButton = new JButton("Cancel");
-  JSlider splitSlider = new JSlider(0, 100, 50);
-  JPanel channelsPanel;
+  private ImageViewer imagePreview;
+  private ImageViewer histogramPreview;
+  private final ComponentObserver listener;
+  private final Set<JMenuItem> disabledByDefault = new HashSet<>();
+  private final JButton confirmButton = new JButton("Confirm");
+  private final JButton cancelButton = new JButton("Cancel");
+  private final JSlider splitSlider = new JSlider(0, 100, 50);
+  private JPanel channelsPanel;
 
+  /**
+   * Constructs a new DefaultFrame with the provided ComponentObserver. Initializes all UI
+   * components and sets up the layout.
+   *
+   * @param listener the observer to handle user actions and commands.
+   */
   public DefaultFrame(ComponentObserver listener) {
     this.listener = listener;
     setTitle("GIME - Graphical Image Manipulation Enhancement");
@@ -48,7 +61,6 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
     addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent e) {
-        // If an image is loaded, ask the user if they want to save changes
         if (!listener.quit()) {
           showExitConfirmation();
         }
@@ -58,10 +70,10 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
       }
     });
 
-    // Create and set the custom menu bar
+    // Set the menu bar
     setJMenuBar(new MenuBar(this));
 
-    // Split the layout between the main image and the right panel
+    // Create and configure split-pane layout
     JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
     splitPane.setDividerLocation(500); // Fix the right panel to 1/4th the width (200px)
     splitPane.setResizeWeight(0.75);   // Allocate 75% of the space to the left panel
@@ -69,17 +81,20 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
 
     // Left panel with slider and main image preview
     splitPane.setLeftComponent(createLeftPanel());
-
-    // Right panel with histogram and channels
     splitPane.setRightComponent(createRightPanel());
-
     getContentPane().add(splitPane, BorderLayout.CENTER);
     setVisible(true);
   }
 
+  /**
+   * Creates the left panel of the frame, which includes the image preview, split slider, and action
+   * buttons (Confirm and Cancel).
+   *
+   * @return the constructed left panel.
+   */
   private JPanel createLeftPanel() {
     JPanel leftPanel = new JPanel(new BorderLayout());
-    leftPanel.setBorder(new TitledBorder("Split Preview")); // Add the title
+    leftPanel.setBorder(new TitledBorder("Split Preview"));
 
     // Create the slider
     splitSlider.setMajorTickSpacing(20); // Major ticks every 20
@@ -103,13 +118,11 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
       listener.setConfirmation(true);
     });
 
-//    cancelButton.setEnabled(false);
     cancelButton.addActionListener(e -> {
-      listener.setPreviewMode(true);
+      listener.setPreviewMode(false);
       listener.setConfirmation(false);
     });
 
-    // Panel to hold the buttons
     JPanel buttonPanel = new JPanel(new GridBagLayout());
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.fill = GridBagConstraints.HORIZONTAL; // Make buttons fill horizontally
@@ -133,12 +146,14 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
     return leftPanel;
   }
 
-
+  /**
+   * Creates the right panel of the frame, which includes the histogram display and channel
+   * adjustment controls.
+   *
+   * @return the constructed right panel.
+   */
   private JPanel createRightPanel() {
-    JPanel rightPanel = new JPanel();
-    rightPanel.setLayout(new BorderLayout());
-
-    // Histogram section
+    JPanel rightPanel = new JPanel(new BorderLayout());
     JPanel histogramPanel = new JPanel(new BorderLayout());
     histogramPanel.setBorder(new TitledBorder("Histogram"));
 
@@ -148,12 +163,9 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
     // Channels section
     channelsPanel = new JPanel(new GridBagLayout());
     channelsPanel.setBorder(new TitledBorder("Channels"));
-
-    // Define GridBagLayout constraints
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.fill = GridBagConstraints.HORIZONTAL; // Make buttons fill horizontally
 
-    // Buttons: Red, Green, Blue
     JButton redButton = new JButton("Red");
     redButton.addActionListener(e -> {
       listener.resetComponents();
@@ -193,36 +205,45 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
     gbc.fill = GridBagConstraints.BOTH; // Fill horizontally and vertically
     channelsPanel.add(resetButton, gbc);
 
-    // Add sections to the right panel
     rightPanel.add(histogramPanel, BorderLayout.CENTER);
     rightPanel.add(channelsPanel, BorderLayout.SOUTH);
-
-    // Fix the width of the right panel to 1/4th of the frame size (200px)
     rightPanel.setPreferredSize(new Dimension(200, getHeight()));
-
     return rightPanel;
   }
 
-
+  /**
+   * Updates the image preview with the given image.
+   *
+   * @param image the new image to display.
+   */
   @Override
   public void updateImage(BufferedImage image) {
-    SwingUtilities.invokeLater(() -> {
-      imagePreview.updateImage(image); // Assuming setImage is a method in ImageViewer
-    });
+    SwingUtilities.invokeLater(() -> imagePreview.updateImage(image));
   }
 
+  /**
+   * Updates the histogram preview with the given histogram image.
+   *
+   * @param histogram the new histogram to display.
+   */
   @Override
   public void updateHistogram(BufferedImage histogram) {
-    SwingUtilities.invokeLater(() -> {
-      histogramPreview.updateImage(histogram); // Assuming setImage is a method in ImageViewer
-    });
+    SwingUtilities.invokeLater(() -> histogramPreview.updateImage(histogram));
   }
 
+  /**
+   * Displays an error message to the user.
+   *
+   * @param error the error message to display.
+   */
   @Override
   public void displayError(String error) {
     JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
   }
 
+  /**
+   * Enables all disabled features in the menu.
+   */
   @Override
   public void enableAllFeatures() {
     for (JMenuItem item : disabledByDefault) {
@@ -230,6 +251,11 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
     }
   }
 
+  /**
+   * Sets whether preview-related components are enabled or not.
+   *
+   * @param enable true to enable, false to disable.
+   */
   @Override
   public void setPreview(boolean enable) {
     confirmButton.setEnabled(enable);
@@ -237,6 +263,11 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
     splitSlider.setEnabled(enable);
   }
 
+  /**
+   * Enables or disables the channel adjustment controls.
+   *
+   * @param enable true to enable, false to disable.
+   */
   @Override
   public void setChannelSettings(boolean enable) {
     for (Component component : channelsPanel.getComponents()) {
@@ -244,6 +275,9 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
     }
   }
 
+  /**
+   * Displays an exit confirmation dialog, prompting the user to save changes.
+   */
   private void showExitConfirmation() {
     int
         result =
@@ -253,7 +287,6 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
                                       JOptionPane.YES_NO_CANCEL_OPTION);
 
     if (result == JOptionPane.YES_OPTION) {
-
       FileChooser fc = new FileChooser();
       int res = fc.showSaveDialog(this);
 
@@ -270,21 +303,34 @@ public class DefaultFrame extends JFrame implements UpdateObserver, SubComponent
     dispose();
   }
 
+  /**
+   * Adds a menu item to the set of features disabled by default.
+   *
+   * @param item the menu item to disable by default.
+   */
   @Override
   public void addToDisabledByDefault(JMenuItem item) {
     disabledByDefault.add(item);
     item.setEnabled(false);
   }
 
+  /**
+   * Retrieves the ComponentObserver for handling user interactions.
+   *
+   * @return the associated ComponentObserver.
+   */
   @Override
   public ComponentObserver getViewComponentListener() {
     return listener;
   }
 
+  /**
+   * Retrieves the current display frame.
+   *
+   * @return this frame instance.
+   */
   @Override
   public JFrame getDisplayFrame() {
     return this;
   }
-
-
 }
