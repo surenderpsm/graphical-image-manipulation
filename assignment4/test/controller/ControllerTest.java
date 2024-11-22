@@ -198,6 +198,9 @@ public class ControllerTest {
   private Model model;
   private StringBuilder log;
 
+  /**
+   * set up method.
+   */
   @Before
   public void setUp() {
     log = new StringBuilder();
@@ -208,6 +211,9 @@ public class ControllerTest {
     testFile = new File("assignment4/res/img/other/donuts.jpg");
   }
 
+  /**
+   * test for load image.
+   */
   @Test
   public void testLoadImage() {
     controller.loadImage(testFile, "test-image");
@@ -215,6 +221,9 @@ public class ControllerTest {
     assertTrue(log.toString().contains("notifyExecutionOnSuccess called!"));
   }
 
+  /**
+   * test for save image.
+   */
   @Test
   public void testSaveImage() {
     controller.loadImage(testFile, "test-image");
@@ -226,6 +235,9 @@ public class ControllerTest {
 
   }
 
+  /**
+   * test for invoke command.
+   */
   @Test
   public void testInvokeCommandCommand() {
     controller.loadImage(testFile, "test-image");
@@ -238,6 +250,9 @@ public class ControllerTest {
 
   }
 
+  /**
+   * test for invoke command.
+   */
   @Test
   public void testInvokeCommandCommandWithSplit() {
     controller.loadImage(testFile, "test-image");
@@ -251,6 +266,9 @@ public class ControllerTest {
 
   }
 
+  /**
+   * test for invoke command.
+   */
   @Test
   public void testInvokeCommandInvalidCommand() {
     ArgumentWrapper testArgs = new ArgumentWrapper();
@@ -262,6 +280,9 @@ public class ControllerTest {
 
   }
 
+  /**
+   * test for invoke command.
+   */
   @Test
   public void testInvokeCommandInvalidArgs() {
     ArgumentWrapper testArgs = new ArgumentWrapper();
@@ -272,6 +293,9 @@ public class ControllerTest {
 
   }
 
+  /**
+   * test for get command names.
+   */
   @Test
   public void testGetCommandNames() {
     Set<String> commandNames = controller.getCommandNames();
@@ -281,6 +305,9 @@ public class ControllerTest {
             commandNames.contains("sharpen"));
   }
 
+  /**
+   * test exit application.
+   */
   @Test
   public void testExitApplication() {
     controller.exitApplication();
