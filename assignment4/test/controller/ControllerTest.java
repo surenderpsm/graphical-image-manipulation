@@ -1,6 +1,5 @@
 package controller;
 
-import controller.viewhandler.ViewAdapter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,146 +8,273 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import controller.viewhandler.ViewAdapter;
 import model.Cache;
 import model.IModel;
 import model.Image;
 import model.Model;
+import model.command.CommandFactory;
 import utils.arguments.ArgumentWrapper;
+import utils.arguments.OptionalArgumentKeyword;
 import utils.arguments.Signature;
+import utils.arguments.StringArgument;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * class for controller tests.
+ */
 public class ControllerTest {
 
-  private static class MockViewAdapter implements ViewAdapter {
-    public boolean successNotified = false;
-    public boolean failureNotified = false;
-    public String failureReason = null;
+  // mock View
+  private static class MockView implements ViewAdapter {
+    private final StringBuilder log;
 
+    /**
+     * constructor of the mock view .
+     * @param log log object
+     */
+    public MockView(StringBuilder log) {
+      this.log = log;
+    }
+
+    /**
+     * method to notify successful execution.
+     */
     @Override
     public void notifyExecutionOnSuccess() {
-      successNotified = true;
+      log.append("notifyExecutionOnSuccess called!").append("\n");
     }
 
+    /**
+     * method to notify failure.
+     * @param reason reason for the failure.
+     */
     @Override
     public void notifyExecutionOnFailure(String reason) {
-      failureNotified = true;
-      failureReason = reason;
+      log.append("notifyExecutionOnFailure called with: ").append(reason).append("\n");
     }
 
+    /**
+     * method to listen for input.
+     */
     @Override
     public void listenForInput() {
     }
 
+    /**
+     * method to add controller.
+     * @param controller object.
+     */
     @Override
     public void addController(controller.Features controller) {
     }
 
-    public void reset() {
-      successNotified = false;
-      failureNotified = false;
-      failureReason = null;
-    }
   }
 
+  /**
+   * mock model class.
+   */
   private static class MockModel implements IModel {
-
-    public boolean executeCalled = false;
-    public String lastCommand = null;
-    public ArgumentWrapper lastArgs = null;
+    private CommandFactory commandClass = CommandFactory.NONE;
     private final Cache cache = new Cache();
+    private final StringBuilder log;
+    private boolean shouldThrowException;
 
-    public StringBuilder log = new StringBuilder();
-
-    @Override
-    public Map<String, Signature> getCommandSignatures() {
-      return Map.of();
+    /**
+     * constructor of the mock model.
+     * @param log log object.
+     */
+    public MockModel(StringBuilder log) {
+      this.log = log;
+      this.shouldThrowException = false;
     }
 
-    @Override
-    public boolean isHistogram(String name) {
-      return false;
+    /**
+     * method to set should throw exception.
+     */
+    public void setShouldThrowException(boolean value) {
+      this.shouldThrowException = value;
     }
 
+    /**
+     * execute method.
+     * @param command the name of the command.
+     * @param args    a string of arguments for the command.
+     * @throws UnsupportedOperationException error.
+     */
     @Override
-    public int[][] getHistogram(String name) throws NoSuchElementException {
-      return new int[0][];
+    public void execute(String command, ArgumentWrapper args) throws UnsupportedOperationException {
+
+      if (shouldThrowException) {
+        throw new RuntimeException("Mock error");
+      }
+      for (CommandFactory c : CommandFactory.values()) {
+        if (c.getCommandName().equals(command)) {
+          commandClass = c;
+          log.append("execute called with command: ").append(command).append("\n");
+          runCommand(args);
+          return;
+        }
+      }
+      throw new UnsupportedOperationException(
+              "User Error: Input command \"" + command + "\" not found.");
     }
 
-    @Override
-    public int[][][] getImage(String name) throws NoSuchElementException {
-      return new int[0][][];
+    /**
+     * Executes the command associated with this model instance using the provided arguments.
+     *
+     * @param args String arguments to the command being executed.
+     */
+    private void runCommand(ArgumentWrapper args) {
+      commandClass.executeCommandWith(args, cache);
     }
+
+    /**
+     * method to get image from the cache.
+     * @param name the name of the image to retrieve
+     * @return image array.
+     */
+    @Override
+    public int[][][] getImage(String name) {
+      log.append("getImage called with name: ").append(name).append("\n");
+      return cache.get(name).getImageArray();
+    }
+
+    /**
+     * set an image object to the cache.
+     *
+     * @param name  A {@code String} which denotes the image name.
+     * @param image A {@code model.Image} object to map to {@code name}.
+     */
 
     @Override
     public void setImage(int[][][] image, String name) {
+      log.append("setImage called with name: ").append(name).append("\n");
       cache.set(name, new Image(image));
-      log.append(name);
     }
 
+    /**
+     * to check if the histogram object is present in the cache.
+     *
+     * @param name of the histogram object.
+     * @return boolean true or false based on presence.
+     */
+
     @Override
-    public void execute(String command, ArgumentWrapper args) throws UnsupportedOperationException {
-      executeCalled = true;
-      lastCommand = command;
-      lastArgs = args;
-      log.append(command);
+    public boolean isHistogram(String name) {
+      return cache.isHistogram(name);
+    }
+
+
+    /**
+     * get the required histogram object from the cache.
+     *
+     * @param name of the histogram object.
+     * @return the histogram object.
+     * @throws NoSuchElementException if the object is not found in the cache.
+     */
+
+    @Override
+    public int[][] getHistogram(String name) {
+      return cache.getHistogram(name).getHistogram();
+    }
+
+    /**
+     * get command signatures.
+     * @return map of the string names and command signatures.
+     */
+    @Override
+    public Map<String, Signature> getCommandSignatures() {
+      return CommandFactory.getSignatureMap();
     }
   }
 
   private Controller controller;
   private Controller controllerTwo;
-  private MockViewAdapter mockViewHandler;
+  private MockView mockView;
   private MockModel mockModel;
   private File testFile;
   private Model model;
+  private StringBuilder log;
 
   @Before
   public void setUp() {
-    mockModel = new MockModel();
+    log = new StringBuilder();
+    mockModel = new MockModel(log);
     model = new Model();
-    mockViewHandler = new MockViewAdapter();
-    controller = new Controller(mockModel, mockViewHandler);
-    controllerTwo = new Controller(model, mockViewHandler);
+    mockView = new MockView(log);
+    controller = new Controller(mockModel, mockView);
     testFile = new File("assignment4/res/img/other/donuts.jpg");
   }
 
   @Test
   public void testLoadImage() {
-    controllerTwo.loadImage(testFile, "test-image");
-
-    assertTrue("View should be notified of successful load",
-            mockViewHandler.successNotified);
+    controller.loadImage(testFile, "test-image");
+    assertTrue(log.toString().contains("setImage called with name: test-image"));
+    assertTrue(log.toString().contains("notifyExecutionOnSuccess called!"));
   }
 
   @Test
   public void testSaveImage() {
-    int[][][] originalImage = {{{23, 24, 25}}};
-    //get3DArrayFromFile("assignment4/res/img4x4/original.txt");
-    model.setImage(originalImage, "test-image");
+    controller.loadImage(testFile, "test-image");
+    assertTrue(log.toString().contains("setImage called with name: test-image"));
+    assertTrue(log.toString().contains("notifyExecutionOnSuccess called!"));
+    controller.saveImage(testFile, "test-image");
+    assertTrue(log.toString().contains("getImage called with name: test-image"));
+    assertTrue(log.toString().contains("notifyExecutionOnSuccess called!"));
 
-    controllerTwo.saveImage(testFile, "test-image");
-
-    assertTrue("View should be notified of successful save", mockViewHandler.successNotified);
   }
 
   @Test
-  public void testInvokeCommand() {
+  public void testInvokeCommandCommand() {
+    controller.loadImage(testFile, "test-image");
+    ArgumentWrapper testArgs = new ArgumentWrapper(
+            new StringArgument("test-image"),
+            new StringArgument("blurred-image"));
+    controller.invokeCommand("blur", testArgs);
+    assertTrue(log.toString().contains("execute called with command: blur"));
+    assertTrue(log.toString().contains("notifyExecutionOnSuccess called!"));
+
+  }
+
+  @Test
+  public void testInvokeCommandCommandWithSplit() {
+    controller.loadImage(testFile, "test-image");
+    ArgumentWrapper testArgs = new ArgumentWrapper(
+            new StringArgument("test-image"),
+            new StringArgument("blurred-image"));
+    testArgs.setArgument(OptionalArgumentKeyword.SPLIT, 25);
+    controller.invokeCommand("blur", testArgs);
+    assertTrue(log.toString().contains("execute called with command: blur"));
+    assertTrue(log.toString().contains("notifyExecutionOnSuccess called!"));
+
+  }
+
+  @Test
+  public void testInvokeCommandInvalidCommand() {
+    ArgumentWrapper testArgs = new ArgumentWrapper();
+
+    controller.invokeCommand("blurr", testArgs);
+    assertTrue(
+            log.toString().contains("notifyExecutionOnFailure called with: User "
+                    + "Error: Input command \"blurr\" not found."));
+
+  }
+
+  @Test
+  public void testInvokeCommandInvalidArgs() {
     ArgumentWrapper testArgs = new ArgumentWrapper();
 
     controller.invokeCommand("blur", testArgs);
+    assertTrue(log.toString().contains("notifyExecutionOnFailure called "
+            + "with: ERROR : Expected 2 arguments."));
 
-    assertTrue("Model should execute the command",
-            mockModel.executeCalled);
-    assertEquals("Correct command should be executed",
-            "blur", mockModel.lastCommand);
-    assertTrue("View should be notified of successful execution",
-            mockViewHandler.successNotified);
   }
 
   @Test
   public void testGetCommandNames() {
-    Set<String> commandNames = controllerTwo.getCommandNames();
+    Set<String> commandNames = controller.getCommandNames();
     assertTrue("Should contain 'blur' command",
             commandNames.contains("blur"));
     assertTrue("Should contain 'sharpen' command",
@@ -157,7 +283,6 @@ public class ControllerTest {
 
   @Test
   public void testExitApplication() {
-
     controller.exitApplication();
 
     // Note: In a real scenario, you might want to verify
