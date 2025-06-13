@@ -1,4 +1,0 @@
-# load parrot.jpg and call it parrot.
-load res/img/parrot.jpg parrot
-# Brighten parrot by 10.
-brighten 10 parrot brighter-parrot
