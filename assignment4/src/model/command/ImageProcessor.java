@@ -2,6 +2,8 @@ package model.command;
 
 import model.Cache;
 import model.Image;
+import utils.arguments.ArgumentWrapper;
+import utils.arguments.OptionalArgumentKeyword;
 
 /**
  * Abstract base class for image processing operations. This class provides a common framework for
@@ -63,7 +65,7 @@ abstract class ImageProcessor extends AbstractCommand {
    * @param rawArguments the space-separated string of command arguments
    * @throws IllegalArgumentException if the arguments are invalid or insufficient
    */
-  protected ImageProcessor(String rawArguments, Cache cache) {
+  protected ImageProcessor(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache);
     checkForSplit();
   }
@@ -108,25 +110,32 @@ abstract class ImageProcessor extends AbstractCommand {
     return Math.min(255, Math.max(0, value));
   }
 
+  /**
+   * Executes the image processing operation, handling split processing if specified.
+   */
+
   public void execute() {
     calculateWorkingWidth();
     processImage();
   }
 
+  /**
+   * method to handle if split was also provided as part of the input for the operation.
+   */
   private void checkForSplit() {
+
     try {
-      // Check if the 2nd last argument is "split"
-      if (getArg(numberOfArgs() - 2).equals("split")) {
-        // can the last argument be parsed?
-        split = parseInt(numberOfArgs() - 1, 0, 100);
-        setNumberOfArgs(numberOfArgs() - 2);
-      }
+      // Is there a split arg? if not IndexOutOfBoundsException caught and ignored.
+      split = parseInt(OptionalArgumentKeyword.SPLIT, 0, 100);
     } catch (IndexOutOfBoundsException ignored) {
     } catch (IllegalArgumentException e) {
       throw new IllegalArgumentException("Incorrect use of split command: " + e.getMessage());
     }
   }
 
+  /**
+   * method to calculate working width.
+   */
   private void calculateWorkingWidth() {
     if (width == 0) {
       throw new IllegalStateException("Internal error: width not set.");

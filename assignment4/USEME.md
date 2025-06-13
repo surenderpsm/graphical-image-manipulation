@@ -1,4 +1,5 @@
-
+# NOTE: Known flaws in Script Mode.
+## The paths described in the script need to be with **reference to the current working directory**.
 # Starting the Application
 ## Script Mode
 You can directly execute the sample script file by passing it as a command-line argument:
@@ -7,6 +8,17 @@ java -jar res/image-processor.jar -file res/scripts/script.txt
 ```
 This allows for automated batch processing without entering interactive mode.
 
+
+ Below shows the assumption of the directory. current working directory should be a level higher than this.
+>```
+>
+>├── image-processor.jar
+>└── res
+>    ├── img/other/*.jpg
+>    └── scripts
+>        └── script.txt
+>```
+> This oversight will be rectified in the next iteration by adding the script path to the paths defined in the script, hence allowing script paths to be defined from its own reference.
 ## Interactive Mode
 ```bash
 java -jar res/image-processor.jar

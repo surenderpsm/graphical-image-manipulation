@@ -50,7 +50,8 @@ public class ScriptHandlerTest {
   public void allCommandsAreRetrieved() throws FileNotFoundException {
     String script = root + "script_with_comments";
     ScriptHandler sh = new ScriptHandler(script);
-    String[] commands = new String[]{"load res/img/parrot.jpg parrot",
+    String[] commands = new String[]{
+        "load res/img/parrot.jpg parrot",
         "brighten 10 parrot " + "brighter-parrot"};
     // Verify all commands are retrieved.
     assertEquals(Arrays.asList(commands), sh.getCommands());

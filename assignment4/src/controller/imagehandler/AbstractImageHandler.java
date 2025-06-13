@@ -8,9 +8,9 @@ import java.io.File;
  *
  * <p>
  * This abstract class is intended to be extended by specific image handler implementations (e.g.,
- * {@code PNGImageHandler}, {@code JPGImageHandler}) for different image formats. It provides
- * basic functionality such as storing the file path and file extension, which are essential for
- * loading and saving image files in the derived classes.
+ * {@code PNGImageHandler}, {@code JPGImageHandler}) for different image formats. It provides basic
+ * functionality such as storing the file path and file extension, which are essential for loading
+ * and saving image files in the derived classes.
  * </p>
  *
  * <p>

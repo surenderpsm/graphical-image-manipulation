@@ -3,6 +3,13 @@ package model.command;
 
 import model.Cache;
 import model.Image;
+import utils.arguments.ArgumentWrapper;
+
+/**
+ * Combines separate red, green, and blue channel images into a single RGB image. This class takes
+ * three images representing the individual color channels and combines them into a full-color RGB
+ * image.
+ */
 
 class RGBCombine extends AbstractCommand {
 
@@ -10,14 +17,22 @@ class RGBCombine extends AbstractCommand {
   private final Image greenImage;
   private final Image blueImage;
 
-  public RGBCombine(String rawArguments, Cache cache) {
+  /**
+   * Constructs a new RGBCombine processor.
+   *
+   * @param rawArguments The command arguments in format: "destImage redImage greenImage blueImage"
+   * @param cache        The cache storing the images
+   * @throws IllegalArgumentException if image dimensions don't match or arguments are invalid
+   */
+
+  public RGBCombine(ArgumentWrapper rawArguments, Cache cache) {
     super(rawArguments, cache);
     if (numberOfArgs() != 4) {
       throw new IllegalArgumentException("Expected 4 arguments.");
     }
-    redImage = cache.get(getArg(1));
-    greenImage = cache.get(getArg(2));
-    blueImage = cache.get(getArg(3));
+    redImage = cache.get(parseString(1));
+    greenImage = cache.get(parseString(2));
+    blueImage = cache.get(parseString(3));
     // need to validate if all three images have same height and width.
     if (redImage.getHeight() != greenImage.getHeight()
         || redImage.getHeight() != blueImage.getHeight()
@@ -25,8 +40,13 @@ class RGBCombine extends AbstractCommand {
         || redImage.getWidth() != blueImage.getWidth()) {
       throw new IllegalArgumentException("RGB image has incorrect dimensions.");
     }
-    imageName = getArg(0);
+    imageName = parseString(0);
   }
+
+  /**
+   * Executes the RGB combination operation by combining the individual channel images into a single
+   * RGB image.
+   */
 
   public void execute() {
 

@@ -2,12 +2,17 @@ package model;
 
 import java.util.NoSuchElementException;
 
+/**
+ * provider for histogram cache to model. it has all the methods required by. any cache that stores
+ * histograms.
+ */
+
 public interface HistogramCacheProvider {
 
   /**
    * Checks if there exists a histogram for the given name.
    *
-   * @param name
+   * @param name of the histogram.
    * @return true if it exists.
    */
   boolean isHistogram(String name);

@@ -4,14 +4,14 @@ import java.io.IOException;
 import model.Image;
 
 /**
- * The {@code ImageHandler} interface provides an abstraction for loading and saving images.
- * It defines the basic operations required for handling various image file formats, and specific
+ * The {@code ImageHandler} interface provides an abstraction for loading and saving images. It
+ * defines the basic operations required for handling various image file formats, and specific
  * implementations of this interface handle different formats (e.g., PNG, JPEG, PPM, etc.).
  *
  * <p>
  * This interface is primarily used in the controller to delegate the tasks of loading and saving
- * images. The controller is responsible for determining which implementation of {@code ImageHandler}
- * to use based on the file path or extension.
+ * images. The controller is responsible for determining which implementation of
+ * {@code ImageHandler} to use based on the file path or extension.
  * </p>
  *
  * <h3>Usage Example:</h3>
@@ -51,8 +51,8 @@ public interface ImageHandler {
    * Saves an {@code Image} object to a specified file path.
    *
    * <p>
-   * This method is called by the model using the file path argument provided by the controller.
-   * The pixel data from the {@code Image} object is saved in the appropriate image file format,
+   * This method is called by the model using the file path argument provided by the controller. The
+   * pixel data from the {@code Image} object is saved in the appropriate image file format,
    * depending on the specific implementation of the {@code ImageHandler}.
    * </p>
    *
